@@ -1,2 +1,5 @@
 # ignore sublime project/workspace files
 *.sublime*
+
+#ignore any object files from build
+*.o
