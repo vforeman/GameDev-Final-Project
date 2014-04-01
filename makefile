@@ -5,27 +5,36 @@
 # TARGET: DEPENDENCIES
 # [TAB]: SYSTEM COMMAND
 
+#include directories
+LIBS = -lSDL2 -lGL -lGLU
+
 # This is the final executable. Last file to be compiled.
 all:	main
 
-main:	Main.o GraphicsManager.o PhysicsManager.o WindowManager.o
-	g++ Main.o GraphicsManager.o PhysicsManager.o -o main
+#translate obj files into executable 'main'
+main:	Main.o
+	g++ -g -Werror Main.o -o main $(LIBS)
 
-Main.o:	Main.cpp
-	g++ -c Main.cpp
+SingletonPattern.o:
+	g++ -c SingletonPattern.h -o SingletonPattern.o
 
-GraphicsManager.o:	GraphicsManager.cpp
-	g++ -c GraphicsManager.cpp
+WindowManager.o: SingletonPattern.o
+	g++ -c WindowManager.h	SingletonPattern.o -o WindowManager.o
 
-PhysicsManager.o:	PhysicsManager.cpp
-	g++ -c PhysicsManager.cpp
+Level.o:
+	g++ -c Level.h -o Level.o
 
-WindowManager.o:	WindowManager.cpp
-	g++ -c WindowManager.cpp
+Main.o: WindowManager.o
+	g++ -c Main.cpp WindowManager.o $(LIBS)
+
+
+
+
+
 
 # Call "make clean" to remove built objects from directory
 # .o, objectfiles are included in .gitignore, incase you forget to clean
 # before you add files to track
-clean:	
-	rm -rf *.o main
+clean:
+	rm -rf *.o main *.gch
 

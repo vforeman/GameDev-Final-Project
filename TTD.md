@@ -1,20 +1,31 @@
-Technical Design Document
+<!--
+Movement
+Collision
+Projectile
+AI
+Enemy
 
-Overview Timeline
+-->
+#Technical Design Document
+
+##Development Style
+###Very, Very Agile
+
+###Overview Timeline
 Player and Movement (4/1)
 Artificial Intelligence (4/8)
 Physics and Collision   (4/15)
 Testing and Optimization  (4/24)
 
 
-Development Team
+###Development Team
 Victor Foreman
 Remington Holt
 Ranjay Salmon
     Physics
 
 
-Code Format:
+###Code Format:
 Single tab
 Block bracketing
 Constants: MYCONSTANT
@@ -40,16 +51,16 @@ class
             methods();
     };
 
-Class Features
+##Class Features
 
 Core namespace Features:
 Maintain global classes and structs
-Utilize ‘extern’ modifier when feasible 
+Utilize ‘extern’ modifier when feasible
 
 WindowManager namespace Features:
 Open/Close window
 exit calls from other modules will be to Window Class
-Resize Window 
+Resize Window
 Neglible if we just work with a set size window for now
 
 GraphicManager namespace Features:
@@ -68,7 +79,7 @@ Development Software
 Text Editors
 GNU C compiler
 
-Version control: 
+Version control:
 GitHub
 
 Libraries
