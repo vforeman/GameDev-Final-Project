@@ -2,6 +2,8 @@
 #define LEVELFACTORY_H
 #include <string>
 #include "Vmath.h"
+#include "PhysicsEngine.h"
+#include "Geometry.h"
 using namespace std;
 namespace level{
 /*
@@ -13,9 +15,13 @@ lvl=lvlFactory->createLevel("Text");
 
 */
 
+
+/***********************************
+*												LEVEL SPECIFICATION
+*************************************/
 class Level{
 public:
- void SetType( string );
+ void setType( string );
  virtual void draw()=0;
 private:
  string _type;

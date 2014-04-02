@@ -11,7 +11,7 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
-	_instance = false;
+	_instanceFlag = false;
 }
 
 Renderer * Renderer::getInstance()

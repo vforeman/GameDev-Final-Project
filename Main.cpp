@@ -17,7 +17,7 @@ int main()
  PhysicsEngine * pEng = PhysicsEngine::getInstance();
  Renderer * gren = Renderer::getInstance();
  Level *lvl;
- LevelFactory * lvlFactory;
+ LevelFactory * lvlFactory = new LevelFactory;
  lvl = lvlFactory->CreateLevel("Flat");
 
  return 0;

@@ -12,25 +12,30 @@ CXX = g++
 CXXFLAGS = -Wall -g
 
 # libraries to include
-
+All: Main
 
 Main:	Main.o WindowController.o
-	$(CXX) $(CXXFLAGS) -o Main Main.o WindowController.o PhysicsEngine.o LevelFactory.o GraphicsRenderer.o
+	$(CXX) $(CXXFLAGS) -o Main Main.o WindowController.o PhysicsEngine.o LevelFactory.o GraphicsRenderer.o Geometry.o
 
-Main.o: Main.cpp WindowController.h PhysicsEngine.h LevelFactory.h GraphicsRenderer.h Util.h
+Main.o: Main.cpp WindowController.o PhysicsEngine.o LevelFactory.o GraphicsRenderer.o Geometry.o
 	$(CXX) $(CXXFLAGS) -c Main.cpp
 
-WindowController.o: WindowController.h
+WindowController.o: WindowController.cpp
 	$(CXX) $(CXXFLAGS) -c WindowController.cpp
 
-PhysicsEngine.o: PhysicsEngine.h Vmath.h
+PhysicsEngine.o: PhysicsEngine.cpp LevelFactory.h Vmath.h Geometry.h
 	$(CXX) $(CXXFLAGS) -c PhysicsEngine.cpp
 
-LevelFactory.o: LevelFactory.h Vmath.h
+LevelFactory.o: LevelFactory.cpp Vmath.h Geometry.h
 	$(CXX) $(CXXFLAGS) -c LevelFactory.cpp
 
-GraphicsRenderer.o: GraphicsRenderer.h Vmath.h
+GraphicsRenderer.o: GraphicsRenderer.cpp Vmath.h
 	$(CXX) $(CXXFLAGS) -c GraphicsRenderer.cpp
+
+Geometry.o: Geometry.cpp Vmath.h
+	$(CXX) $(CXXFLAGS) -c Geometry.cpp
+
+
 
 
 
