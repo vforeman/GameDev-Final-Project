@@ -1,5 +1,9 @@
+[//]:<>(look and feel of the game)
 #Game Design Document
 ##Game Overview
+
+
+
 
 ###Character
 >The player will be a first person camera who can fire projectiles to defeat
