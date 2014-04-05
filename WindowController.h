@@ -1,6 +1,6 @@
 #ifndef WINDOWCONTROLLER_H
 #define WINDOWCONTROLLER_H
-#include <SDL2/SDL.h>
+#include <SDL/SDL.h>
 #include <stdio.h>
 namespace window{
 

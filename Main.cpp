@@ -4,6 +4,7 @@
 #include "LevelFactory.h"
 #include "GraphicsRenderer.h"
 #include "Util.h"
+#include "GameLogic.h"
 
 using namespace window;
 using namespace physics;
@@ -13,12 +14,10 @@ using namespace std;
 
 int main()
 {
- Window * wCtrl = Window::getInstance();
- PhysicsEngine * pEng = PhysicsEngine::getInstance();
- Renderer * gren = Renderer::getInstance();
- Level *lvl;
- LevelFactory * lvlFactory = new LevelFactory;
- lvl = lvlFactory->CreateLevel("Flat");
+    Window * wCtrl = Window::getInstance();
+	GameLogic* gameObject = GameLogic::getInstance();
+	gameObject->start();
+ 
 
  return 0;
 }

@@ -14,10 +14,10 @@ CXXFLAGS = -Wall -g
 # libraries to include
 All: Main
 
-Main:	Main.o WindowController.o
-	$(CXX) $(CXXFLAGS) -o Main Main.o WindowController.o PhysicsEngine.o LevelFactory.o GraphicsRenderer.o Geometry.o
+Main:	Main.o WindowController.o 
+	$(CXX) $(CXXFLAGS) -o Main Main.o WindowController.o PhysicsEngine.o LevelFactory.o GraphicsRenderer.o Geometry.o GameLogic.o Camera.o Dummy.o InputController.o -lGL -lSDL -lGLU
 
-Main.o: Main.cpp WindowController.o PhysicsEngine.o LevelFactory.o GraphicsRenderer.o Geometry.o
+Main.o: Main.cpp WindowController.o PhysicsEngine.o LevelFactory.o GraphicsRenderer.o Geometry.o GameLogic.o
 	$(CXX) $(CXXFLAGS) -c Main.cpp
 
 WindowController.o: WindowController.cpp
@@ -34,6 +34,16 @@ GraphicsRenderer.o: GraphicsRenderer.cpp Vmath.h
 
 Geometry.o: Geometry.cpp Vmath.h
 	$(CXX) $(CXXFLAGS) -c Geometry.cpp
+
+GameLogic.o: GameLogic.cpp GameLogic.h Dummy.o InputController.o WindowController.o Camera.o
+	$(CXX) $(CXXFLAGS) -c GameLogic.cpp WindowController.cpp
+
+Camera.o: Camera.cpp Camera.h Vmath.h
+	$(CXX) $(CXXFLAGS) -c Camera.cpp
+
+Dummy.o: Dummy.cpp Dummy.h 
+	$(CXX) $(CXXFLAGS) -c Dummy.cpp
+
 
 
 
