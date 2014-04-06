@@ -44,8 +44,12 @@ Camera.o: Camera.cpp Vmath.h
 Dummy.o: Dummy.cpp
 	$(CXX) $(CXXFLAGS) -c Dummy.cpp
 
-InputController.o:	Vmath.h	Camera.h
+InputController.o:	InputController.cpp	Vmath.h	Camera.h
 	$(CXX) $(CXXFLAGS)	-c InputController.cpp
+
+Weapon.o: Weapon.cpp	VMath.h	PhysicsEngine.h
+	$(CXX) $(CXXFLAGS)	-c Weapon.cpp
+
 
 
 
