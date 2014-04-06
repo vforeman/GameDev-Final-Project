@@ -36,6 +36,12 @@ Window * Window::getInstance()
 void Window::open()
 {
 
+	// open function implemented
+	SDL_Init(SDL_INIT_EVERYTHING);//initializing the window
+	SDL_Surface* screen;
+	// x = 640
+	// y = 480
+	screen = SDL_SetVideoMode(1280,960,32,SDL_SWSURFACE|SDL_OPENGL);
 }
 
 void Window::close()
