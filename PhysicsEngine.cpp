@@ -11,6 +11,28 @@ void PhysicsEntity::update()
 
 
 /***********************************
+*					ENEMY IMPLEMENTATION
+*************************************/
+
+/***********************************
+*					BULLET IMPLEMENTATION
+*************************************/
+
+/***********************************
+*					PLAYER IMPLEMENTATION
+*************************************/
+
+
+
+
+
+
+
+
+
+
+
+/***********************************
 *						QUADTREE IMPLEMENTATION
 *************************************/
 //INIT static const attributes
@@ -94,11 +116,11 @@ PhysicsEngine * PhysicsEngine::getInstance()
 	}
 }
 
-/*bool PhysicsEngine::checkSphereSphere( PhysicsEntity, PhysicsEntity )
+bool PhysicsEngine::checkSphereSphere( PhysicsEntity, PhysicsEntity )
 {
 
 }
-bool PhysicsEngine::checkPlaneSphere( PhysicsEntity, Level )
+bool PhysicsEngine::checkPlaneSphere( PhysicsEntity, level::LevelFactory )
 {
 
 }
@@ -113,7 +135,7 @@ void PhysicsEngine::resolvePlayerBullet(Player , Bullet )
 void PhysicsEngine::resolveBulletEnemy( Enemy, Bullet )
 {
 
-}*/
+}
 
 
 

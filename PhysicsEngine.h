@@ -21,6 +21,25 @@ public:
 };
 
 /***********************************
+*					ENEMY SPECIFICATION
+*************************************/
+class Enemy : PhysicsEntity{
+
+};
+/***********************************
+*					BULLET SPECIFICATION
+*************************************/
+class Bullet : PhysicsEntity{
+
+};
+/***********************************
+*					PLAYER SPECIFICATION
+*************************************/
+class Player : PhysicsEntity{
+
+};
+
+/***********************************
 *						QUADTREE SPECIFICATION
 *************************************/
 class QuadTree
@@ -53,11 +72,11 @@ class PhysicsEngine
 public:
 	static PhysicsEngine * getInstance();
 	~PhysicsEngine();
-	/*bool checkSphereSphere( PhysicsEntity, PhysicsEntity );
+	bool checkSphereSphere( PhysicsEntity, PhysicsEntity );
 	bool checkPlaneSphere( PhysicsEntity, level::LevelFactory );
 	void resolvePlayerEnemy( Player , Enemy );
 	void resolvePlayerBullet(Player , Bullet );
-	void resolveBulletEnemy( Enemy, Bullet );*/
+	void resolveBulletEnemy( Enemy, Bullet );
 
 
 private:
@@ -65,6 +84,18 @@ private:
 	static bool _instanceFlag;
 	PhysicsEngine();
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }//namespace physics
