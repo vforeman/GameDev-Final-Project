@@ -8,6 +8,34 @@ namespace level{
 /***********************************
 *												LEVEL IMPLEMENTATION
 *************************************/
+bool LevelContainer::_instanceFlag = false;
+LevelContainer * LevelContainer::_instance = NULL;
+
+LevelContainer::LevelContainer()
+{
+	//empty constructor
+}
+
+LevelContainer::~LevelContainer()
+{
+	_instanceFlag = false;
+}
+
+LevelContainer * LevelContainer::get()
+{
+ if(!_instanceFlag)
+ {
+  _instance = new LevelContainer();
+  _instanceFlag = true;
+  return _instance;
+ }
+ else
+ {
+  return _instance;
+ }
+}
+
+
 void Level::setType( string levelType )
 {
 	_type = levelType;

@@ -5,19 +5,25 @@
 #include "Geometry.h"
 using namespace std;
 namespace level{
-/*
-USAGE:
-Level * lvl;
-LevelFactory * lvlFactory;
-lvl=lvlFactory->createLevel("Text");
 
-
-*/
 
 
 /***********************************
 *												LEVEL SPECIFICATION
 *************************************/
+
+class LevelContainer{
+public:
+	static LevelContainer * get();
+	~LevelContainer();
+
+private:
+	static LevelContainer * _instance;
+	static bool _instanceFlag;
+	LevelContainer();
+};
+
+
 class Level{
 public:
  void setType( string );
