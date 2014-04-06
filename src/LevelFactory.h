@@ -3,76 +3,80 @@
 #include <string>
 #include "Vmath.h"
 #include "Geometry.h"
+#include "PhysicsEngine.h"
 using namespace std;
 namespace level{
 
+typedef struct
+{
+	Vector2f _area;
+	string _type;
+	geo::Rectangle * _tiles;
+	int _numTiles;
+	int _maxObjects;
+	int _numObjects;
+	physics::PhysicsEntity * _objs;
+
+}Level;
+
+
+
+
+// Concrete Level
+class FlatLevel
+{
+private:
+public:
+ FlatLevel(string);
+ FlatLevel();
+ ~FlatLevel();
+void draw();
+};
+
+// Concrete Level
+class TextLevel
+{
+public:
+ TextLevel(string);
+ TextLevel();
+ ~TextLevel();
+ void draw();
+};
+
+// Concrete Level
+class RandomLevel
+{
+public:
+ RandomLevel(string);
+ RandomLevel();
+ ~RandomLevel();
+ void draw();
+
+};
 
 
 /***********************************
-*												LEVEL SPECIFICATION
+*						LEVEL CONTAINER SPECIFICATION
 *************************************/
-
 class LevelContainer{
 public:
 	static LevelContainer * get();
-	~LevelContainer();
+	static Level _level;
 
+	~LevelContainer();
 private:
 	static LevelContainer * _instance;
 	static bool _instanceFlag;
 	LevelContainer();
 };
 
-
-class Level{
-public:
- void setType( string );
- virtual void draw()=0;
-private:
- string _type;
-
-};
-
-// Concrete Level
-class FlatLevel : public Level{
-private:
-
-public:
- FlatLevel();
- ~FlatLevel();
-void draw();
-
-
-};
-
-// Concrete Level
-class TextLevel : public Level{
-public:
- TextLevel();
- ~TextLevel();
- void draw();
-
-
-};
-
-// Concrete Level
-class RandomLevel : public Level{
-public:
- RandomLevel();
- ~RandomLevel();
- void draw();
-
-
-
-};
-
+/***********************************
+*					HELPER SPECIFICATION
+*************************************/
+//@TODO: the helper class could be a registry of
+// helper functions for any singleton class
 // Factory Method for Level construction
-class LevelFactory{
-public:
- Level *CreateLevel( string );
-
-};
-
+void CreateLevel( string );
 
 
 

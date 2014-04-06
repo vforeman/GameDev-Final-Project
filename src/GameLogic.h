@@ -1,11 +1,10 @@
 #ifndef GAMELOGIC_H
 #define GAMELOGIC_H
 
-
-
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "Dummy.h"
+#include "LevelFactory.h"
 #include "InputController.h"
 #include "WindowController.h"
 #include "Camera.h"
@@ -20,7 +19,8 @@ class GameLogic
 {
 	private:
 	Camera cam;
-	InputController* iController;
+ level::LevelContainer * _lvl;
+	gamein::InputController * iController;
 	Window * wController;
 
 	void update();
@@ -31,7 +31,8 @@ class GameLogic
 
 	public:
 	static GameLogic * getInstance();
-	Dummy obj;
+	Dummy _obj;
+
 	~GameLogic();
 
 	void start();

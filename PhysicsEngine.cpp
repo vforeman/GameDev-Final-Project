@@ -28,8 +28,24 @@ Bullet::Bullet()
 
 
 
+/***********************************
+*					STATIC ENTITY IMPLEMENTATION
+*************************************/
+StaticEntity::StaticEntity()
+{
 
+}
+StaticEntity::StaticEntity(float radius, Vector3f position, Vector3f force)
+{
+	_radius = radius;
+	_position = position;
+	_velocity = Vector3f(0,0,0);
+	_force = force;
+}
+StaticEntity::~StaticEntity()
+{
 
+}
 
 
 
@@ -39,8 +55,8 @@ Bullet::Bullet()
 *						QUADTREE IMPLEMENTATION
 *************************************/
 //INIT static const attributes
-const int QuadTree::MAX_OBJECTS = 10;
-const int QuadTree::MAX_DEGREES = 5;
+const int QuadTree::MAX_QT_OBJECTS = 10;
+const int QuadTree::MAX_QT_DEGREES = 5;
 
 QuadTree::QuadTree()
 {
@@ -53,38 +69,13 @@ QuadTree::QuadTree(int degree, geo::Rectangle bound)
 	//qtrees are always subdivided by 4
 	_nodes = new QuadTree[4];
 	//allocate an array to hold max physics entities
-	_objs = new PhysicsEntity[MAX_OBJECTS];
+	_objs = new PhysicsEntity[MAX_QT_OBJECTS];
 }
 QuadTree::~QuadTree()
 {
 	delete[] _nodes;
 	delete[] _objs;
 }
-
-
-/*class QuadTree
-{
-public:
-	QuadTree( int, geo::Rectangle);
-private:
-	//maximum objects the quadtree can hold
-	const int MAX_OBJECTS;
-	//indicates the lowest degree in quadtee
-	const int MAX_DEGREES;
-	//degree of current quadtree
-	int _degree;
-	//dynamic array of objs in current quadtree
- PhysicsEntity * _objs;
-	//bounding rect of quadtree area
-	geo::Rectangle _bound;
-	//qtree pointer to dynamic array of qtrees
-	QuadTree *_nodes;
-};*/
-
-
-
-
-
 
 
 
@@ -94,15 +85,16 @@ private:
 *************************************/
 bool PhysicsEngine::_instanceFlag = false;
 PhysicsEngine * PhysicsEngine::_instance = NULL;
-
+const int PhysicsEngine::MAX_LVL_OBJECTS = 16;
 PhysicsEngine::PhysicsEngine()
 {
-	//empty constructor
+	_objs = new PhysicsEntity[MAX_LVL_OBJECTS];
 }
 
 PhysicsEngine::~PhysicsEngine()
 {
 	_instanceFlag = false;
+	delete[] _objs;
 }
 
 PhysicsEngine * PhysicsEngine::getInstance()
@@ -117,6 +109,10 @@ PhysicsEngine * PhysicsEngine::getInstance()
 	{
 		return _instance;
 	}
+}
+
+void PhysicsEngine::addToTree()
+{
 }
 
 /*bool PhysicsEngine::checkSphereSphere( PhysicsEntity, PhysicsEntity )

@@ -5,20 +5,20 @@ namespace level{
 
 
 
+
 /***********************************
-*												LEVEL IMPLEMENTATION
+*    LEVEL IMPLEMENTATION
 *************************************/
 bool LevelContainer::_instanceFlag = false;
 LevelContainer * LevelContainer::_instance = NULL;
-
+Level LevelContainer::_level;
 LevelContainer::LevelContainer()
 {
-	//empty constructor
 }
 
 LevelContainer::~LevelContainer()
 {
-	_instanceFlag = false;
+ _instanceFlag = false;
 }
 
 LevelContainer * LevelContainer::get()
@@ -35,61 +35,67 @@ LevelContainer * LevelContainer::get()
  }
 }
 
-
-void Level::setType( string levelType )
+/***********************************
+*      LEVEL DECORATOR IMPLEMENTATION
+*************************************/
+FlatLevel::FlatLevel(){}
+FlatLevel::FlatLevel(string levelType)
 {
-	_type = levelType;
+ Level * _lvl =  &LevelContainer::get()->_level;
+ _lvl->_area = Vector2f(8,8);
+ _lvl->_maxObjects = 10;
+ _lvl->_numObjects = 1;
+ _lvl->_numTiles = (8*8);
+ _lvl->_type = levelType;
+ _lvl->_tiles = new geo::Rectangle[_lvl->_numTiles];
+ _lvl->_objs = NULL;
 }
+FlatLevel::~FlatLevel(){}
 
-FlatLevel::FlatLevel()
-{
-
-}
 void FlatLevel::draw()
 {
 
 }
-
-TextLevel::TextLevel()
+TextLevel::TextLevel(){}
+TextLevel::~TextLevel(){}
+TextLevel::TextLevel(string levelType)
 {
-
+ Level * _lvl =  &LevelContainer::get()->_level;
 }
 void TextLevel::draw()
 {
 
 }
-
-RandomLevel::RandomLevel()
+RandomLevel::RandomLevel(){}
+RandomLevel::~RandomLevel(){}
+RandomLevel::RandomLevel(string levelType)
 {
-
+ Level * _lvl =  &LevelContainer::get()->_level;
 }
 void RandomLevel::draw()
 {
 
 }
 
-Level * LevelFactory::CreateLevel( string levelType)
+
+/***********************************
+*     HELPER IMPLEMENTATION
+*************************************/
+void CreateLevel( string levelType)
 {
  if(levelType == "Text")
  {
-  return new TextLevel;
+  TextLevel(levelType);
  }
  else if(levelType == "Random")
  {
-  return new RandomLevel;
+  RandomLevel(levelType);
  }
  else /*if(levelType == "Flat")*/
  {
-  return new FlatLevel;
+  FlatLevel(levelType);
  }
 }
-
-
-
-
-
-
-
 
 
 

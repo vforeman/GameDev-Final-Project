@@ -1,11 +1,13 @@
 #ifndef PHYSICSENGINE_H
 #define PHYSICSENGINE_H
-#include "LevelFactory.h"
+//#include "LevelFactory.h"
 #include "Geometry.h"
 #include "Vmath.h"
 #include <string>
 namespace physics{
-
+///TODO
+//	add method to cosntructors of PhysicsEntity
+	// to add it to PhysicsEngine quadtree
 
 /***********************************
 *					PHYSICS ENTITY SPECIFICATION
@@ -37,9 +39,26 @@ public:
 /***********************************
 *					PLAYER SPECIFICATION
 *************************************/
-class Player : PhysicsEntity{
+class Player : PhysicsEntity
+{
 
 };
+
+
+/***********************************
+*					STATIC ENTITY SPECIFICATION
+*************************************/
+class StaticEntity: public PhysicsEntity
+{
+public:
+ StaticEntity();
+ StaticEntity(float, Vector3f, Vector3f);
+ ~StaticEntity();
+private:
+
+};
+
+
 
 /***********************************
 *						QUADTREE SPECIFICATION
@@ -53,9 +72,9 @@ public:
 	void setQuadConsts(int , int );
 private:
 	//maximum objects the quadtree can hold
-	static const int MAX_OBJECTS;
+	static const int MAX_QT_OBJECTS;
 	//indicates the lowest degree in quadtee
-	static const int MAX_DEGREES;
+	static const int MAX_QT_DEGREES;
 	//degree of current quadtree
 	int _degree;
 	//dynamic array of objs in current quadtree
@@ -73,7 +92,14 @@ class PhysicsEngine
 {
 public:
 	static PhysicsEngine * getInstance();
+	static const int MAX_LVL_OBJECTS;
 	~PhysicsEngine();
+	//quadtree for collision
+	QuadTree _qtree;
+	//dynamic array of all objs in game
+	PhysicsEntity * _objs;
+	//add new objs to qtree
+	void addToTree();
 /*	bool checkSphereSphere( PhysicsEntity, PhysicsEntity );
 	bool checkPlaneSphere( PhysicsEntity, level::LevelFactory );
 	void resolvePlayerEnemy( Player , Enemy );

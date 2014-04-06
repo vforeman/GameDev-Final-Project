@@ -1,5 +1,6 @@
 # To execute just call "make" from the bash in the same directory
 # as the makefile
+# To clean call "make clean"
 include makefile.inc
 
 %.o:	%.cpp
@@ -12,10 +13,10 @@ Main: $(OBJECTS)
 PhysicsEngine.o: PhysicsEngine.cpp Vmath.h Geometry.h
 Main.o: Main.cpp WindowController.o PhysicsEngine.o LevelFactory.o GraphicsRenderer.o Geometry.o GameLogic.o
 WindowController.o: WindowController.cpp
-LevelFactory.o: LevelFactory.cpp Vmath.h Geometry.h
+LevelFactory.o: LevelFactory.cpp Vmath.h Geometry.h PhysicsEngine.h
 GraphicsRenderer.o: GraphicsRenderer.cpp Vmath.h
 Geometry.o: Geometry.cpp Vmath.h
-GameLogic.o: GameLogic.cpp  Dummy.h InputController.h WindowController.h Camera.h
+GameLogic.o: GameLogic.cpp  Dummy.h InputController.h WindowController.h Camera.h LevelFactory.h
 Camera.o: Camera.cpp Vmath.h
 Dummy.o: Dummy.cpp
 InputController.o:	InputController.cpp	Vmath.h	Camera.h
@@ -39,6 +40,6 @@ clean:
 splash:
 	$(ECHO) "headers: $(HEADERS)\n\n"\
 	"objects: $(OBJECTS)\n\n"\
-	"objs: $(LIBS)\n\n"\
+	"libs: $(LIBS)\n\n"\
 	"cppfiles: $(CPPFILES)\n\n"\
 	"curdir: $(CURDIR)/something\n\n"\

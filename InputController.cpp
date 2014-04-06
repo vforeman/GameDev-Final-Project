@@ -1,5 +1,5 @@
 #include "InputController.h"
-
+namespace gamein{
 bool InputController::_instanceFlag = false;
 InputController * InputController::_instance = NULL;
 
@@ -44,13 +44,13 @@ bool InputController::HandleInput(Camera& cam,bool running)
 						running = false;
 						break;
 
-					
+
 					case SDLK_p:
 						cam.mouseIn();
 						SDL_ShowCursor(SDL_ENABLE);
 						break;
 
-					
+
 				}
 				break;
 				case SDL_KEYUP:
@@ -60,7 +60,7 @@ bool InputController::HandleInput(Camera& cam,bool running)
 						running = false;
 						break;
 
-					
+
 					case SDLK_p:
 						cam.mouseOut();
 						SDL_ShowCursor(SDL_ENABLE);
@@ -76,3 +76,4 @@ bool InputController::HandleInput(Camera& cam,bool running)
 		}
 	return running;
 };
+}// namespace gamein

@@ -6,6 +6,7 @@ GameLogic * GameLogic::_instance = NULL;
 
 GameLogic::GameLogic()
 {
+	_lvl = level::LevelContainer::get();
 	wController = Window::getInstance();
 	wController->open();
 	cam.setLocation(Vector3<float>(0,0.8,0));
@@ -28,7 +29,7 @@ GameLogic::~GameLogic()
 
 void GameLogic::start()
 {
-	iController = InputController::getInstance();
+	iController = gamein::InputController::getInstance();
 	float angle =0.0;
 	const int FPS = 30;
 	Uint32 start;
@@ -65,7 +66,7 @@ void GameLogic::update()
 
 
 };
-
+//TODO: use Renderer Singleton Here
 void GameLogic::show()
 {
 
@@ -74,8 +75,8 @@ void GameLogic::show()
 	cam.control();
 	cam.update();
 	glTranslatef(10.0,0.0,0.0);
-	obj.drawSphere();
-	obj.drawEnvironment();
+	_obj.drawSphere();
+	_obj.drawEnvironment();
 
 
 };
