@@ -1,6 +1,9 @@
 #ifndef LEVELFACTORY_H
 #define LEVELFACTORY_H
 #include <string>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <stdio.h>
 #include "Vmath.h"
 #include "Geometry.h"
 #include "PhysicsEngine.h"
@@ -16,7 +19,7 @@ typedef struct
 	int _maxObjects;
 	int _numObjects;
 	physics::PhysicsEntity * _objs;
-
+ GLfloat ** _mesh;
 }Level;
 
 
@@ -62,7 +65,7 @@ class LevelContainer{
 public:
 	static LevelContainer * get();
 	static Level _level;
-
+ void drawLevel();
 	~LevelContainer();
 private:
 	static LevelContainer * _instance;
@@ -76,9 +79,9 @@ private:
 //@TODO: the helper class could be a registry of
 // helper functions for any singleton class
 // Factory Method for Level construction
-void CreateLevel( string );
-
-
+void createLevel( string );
+void genTiles();
+void genMesh();
 
 
 }//end of level namespace

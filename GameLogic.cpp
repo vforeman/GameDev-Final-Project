@@ -4,9 +4,12 @@ namespace logic{
 bool GameLogic::_instanceFlag = false;
 GameLogic * GameLogic::_instance = NULL;
 
+
+
 GameLogic::GameLogic()
 {
-	_lvl = level::LevelContainer::get();
+	_lcont = level::LevelContainer::get();
+	_lvl = &_lcont->_level;
 	wController = Window::getInstance();
 	wController->open();
 	cam.setLocation(Vector3<float>(0,0.8,0));
@@ -19,7 +22,9 @@ GameLogic::GameLogic()
 
 
 
+
 };
+
 GameLogic::~GameLogic()
 {
 	_instanceFlag = false;
@@ -29,6 +34,7 @@ GameLogic::~GameLogic()
 
 void GameLogic::start()
 {
+ level::createLevel("Flat");
 	iController = gamein::InputController::getInstance();
 	float angle =0.0;
 	const int FPS = 30;
@@ -77,7 +83,7 @@ void GameLogic::show()
 	glTranslatef(10.0,0.0,0.0);
 	_obj.drawSphere();
 	_obj.drawEnvironment();
-
+ _lcont->drawLevel();
 
 };
 
@@ -94,4 +100,7 @@ GameLogic * GameLogic::getInstance()
   return _instance;
  }
 }
+
+
+
 }// namesapce logic

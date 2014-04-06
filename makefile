@@ -16,7 +16,7 @@ WindowController.o: WindowController.cpp
 LevelFactory.o: LevelFactory.cpp Vmath.h Geometry.h PhysicsEngine.h
 GraphicsRenderer.o: GraphicsRenderer.cpp Vmath.h
 Geometry.o: Geometry.cpp Vmath.h
-GameLogic.o: GameLogic.cpp  Dummy.h InputController.h WindowController.h Camera.h LevelFactory.h
+GameLogic.o: GameLogic.cpp  Dummy.h InputController.h WindowController.h Camera.h LevelFactory.h GraphicsRenderer.h WindowController.h
 Camera.o: Camera.cpp Vmath.h
 Dummy.o: Dummy.cpp
 InputController.o:	InputController.cpp	Vmath.h	Camera.h

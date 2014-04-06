@@ -30,5 +30,4 @@ Renderer * Renderer::getInstance()
 
 
 
-
 }// namespace graphics

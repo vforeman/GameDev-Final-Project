@@ -7,6 +7,7 @@
 #include "LevelFactory.h"
 #include "InputController.h"
 #include "WindowController.h"
+#include "GraphicsRenderer.h"
 #include "Camera.h"
 
 //Dummy.h is a temp class for drawing objects
@@ -19,7 +20,8 @@ class GameLogic
 {
 	private:
 	Camera cam;
- level::LevelContainer * _lvl;
+ level::Level * _lvl;
+ level::LevelContainer * _lcont;
 	gamein::InputController * iController;
 	Window * wController;
 
@@ -38,6 +40,7 @@ class GameLogic
 	void start();
 
 };
+
 
 
 

@@ -9,6 +9,7 @@ Rectangle::Rectangle( Vector4f bound)
 {
  _bound = bound;
 }
+//x,y,z == position in mesh, w = occuppied
 Rectangle::Rectangle( float x, float y, float z , float w )
 {
  _bound = Vector4f(x,y,z,w);
