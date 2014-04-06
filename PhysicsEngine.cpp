@@ -17,7 +17,10 @@ void PhysicsEntity::update()
 /***********************************
 *					BULLET IMPLEMENTATION
 *************************************/
-
+Bullet::Bullet()
+{
+    _type = "";
+}
 /***********************************
 *					PLAYER IMPLEMENTATION
 *************************************/
@@ -116,7 +119,7 @@ PhysicsEngine * PhysicsEngine::getInstance()
 	}
 }
 
-bool PhysicsEngine::checkSphereSphere( PhysicsEntity, PhysicsEntity )
+/*bool PhysicsEngine::checkSphereSphere( PhysicsEntity, PhysicsEntity )
 {
 
 }
@@ -136,7 +139,7 @@ void PhysicsEngine::resolveBulletEnemy( Enemy, Bullet )
 {
 
 }
-
+*/
 
 
 }//namespace physics

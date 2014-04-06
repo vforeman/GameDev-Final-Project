@@ -3,6 +3,7 @@
 #include "LevelFactory.h"
 #include "Geometry.h"
 #include "Vmath.h"
+#include <string>
 namespace physics{
 
 
@@ -20,18 +21,19 @@ public:
 
 };
 
-/***********************************
-*					ENEMY SPECIFICATION
-*************************************/
-class Enemy : PhysicsEntity{
 
-};
+
+
 /***********************************
 *					BULLET SPECIFICATION
 *************************************/
-class Bullet : PhysicsEntity{
-
+class Bullet : public PhysicsEntity
+{
+public:
+ Bullet();
+ std::string _type;
 };
+
 /***********************************
 *					PLAYER SPECIFICATION
 *************************************/
@@ -72,11 +74,11 @@ class PhysicsEngine
 public:
 	static PhysicsEngine * getInstance();
 	~PhysicsEngine();
-	bool checkSphereSphere( PhysicsEntity, PhysicsEntity );
+/*	bool checkSphereSphere( PhysicsEntity, PhysicsEntity );
 	bool checkPlaneSphere( PhysicsEntity, level::LevelFactory );
 	void resolvePlayerEnemy( Player , Enemy );
 	void resolvePlayerBullet(Player , Bullet );
-	void resolveBulletEnemy( Enemy, Bullet );
+	void resolveBulletEnemy( Enemy, Bullet );*/
 
 
 private:
