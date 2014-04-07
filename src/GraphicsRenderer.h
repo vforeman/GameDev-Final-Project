@@ -1,3 +1,6 @@
+/**@Dependencies
+*	Vmath.h
+**/
 #ifndef GRAPHICSRENDERER_H
 #define GRAPHICSRENDERER_H
 #include <GL/gl.h>
@@ -8,7 +11,7 @@ namespace graphics{
 class Renderer
 {
 public:
-	static Renderer * getInstance();
+	static Renderer * get();
 	~Renderer();
 
 private:

@@ -1,6 +1,13 @@
 #include "Dummy.h"
 
+Dummy::Dummy()
+{
 
+}
+Dummy::~Dummy()
+{
+
+}
 void Dummy::drawSphere()
 {
 	float angle1, angle2;

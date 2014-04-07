@@ -1,4 +1,4 @@
-# To execute just call "make" from the bash in the same directory
+	# To execute just call "make" from the bash in the same directory
 # as the makefile
 # To clean call "make clean"
 include makefile.inc
@@ -11,7 +11,8 @@ Main: $(OBJECTS)
 
 # RULES
 PhysicsEngine.o: PhysicsEngine.cpp Vmath.h Geometry.h
-Main.o: Main.cpp WindowController.o PhysicsEngine.o LevelFactory.o GraphicsRenderer.o Geometry.o GameLogic.o
+Main.o: Main.cpp WindowController.o PhysicsEngine.o LevelFactory.o GraphicsRenderer.o GameLogic.o	\
+	WindowController.h PhysicsEngine.h LevelFactory.h GraphicsRenderer.h GameLogic.h
 WindowController.o: WindowController.cpp
 LevelFactory.o: LevelFactory.cpp Vmath.h Geometry.h PhysicsEngine.h
 GraphicsRenderer.o: GraphicsRenderer.cpp Vmath.h

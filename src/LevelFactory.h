@@ -1,3 +1,6 @@
+/**@Dependencies:
+*	Geometry.h	Vmath.h	PhysicsEngine.h
+**/
 #ifndef LEVELFACTORY_H
 #define LEVELFACTORY_H
 #include <string>
@@ -7,23 +10,10 @@
 #include "Vmath.h"
 #include "Geometry.h"
 #include "PhysicsEngine.h"
+#include <array>
+#include <iostream>
 using namespace std;
 namespace level{
-
-typedef struct
-{
-	Vector2f _area;
-	string _type;
-	geo::Rectangle * _tiles;
-	int _numTiles;
-	int _maxObjects;
-	int _numObjects;
-	physics::PhysicsEntity * _objs;
- GLfloat ** _mesh;
-}Level;
-
-
-
 
 // Concrete Level
 class FlatLevel
@@ -32,7 +22,6 @@ private:
 public:
  FlatLevel(string);
  FlatLevel();
- ~FlatLevel();
 void draw();
 };
 
@@ -42,7 +31,6 @@ class TextLevel
 public:
  TextLevel(string);
  TextLevel();
- ~TextLevel();
  void draw();
 };
 
@@ -52,7 +40,6 @@ class RandomLevel
 public:
  RandomLevel(string);
  RandomLevel();
- ~RandomLevel();
  void draw();
 
 };
@@ -61,17 +48,31 @@ public:
 /***********************************
 *						LEVEL CONTAINER SPECIFICATION
 *************************************/
+typedef struct
+{
+	Vector2f * _area;
+	string _type;
+	geo::Rectangle ** _tiles;
+	int _numTiles;
+	int _maxObjects;
+	int _numObjects;
+	physics::PhysicsEntity * _objs;
+ GLfloat * _mesh;
+}DATA;
+
 class LevelContainer{
 public:
 	static LevelContainer * get();
-	static Level _level;
+	static DATA _data;
  void drawLevel();
-	~LevelContainer();
+ ~LevelContainer();
 private:
 	static LevelContainer * _instance;
 	static bool _instanceFlag;
 	LevelContainer();
 };
+
+
 
 /***********************************
 *					HELPER SPECIFICATION
@@ -81,8 +82,8 @@ private:
 // Factory Method for Level construction
 void createLevel( string );
 void genTiles();
-void genMesh();
-
+void genMesh(int , int);
+void printMesh();
 
 }//end of level namespace
 #endif //LEVELFACTORY_H

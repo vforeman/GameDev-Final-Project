@@ -1,3 +1,6 @@
+/**@Dependencies:
+*	Camera.h	Vmath.h
+**/
 #ifndef INPUTCONTROLLER_H
 #define INPUTCONTROLLER_H
 #include <GL/gl.h>
@@ -8,9 +11,9 @@ namespace gamein{
 class InputController
 {
 public:
-	static InputController * getInstance();
+	static InputController * get();
 	~InputController();
-	bool HandleInput(Camera& cam,bool running);
+	bool HandleInput(Camera * ,bool);
 
 private:
 	static InputController * _instance;

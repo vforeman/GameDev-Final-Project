@@ -1,3 +1,6 @@
+/**@Dependencies:
+* PRIMITIVE
+**/
 #ifndef WINDOWCONTROLLER_H
 #define WINDOWCONTROLLER_H
 #include <SDL/SDL.h>
@@ -9,19 +12,17 @@ namespace window{
  {
  public:
  	//PUBLIC methods
-  static Window * getInstance();
+  static Window * get();
+  static SDL_Surface * _screen;
   ~Window();
   void open( void );
   void close( void );
-  void resize( int, int );
-  void resize( char * );
+  /*void resize( int, int );
+  void resize( char * );*/
 
  private:
-  // PRIVATE attributes
   static Window * _instance;
   static bool _instanceFlag;
-
-  // PRIVATE methods
   Window();
  };
 

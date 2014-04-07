@@ -1,27 +1,20 @@
 #include "WindowController.h"
-
 namespace window{
 
-// INIT static attributes
 bool Window::_instanceFlag = false;
 Window * Window::_instance = NULL;
+SDL_Surface * Window::_screen = NULL;
 
-//private constructor per Signleton-Pattern
-Window::Window()
-{
- //empty constructor
-}
+Window::Window(){}
 
-///Destructor Method
 Window::~Window()
 {
- _instanceFlag = false; //no current instance
+ _instanceFlag = false;
 }
 
-//Get CURRENT or ONLY instance
-Window * Window::getInstance()
+Window * Window::get()
 {
- if(!_instanceFlag)
+ if(_instance == NULL)
  {
   _instance = new Window();
   _instanceFlag = true;
@@ -35,28 +28,14 @@ Window * Window::getInstance()
 
 void Window::open()
 {
-
-	// open function implemented
-	SDL_Init(SDL_INIT_EVERYTHING);//initializing the window
-	SDL_Surface* screen;
-	// x = 640
-	// y = 480
-	screen = SDL_SetVideoMode(1280,960,32,SDL_SWSURFACE|SDL_OPENGL);
+	SDL_Init(SDL_INIT_EVERYTHING);
+	_screen = SDL_SetVideoMode(1280,960,32,SDL_SWSURFACE|SDL_OPENGL);
 }
 
-void Window::close()
-{
+void Window::close(){}
+/*
+void Window::resize( int width, int height){}
 
-}
-
-void Window::resize( int width, int height)
-{
-
-}
-
-void Window::resize( char * ch)
-{
-
-}
+void Window::resize( char * ch){}*/
 
 }//namespace window

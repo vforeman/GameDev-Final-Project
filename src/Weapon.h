@@ -1,3 +1,6 @@
+/**@Dependencies:
+*	Vmath.h	PhysicsEngine.h
+**/
 #ifndef WEAPON_H
 #define WEAPON_H
 
@@ -12,7 +15,7 @@ class Weapon
 {
 public:
  Weapon();
- void fire(Vector3f);
+ void fire(/*Vector3f*/);
  void iterate(); //Container iterate update on all bullets fired
  void reload();
 private:

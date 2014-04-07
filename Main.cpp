@@ -14,8 +14,8 @@ using namespace std;
 using namespace logic;
 int main()
 {
- Window * wCtrl = Window::getInstance();
-	GameLogic* gameObject = GameLogic::getInstance();
+/* Window * wCtrl = Window::get();*/
+	GameLogic* gameObject = GameLogic::get();
 	gameObject->start();
 
 

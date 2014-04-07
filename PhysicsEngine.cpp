@@ -60,15 +60,13 @@ const int QuadTree::MAX_QT_DEGREES = 5;
 
 QuadTree::QuadTree()
 {
-	//empty constructor
+	QuadTree(1,geo::Rectangle(0,-1,0,0));
 }
 QuadTree::QuadTree(int degree, geo::Rectangle bound)
 {
 	_degree = degree;
 	_bound = bound;
-	//qtrees are always subdivided by 4
 	_nodes = new QuadTree[4];
-	//allocate an array to hold max physics entities
 	_objs = new PhysicsEntity[MAX_QT_OBJECTS];
 }
 QuadTree::~QuadTree()
@@ -85,21 +83,18 @@ QuadTree::~QuadTree()
 *************************************/
 bool PhysicsEngine::_instanceFlag = false;
 PhysicsEngine * PhysicsEngine::_instance = NULL;
-const int PhysicsEngine::MAX_LVL_OBJECTS = 16;
-PhysicsEngine::PhysicsEngine()
-{
-	_objs = new PhysicsEntity[MAX_LVL_OBJECTS];
-}
+extern DATA PhysicsEngine::_data;
+
+PhysicsEngine::PhysicsEngine(){}
 
 PhysicsEngine::~PhysicsEngine()
 {
 	_instanceFlag = false;
-	delete[] _objs;
 }
 
-PhysicsEngine * PhysicsEngine::getInstance()
+PhysicsEngine * PhysicsEngine::get()
 {
-	if(!_instanceFlag)
+	if(_instance == NULL)
 	{
 		_instance = new PhysicsEngine();
 		_instanceFlag = true;
@@ -111,31 +106,8 @@ PhysicsEngine * PhysicsEngine::getInstance()
 	}
 }
 
-void PhysicsEngine::addToTree()
-{
-}
+void PhysicsEngine::addToTree(){}
 
-/*bool PhysicsEngine::checkSphereSphere( PhysicsEntity, PhysicsEntity )
-{
-
-}
-bool PhysicsEngine::checkPlaneSphere( PhysicsEntity, level::LevelFactory )
-{
-
-}
-void PhysicsEngine::resolvePlayerEnemy( Player , Enemy )
-{
-
-}
-void PhysicsEngine::resolvePlayerBullet(Player , Bullet )
-{
-
-}
-void PhysicsEngine::resolveBulletEnemy( Enemy, Bullet )
-{
-
-}
-*/
 
 
 }//namespace physics

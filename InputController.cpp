@@ -3,19 +3,16 @@ namespace gamein{
 bool InputController::_instanceFlag = false;
 InputController * InputController::_instance = NULL;
 
-InputController::InputController()
-{
-	//emptry constructor
-};
+InputController::InputController(){}
 
 InputController::~InputController()
 {
 	_instanceFlag = false;
-};
+}
 
-InputController * InputController::getInstance()
+InputController * InputController::get()
 {
- if(!_instanceFlag)
+ if(NULL == _instance )
  {
   _instance = new InputController();
   _instanceFlag = true;
@@ -25,9 +22,9 @@ InputController * InputController::getInstance()
  {
   return _instance;
  }
-};
+}
 
-bool InputController::HandleInput(Camera& cam,bool running)
+bool InputController::HandleInput(Camera * cam,bool running)
 {
 	SDL_Event event;
 		while(SDL_PollEvent(&event))
@@ -37,43 +34,44 @@ bool InputController::HandleInput(Camera& cam,bool running)
 				case SDL_QUIT:
 					running = false;
 					break;
+
 				case SDL_KEYDOWN:
-				switch(event.key.keysym.sym)
-				{
-					case SDLK_ESCAPE:
-						running = false;
-						break;
+					switch(event.key.keysym.sym)
+					{
+						case SDLK_ESCAPE:
+							running = false;
+							break;
 
+						case SDLK_p:
+							cam->mouseIn();
+							SDL_ShowCursor(SDL_ENABLE);
+							break;
+						default: break;
+					}
+					break;
 
-					case SDLK_p:
-						cam.mouseIn();
-						SDL_ShowCursor(SDL_ENABLE);
-						break;
-
-
-				}
-				break;
 				case SDL_KEYUP:
-				switch(event.key.keysym.sym)
-				{
-					case SDLK_ESCAPE:
-						running = false;
-						break;
+					switch(event.key.keysym.sym)
+					{
+						case SDLK_ESCAPE:
+							running = false;
+							break;
 
+						case SDLK_p:
+							cam-> mouseOut();
+							SDL_ShowCursor(SDL_ENABLE);
+							break;
+						default: break;
+					}
+					break;
 
-					case SDLK_p:
-						cam.mouseOut();
-						SDL_ShowCursor(SDL_ENABLE);
-						break;
-
-				}
-				break;
 				case SDL_MOUSEBUTTONDOWN:
-					cam.mouseIn();
+					cam->mouseIn();
 					SDL_ShowCursor(SDL_DISABLE);
 					break;
+				default: break;
 			}
 		}
 	return running;
-};
+}
 }// namespace gamein

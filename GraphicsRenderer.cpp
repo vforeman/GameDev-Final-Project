@@ -4,19 +4,16 @@ namespace graphics{
 bool Renderer::_instanceFlag = false;
 Renderer * Renderer::_instance = NULL;
 
-Renderer::Renderer()
-{
-	//emptry constructor
-}
+Renderer::Renderer(){}
 
 Renderer::~Renderer()
 {
 	_instanceFlag = false;
 }
 
-Renderer * Renderer::getInstance()
+Renderer * Renderer::get()
 {
- if(!_instanceFlag)
+ if(_instance == NULL)
  {
   _instance = new Renderer();
   _instanceFlag = true;

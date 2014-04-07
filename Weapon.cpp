@@ -12,10 +12,8 @@ Weapon::Weapon()
     _clip = 0;
 }
 
-void Weapon::fire(Vector3f target)
+void Weapon::fire(/*Vector3f target*/)
 {
-
-
 }
 
 void Weapon::iterate()

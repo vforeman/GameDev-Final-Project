@@ -1,3 +1,6 @@
+/**@Dependencies:
+*	Vmath.h
+**/
 #ifndef Camera_H
 #define Camera_H
 #include <SDL/SDL.h>
@@ -10,7 +13,7 @@
 
 class Camera
 {
-	Vector3<float> loc;
+	Vector3f loc;
 	float camYaw;
 	float camPitch;
 	float speed;
@@ -21,13 +24,13 @@ class Camera
 	void moveCameraUp(const float& dir);
 	public:
 	Camera();
-	Camera(const Vector3<float>& loc);
-	Camera(const Vector3<float>& loc,const float& yaw,const float& pitch);
-	Camera(const Vector3<float>& loc,const float& yaw,const float& pitch,const float& sp,const float& ms);
+	Camera(const Vector3f & loc);
+	Camera(const Vector3f & loc,const float& yaw,const float& pitch);
+	Camera(const Vector3f & loc,const float& yaw,const float& pitch,const float& sp,const float& ms);
 	void control();
 	void update();
-	Vector3<float> getVector();
-	Vector3<float> getLocation();
+	Vector3f getVector();
+	Vector3f getLocation();
 	float getYaw();
 	float getPitch();
 	void setLocation(const Vector3<float>& newcoord);

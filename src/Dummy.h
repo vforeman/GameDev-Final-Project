@@ -1,3 +1,6 @@
+/**@Dependencies:
+*	PRIMITIVE
+**/
 #ifndef DUMMY_H
 #define DUMMY_H
 #include <GL/gl.h>
@@ -12,6 +15,7 @@ class Dummy
 	public:
 	void drawSphere();
 	void drawEnvironment();
-
+ Dummy();
+ ~Dummy();
 };
 #endif

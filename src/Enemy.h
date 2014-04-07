@@ -1,3 +1,6 @@
+/**@Dependencies:
+*	Util.h	Vmath.h	PhysicsEngine.h
+**/
 #ifndef ENEMY_H
 #define ENEMY_H
 

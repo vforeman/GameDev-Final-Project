@@ -1,3 +1,12 @@
+/**@Dependencies:
+*	Geometry.h	Vmath.h
+**/
+///TODO
+//	add method to cosntructors of PhysicsEntity
+// to add it to PhysicsEngine quadtree
+
+
+
 #ifndef PHYSICSENGINE_H
 #define PHYSICSENGINE_H
 //#include "LevelFactory.h"
@@ -5,9 +14,7 @@
 #include "Vmath.h"
 #include <string>
 namespace physics{
-///TODO
-//	add method to cosntructors of PhysicsEntity
-	// to add it to PhysicsEngine quadtree
+
 
 /***********************************
 *					PHYSICS ENTITY SPECIFICATION
@@ -69,61 +76,38 @@ public:
 	QuadTree();
 	QuadTree( int, geo::Rectangle);
 	~QuadTree();
+	static const int MAX_QT_OBJECTS;
+	static const int MAX_QT_DEGREES;
+	int _degree;
+ PhysicsEntity * _objs;
+	geo::Rectangle _bound;
+	QuadTree *_nodes;
 	void setQuadConsts(int , int );
 private:
-	//maximum objects the quadtree can hold
-	static const int MAX_QT_OBJECTS;
-	//indicates the lowest degree in quadtee
-	static const int MAX_QT_DEGREES;
-	//degree of current quadtree
-	int _degree;
-	//dynamic array of objs in current quadtree
- PhysicsEntity * _objs;
-	//bounding rect of quadtree area
-	geo::Rectangle _bound;
-	//qtree pointer to dynamic array of qtrees
-	QuadTree *_nodes;
+
 };
 
 /***********************************
 *					PHYSICS ENGINE SPECIFICATION
 *************************************/
+typedef struct
+{
+	QuadTree * _qtree;
+	PhysicsEntity * _objs;
+}DATA;
+
 class PhysicsEngine
 {
 public:
-	static PhysicsEngine * getInstance();
-	static const int MAX_LVL_OBJECTS;
+	static PhysicsEngine * get();
 	~PhysicsEngine();
-	//quadtree for collision
-	QuadTree _qtree;
-	//dynamic array of all objs in game
-	PhysicsEntity * _objs;
-	//add new objs to qtree
+	static DATA _data;
 	void addToTree();
-/*	bool checkSphereSphere( PhysicsEntity, PhysicsEntity );
-	bool checkPlaneSphere( PhysicsEntity, level::LevelFactory );
-	void resolvePlayerEnemy( Player , Enemy );
-	void resolvePlayerBullet(Player , Bullet );
-	void resolveBulletEnemy( Enemy, Bullet );*/
-
-
 private:
 	static PhysicsEngine * _instance;
 	static bool _instanceFlag;
 	PhysicsEngine();
 };
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }//namespace physics

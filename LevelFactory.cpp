@@ -1,20 +1,14 @@
 #include "LevelFactory.h"
 namespace level{
 
-
-
-
-
-
 /***********************************
 *    LEVEL IMPLEMENTATION
 *************************************/
-bool LevelContainer::_instanceFlag = false;
 LevelContainer * LevelContainer::_instance = NULL;
-Level LevelContainer::_level;
-LevelContainer::LevelContainer()
-{
-}
+bool LevelContainer::_instanceFlag = false;
+extern DATA LevelContainer::_data;
+
+LevelContainer::LevelContainer(){}
 
 LevelContainer::~LevelContainer()
 {
@@ -23,7 +17,7 @@ LevelContainer::~LevelContainer()
 
 LevelContainer * LevelContainer::get()
 {
- if(!_instanceFlag)
+ if(_instance == NULL )
  {
   _instance = new LevelContainer();
   _instanceFlag = true;
@@ -34,14 +28,17 @@ LevelContainer * LevelContainer::get()
   return _instance;
  }
 }
+
 //TODO: this should really be done by the renderer
 void LevelContainer::drawLevel()
 {
  printf("%s\n","drawLevel()" );
  glPushMatrix();
+
   glColor3f(0,1,1);
+
   glEnableClientState(GL_VERTEX_ARRAY);
-  glVertexPointer(3, GL_FLOAT, 0, _level._mesh);
+  glVertexPointer(3, GL_FLOAT, 0, LevelContainer::_data._mesh);
   glDrawArrays(GL_QUADS, 0, 4);
   glDisableClientState(GL_VERTEX_ARRAY);
  glPopMatrix();
@@ -55,74 +52,49 @@ void LevelContainer::drawLevel()
 FlatLevel::FlatLevel(){}
 FlatLevel::FlatLevel(string levelType)
 {
- Level * lvl =  &LevelContainer::get()->_level;
- lvl->_area = Vector2f( 8 , 8 );
- lvl->_maxObjects = 10;
- lvl->_numObjects = 1;
- lvl->_numTiles = ( 8 * 8 );
- lvl->_type = levelType;
- lvl->_tiles = new geo::Rectangle[lvl->_numTiles];
- lvl->_objs = NULL;
-
+ LevelContainer::_data._area->x = 8.0;
+ LevelContainer::_data._area->y = 8.0;
+ LevelContainer::_data._maxObjects = 10;
+ LevelContainer::_data._numObjects = 1;
+ LevelContainer::_data._numTiles = ( 8 * 8 );
+ LevelContainer::_data._type = levelType;
+ LevelContainer::_data._objs = new physics::PhysicsEntity[LevelContainer::_data._numObjects];
 }
-FlatLevel::~FlatLevel(){}
+void FlatLevel::draw(){}
 
-void FlatLevel::draw()
-{
-
-}
 TextLevel::TextLevel(){}
-TextLevel::~TextLevel(){}
 TextLevel::TextLevel(string levelType)
 {
- Level * _lvl =  &LevelContainer::get()->_level;
+ LevelContainer::_data._type = levelType;
 }
-void TextLevel::draw()
-{
+void TextLevel::draw(){}
 
-}
 RandomLevel::RandomLevel(){}
-RandomLevel::~RandomLevel(){}
 RandomLevel::RandomLevel(string levelType)
 {
- Level * _lvl =  &LevelContainer::get()->_level;
+ LevelContainer::_data._type = levelType;
 }
-
-void RandomLevel::draw()
-{
-
-}
+void RandomLevel::draw(){}
 
 
 /***********************************
 *     HELPER IMPLEMENTATION
 *************************************/
-void genMesh()
+void genMesh(int width, int height)
 {
- Level * lvl = &LevelContainer::get()->_level;
- GLfloat ** mesh = lvl->_mesh;
- int numObjs = lvl->_numObjects;
- Vector2f area = lvl->_area;
- mesh = new GLfloat * [4];
- for(int n = 0; n < 4; ++n)
- {
-  mesh[n] = new GLfloat[3];
- }
+
+
+
 
 
 }
+
 void genTiles()
 {
- Level * lvl = &LevelContainer::get()->_level;
- geo::Rectangle * tiles = lvl->_tiles;
- Vector2f area = lvl->_area;
- int numTiles = lvl->_numTiles;
- for(int n = 0; n < area.x; ++n)
+ LevelContainer::_data._tiles = new geo::Rectangle * [8];
+ for(int m = 0; m < 8; ++m)
  {
-  for(int m = 0; m < area.y; ++m)
-  {
-   tiles[n+m]=geo::Rectangle(n,-1,m,0);
-  }
+  LevelContainer::_data._tiles[m] = new geo::Rectangle[8];
  }
 }
 
@@ -141,10 +113,15 @@ void createLevel( string levelType)
   FlatLevel(levelType);
  }
  genTiles();
- genMesh();
+ genMesh(8,8);
 }
 
-
+void printMesh()
+{
+ for(int n = 0; n < 12; ++n){
+  cout<<LevelContainer::_data._mesh[n]<<endl;
+ }
+}
 
 
 }//namespace level
