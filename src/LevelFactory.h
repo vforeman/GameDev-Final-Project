@@ -7,10 +7,10 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdio.h>
+#include "BSP.h"
 #include "Vmath.h"
 #include "Geometry.h"
 #include "PhysicsEngine.h"
-#include <array>
 #include <iostream>
 using namespace std;
 namespace level{
