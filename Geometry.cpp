@@ -24,10 +24,8 @@ Vector4f * Rectangle::getBound()
 	return &_bound;
 }
 
-BBox::BBox(int width, int length)
+BBox::BBox(int width, int length):_width(width),_length(length)
 {
-	_width=width;
-	_length=length;
 }
 
 BBox::~BBox()
