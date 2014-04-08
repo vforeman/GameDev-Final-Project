@@ -1,31 +1,47 @@
-# To execute just call "make" from the bash in the same directory
+	# To execute just call "make" from the bash in the same directory
 # as the makefile
+# To clean call "make clean"
+include makefile.inc
 
-# SYNTAX:
-# TARGET: DEPENDENCIES
-# [TAB]: SYSTEM COMMAND
+%.o:	%.cpp
+	$(CXX) $(CXXFLAGS) $(LIBS) -c $< -o	$(addprefix build/,$(@F))
+all: Main
+Main: $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(LIBS) $(addprefix build/,$(OBJECTS)) -o Main
 
-# This is the final executable. Last file to be compiled.
-all:	main
+# RULES
+PhysicsEngine.o: PhysicsEngine.cpp Vmath.h Geometry.h
+Main.o: Main.cpp WindowController.o PhysicsEngine.o Enemy.o Weapon.o LevelFactory.o GraphicsRenderer.o GameLogic.o BSP.o InputController.h WindowController.h Camera.h LevelFactory.h GraphicsRenderer.h WindowController.h
+WindowController.o: WindowController.cpp PhysicsEngine.h InputController.h LevelFactory.h Util.h GraphicsRenderer.h
+LevelFactory.o: LevelFactory.cpp Vmath.h Geometry.h PhysicsEngine.h BSP.h
+GraphicsRenderer.o: GraphicsRenderer.cpp Vmath.h
+Geometry.o: Geometry.cpp Vmath.h
+GameLogic.o: GameLogic.cpp  Dummy.h InputController.h WindowController.h Camera.h LevelFactory.h GraphicsRenderer.h
+Camera.o: Camera.cpp Vmath.h
+Dummy.o: Dummy.cpp
+InputController.o:	InputController.cpp	Vmath.h	Camera.h
+Weapon.o: Weapon.cpp	Vmath.h	PhysicsEngine.h
+Enemy.o: Enemy.cpp Vmath.h PhysicsEngine.h Util.h
+BSP.o: BSP.cpp Util.h
+# trace.o:	trace.cpp
+# Syntax for adding new Rules:
+# [TARGET] : [DEPENDENCIES]
+# <filename>.o: <filename>.cpp <includefile1>.h <includefile2>.h
 
-main:	Main.o GraphicsManager.o PhysicsManager.o WindowManager.o
-	g++ Main.o GraphicsManager.o PhysicsManager.o -o main
 
-Main.o:	Main.cpp
-	g++ -c Main.cpp
 
-GraphicsManager.o:	GraphicsManager.cpp
-	g++ -c GraphicsManager.cpp
 
-PhysicsManager.o:	PhysicsManager.cpp
-	g++ -c PhysicsManager.cpp
-
-WindowManager.o:	WindowManager.cpp
-	g++ -c WindowManager.cpp
 
 # Call "make clean" to remove built objects from directory
 # .o, objectfiles are included in .gitignore, incase you forget to clean
 # before you add files to track
-clean:	
-	rm -rf *.o main
+clean:
+	rm -rf *.o *.gch build/* Main
 
+# for testing the value of  Variables
+splash:
+	$(ECHO) "headers: $(HEADERS)\n\n"\
+	"objects: $(OBJECTS)\n\n"\
+	"libs: $(LIBS)\n\n"\
+	"cppfiles: $(CPPFILES)\n\n"\
+	"curdir: $(CURDIR)/something\n\n"\

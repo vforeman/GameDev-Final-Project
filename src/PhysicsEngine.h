@@ -1,0 +1,114 @@
+/**@Dependencies:
+*	Geometry.h	Vmath.h
+**/
+///TODO
+//	add method to cosntructors of PhysicsEntity
+// to add it to PhysicsEngine quadtree
+
+
+
+#ifndef PHYSICSENGINE_H
+#define PHYSICSENGINE_H
+//#include "LevelFactory.h"
+#include "Geometry.h"
+#include "Vmath.h"
+#include <string>
+namespace physics{
+
+
+/***********************************
+*					PHYSICS ENTITY SPECIFICATION
+*************************************/
+class PhysicsEntity
+{
+public:
+ float _radius;
+ Vector3f _position;
+ Vector3f _velocity;
+ Vector3f _force;
+ void update();
+
+};
+
+
+
+
+/***********************************
+*					BULLET SPECIFICATION
+*************************************/
+class Bullet : public PhysicsEntity
+{
+public:
+ Bullet();
+ std::string _type;
+};
+
+/***********************************
+*					PLAYER SPECIFICATION
+*************************************/
+class Player : PhysicsEntity
+{
+
+};
+
+
+/***********************************
+*					STATIC ENTITY SPECIFICATION
+*************************************/
+class StaticEntity: public PhysicsEntity
+{
+public:
+ StaticEntity();
+ StaticEntity(float, Vector3f, Vector3f);
+ ~StaticEntity();
+private:
+
+};
+
+
+
+/***********************************
+*						QUADTREE SPECIFICATION
+*************************************/
+class QuadTree
+{
+public:
+	QuadTree();
+	QuadTree( int, geo::Rectangle);
+	~QuadTree();
+	static const int MAX_QT_OBJECTS;
+	static const int MAX_QT_DEGREES;
+	int _degree;
+ PhysicsEntity * _objs;
+	geo::Rectangle _bound;
+	QuadTree *_nodes;
+	void setQuadConsts(int , int );
+private:
+
+};
+
+/***********************************
+*					PHYSICS ENGINE SPECIFICATION
+*************************************/
+typedef struct
+{
+	QuadTree * _qtree;
+	PhysicsEntity * _objs;
+}DATA;
+
+class PhysicsEngine
+{
+public:
+	static PhysicsEngine * get();
+	~PhysicsEngine();
+	static DATA _data;
+	void addToTree();
+private:
+	static PhysicsEngine * _instance;
+	static bool _instanceFlag;
+	PhysicsEngine();
+};
+
+
+}//namespace physics
+#endif

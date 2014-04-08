@@ -3,3 +3,4 @@
 
 #ignore any object files from build
 *.o
+Main
