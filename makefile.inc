@@ -1,4 +1,4 @@
-CXXFLAGS = -Wall -Werror -g -std=gnu++11 $(OPTFLAGS)
+CXXFLAGS =  -Werror -g -std=c++11 $(OPTFLAGS)
 DEBUG = -Wall -Wextra
 CXX = g++
 VPATH = $(CURDIR)/src/

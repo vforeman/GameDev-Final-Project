@@ -1,4 +1,4 @@
-#include "GameLogic.h"
+	#include "GameLogic.h"
 
 namespace logic
 {
@@ -69,9 +69,13 @@ void GameLogic::show()
 	GameLogic::_data._cam->update();
 	glTranslatef(10.0,0.0,0.0);
 	GameLogic::_data._obj->drawSphere();
-	GameLogic::_data._obj->drawEnvironment();
-	//level::LevelContainer::get()->drawLevel();
-};
+
+	/*
+	GameLogic::_data._obj->drawEnvironment();*/
+/*	level::PartitionTree::get();
+*//* level::LevelContainer::get()->drawLevel();
+*/
+}
 
 GameLogic * GameLogic::get()
 {

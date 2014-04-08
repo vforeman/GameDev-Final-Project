@@ -17,7 +17,7 @@ using namespace logic;
 
 int main()
 {
- cout<<util::xorshift()%2<<endl;
+
 /* Window * wCtrl = Window::get();*/
 	GameLogic* gameObject = GameLogic::get();
 	gameObject->start();

@@ -11,7 +11,7 @@ using namespace std;
 namespace util{
 
 
-
+/**************************************************************/
 inline uint32_t xorshift()
 {
 
@@ -27,13 +27,14 @@ inline uint32_t xorshift()
  _z = _w;
  return _w = _w & (((_w >> 19) ^ _t) ^ (_t>>8));
 }
+/**************************************************************/
 
 inline bool coinToss()
 {
 	srand(time(NULL));
 	return rand()%2;
 }
-
+/**************************************************************/
 inline int randomRange(int a, int z)
 {
 	int high = ((a < z )? z : a);

@@ -8,13 +8,16 @@ namespace geo{
 class Rectangle
 {
 private:
-	Vector4f _bound;
+	int _x;
+	int _y;
+	int _w;
+	int _h;
 public:
 	Rectangle();
  Rectangle( Vector4f );
  Rectangle( float, float, float, float);
+ Rectangle(int,int,int,int);
  ~Rectangle();
- Vector4f * getBound();
 };
 
 class BBox
