@@ -8,12 +8,16 @@
 #include <GL/glu.h>
 #include <stdio.h>
 #include "BSP.h"
+// #include "Tiles.h"
 #include "Vmath.h"
-#include "Geometry.h"
+/*#include "Geometry.h"*/
 #include "PhysicsEngine.h"
 #include <iostream>
+#include <vector>
 using namespace std;
 namespace level{
+
+/**************************************************************/
 
 // Concrete Level
 class FlatLevel
@@ -41,23 +45,25 @@ public:
  RandomLevel(string);
  RandomLevel();
  void draw();
-
 };
 
 
 /***********************************
 *						LEVEL CONTAINER SPECIFICATION
 *************************************/
+
 typedef struct
 {
-	Vector2f * _area;
+	vector<float>roomlist;
+ PartitionTree * _ptree;
+ std::vector<Leaf*> _room;
+ GLfloat * _mesh;
 	string _type;
-	geo::Rectangle ** _tiles;
-	int _numTiles;
+ int _numTiles;
 	int _maxObjects;
 	int _numObjects;
 	physics::PhysicsEntity * _objs;
- GLfloat * _mesh;
+
 }DATA;
 
 class LevelContainer{
@@ -81,8 +87,8 @@ private:
 // helper functions for any singleton class
 // Factory Method for Level construction
 void createLevel( string );
-void genTiles();
-void genMesh(int , int);
+/*void genTiles();
+*/void genMesh(int , int);
 void printMesh();
 
 }//end of level namespace

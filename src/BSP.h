@@ -31,6 +31,7 @@ class PartitionTree
 public:
 	PartitionTree();
 	void build();
+	void drawLevel();
 	const int MAPWIDTH = 50;
 	const int MAPHEIGHT = 50;
  std::vector<Leaf*> _leaves;

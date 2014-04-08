@@ -52,8 +52,7 @@ void LevelContainer::drawLevel()
 FlatLevel::FlatLevel(){}
 FlatLevel::FlatLevel(string levelType)
 {
- LevelContainer::_data._area->x = 8.0;
- LevelContainer::_data._area->y = 8.0;
+ LevelContainer::_data._ptree = new PartitionTree();
  LevelContainer::_data._maxObjects = 10;
  LevelContainer::_data._numObjects = 1;
  LevelContainer::_data._numTiles = ( 8 * 8 );
@@ -89,14 +88,14 @@ void genMesh(int width, int height)
 
 }
 
-void genTiles()
-{
- LevelContainer::_data._tiles = new geo::Rectangle * [8];
- for(int m = 0; m < 8; ++m)
- {
-  LevelContainer::_data._tiles[m] = new geo::Rectangle[8];
- }
-}
+// void genTiles()
+// {
+//  LevelContainer::_data._tiles = new geo::Rectangle * [8];
+//  for(int m = 0; m < 8; ++m)
+//  {
+//   LevelContainer::_data._tiles[m] = new geo::Rectangle[8];
+//  }
+// }
 
 void createLevel( string levelType)
 {
@@ -112,7 +111,7 @@ void createLevel( string levelType)
  {
   FlatLevel(levelType);
  }
- genTiles();
+
  genMesh(8,8);
 }
 

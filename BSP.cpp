@@ -68,6 +68,12 @@ void PartitionTree::build()
 }
 
 
+void PartitionTree::drawLevel()
+{
+	std::cout<<"PartitionTree::drawLevel()\n";
+
+}
+
 
 
 

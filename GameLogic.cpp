@@ -70,7 +70,7 @@ void GameLogic::show()
 	glTranslatef(10.0,0.0,0.0);
 	GameLogic::_data._obj->drawSphere();
 	GameLogic::_data._obj->drawEnvironment();
-	//level::LevelContainer::get()->drawLevel();
+	level::LevelContainer::_data._ptree->drawLevel();
 };
 
 GameLogic * GameLogic::get()
