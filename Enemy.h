@@ -10,6 +10,7 @@ class Enemy : public PhysicsEntity
 {
     public:
         Enemy();
+        bool _alive;
         int _health;
         void attack();
         void die();

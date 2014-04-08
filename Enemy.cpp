@@ -1,5 +1,11 @@
 #include "Enemy.h"
 
+Enemy::Enemy() : 
+    _alive(true), _health(100)
+{
+
+}
+
 void Enemy::attack()
 {
 
