@@ -1,8 +1,10 @@
-/**@Dependencies:
-*	Vmath.h
-**/#ifndef GEOMETRY_H
+#ifndef GEOMETRY_H
 #define GEOMETRY_H
 #include "Vmath.h"
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <vector>
+
 namespace geo{
 
 class Rectangle
@@ -18,6 +20,24 @@ public:
  Rectangle( float, float, float, float);
  Rectangle(int,int,int,int);
  ~Rectangle();
+};
+
+class Sphere
+{
+public:
+	float _x;
+	float _y;
+	float _z;
+	float _radius;
+	float _resol;
+	std::vector<GLfloat> _verts;
+	std::vector<GLfloat> _normals;
+
+	Sphere();
+	Sphere(float,float);
+	void draw();
+	void initialize();
+private:
 };
 
 class BBox

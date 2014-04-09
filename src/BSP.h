@@ -46,8 +46,8 @@ public:
 	const int MAPHEIGHT = 50;
 
 
-	vector<float> *roomlist;
- vector<Leaf> _leaves;
+	vector<float> _roomlist;
+ vector<Leaf*>  _leaves;
 
 
 
@@ -56,6 +56,7 @@ public:
 
 };
 
+/**************************************************************/
 
 
 

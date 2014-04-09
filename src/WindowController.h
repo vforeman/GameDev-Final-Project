@@ -1,6 +1,3 @@
-/**@Dependencies:
-* PRIMITIVE
-**/
 #ifndef WINDOWCONTROLLER_H
 #define WINDOWCONTROLLER_H
 #include <SDL/SDL.h>

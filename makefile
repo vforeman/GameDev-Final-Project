@@ -11,7 +11,8 @@ Main: $(OBJECTS)
 
 # RULES
 
-Main.o: Main.cpp WindowController.o PhysicsEngine.o Enemy.o Weapon.o LevelFactory.o GraphicsRenderer.o GameLogic.o BSP.o Tiles.o InputController.h WindowController.h Camera.h LevelFactory.h GraphicsRenderer.h WindowController.h
+
+Main.o: Main.cpp WindowController.o PhysicsEngine.o Enemy.o Weapon.o LevelFactory.o GraphicsRenderer.o GameLogic.o BSP.o Tiles.o Geometry.o InputController.h WindowController.h Camera.h LevelFactory.h GraphicsRenderer.h WindowController.h
 WindowController.o: WindowController.cpp PhysicsEngine.h InputController.h LevelFactory.h Util.h GraphicsRenderer.h
 PhysicsEngine.o: PhysicsEngine.cpp Vmath.h Geometry.h
 LevelFactory.o: LevelFactory.cpp Vmath.h PhysicsEngine.h Tiles.h
@@ -23,14 +24,8 @@ Dummy.o: Dummy.cpp
 InputController.o:	InputController.cpp	Vmath.h	Camera.h
 Weapon.o: Weapon.cpp	Vmath.h	PhysicsEngine.h
 Enemy.o: Enemy.cpp Vmath.h PhysicsEngine.h Util.h
-# BSP.o: BSP.cpp Util.h Geometry.h
+BSP.o: BSP.cpp Util.h Geometry.h
 Tiles.o: Tiles.cpp
-# trace.o:	trace.cpp
-# Syntax for adding new Rules:
-# [TARGET] : [DEPENDENCIES]
-# <filename>.o: <filename>.cpp <includefile1>.h <includefile2>.h
-
-
 
 
 

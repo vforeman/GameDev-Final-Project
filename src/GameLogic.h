@@ -1,7 +1,3 @@
-/**@Dependencies:
-	Dummy.h	LevelFactory.h	WindowController.h	GraphicsRenderer.h	Camera.h	\
-	PhysicsEngine.h InputController.h
-**/
 #ifndef GAMELOGIC_H
 #define GAMELOGIC_H
 
@@ -46,13 +42,6 @@ public:
 };
 
 
-
-
-
-
-
-
-
-
 }//namespace logic
 #endif //GAMELOGIC_H
+

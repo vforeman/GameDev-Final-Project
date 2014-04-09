@@ -1,6 +1,3 @@
-/**@Dependencies:
-*	PRIMITIVE
-**/
 #ifndef DUMMY_H
 #define DUMMY_H
 #include <GL/gl.h>

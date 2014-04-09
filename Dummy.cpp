@@ -8,12 +8,11 @@ Dummy::~Dummy()
 {
 
 }
+
 void Dummy::drawSphere()
 {
 	float angle1, angle2;
 	float xx,yy,zz,xxp,yyp,zzp;
-
-
 	glPushMatrix();
 
 	for(angle2 = -T_PI/2 ; angle2<=T_PI/2; angle2+= RESL)
@@ -28,6 +27,7 @@ void Dummy::drawSphere()
 			yyp = sin(angle2 + RESL);
 			xxp = cos(angle1) * cos(angle2 + RESL);
 			zzp = sin(angle1) * cos(angle2 + RESL);
+
 
 			glColor3f(0.0,1.0,0.0);
 			glVertex3f(xx,yy,zz);
@@ -50,7 +50,6 @@ void Dummy::drawEnvironment()
 			glVertex3f(100.0f,-1.0f,-100.0f);
 		glEnd();
 	glPopMatrix();
-
 
 };
 

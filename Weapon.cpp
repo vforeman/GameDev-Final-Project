@@ -1,29 +1,23 @@
 #include "Weapon.h"
-
-
-
 namespace physics{
-
-int Weapon::MAX_CLIP_SIZE = 8;
+Bullet::Bullet()
+{
+    _type = "";
+}
 
 Weapon::Weapon()
 {
     _reloading = false;
     _clip = 0;
 }
-
-void Weapon::fire(/*Vector3f target*/)
-{
-}
-
+void Weapon::fire(Vector3f){}
 void Weapon::iterate()
 {
-    for(unsigned int i = 0; i < _clip ; ++i)
-        _magazine.update();
+
+    for(unsigned int i = 0; i < _clip; ++i)
+        _magazine[i].update();
 }
 
-void reload()
-{
-
-}
+void reload(){}
 }// namespace physics
+

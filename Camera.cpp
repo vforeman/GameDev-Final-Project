@@ -11,7 +11,8 @@ Camera::Camera()
 	mousespeed=0.2;
 	mi=false;
 }
-Camera::Camera(const Vector3f& l)
+
+Camera::Camera(const Vector3<float>& l)
 {
 	loc=l;
 	camYaw=0.0;
@@ -20,7 +21,8 @@ Camera::Camera(const Vector3f& l)
 	mousespeed=0.3;
 	mi=false;
 }
-Camera::Camera(const Vector3f& l,const float& yaw,const float& pitch)
+
+Camera::Camera(const Vector3<float>& l,const float& yaw,const float& pitch)
 {
 	loc=l;
 	 camYaw=yaw;
@@ -29,7 +31,8 @@ Camera::Camera(const Vector3f& l,const float& yaw,const float& pitch)
 	 mousespeed=0.3;
 	 mi=false;
 }
-Camera::Camera(const Vector3f& l,const float& yaw,const float& pitch,const float& sp,const float& ms)
+
+Camera::Camera(const Vector3<float>& l,const float& yaw,const float& pitch,const float& sp,const float& ms)
 {
 	loc=l;
 	 camYaw=yaw;
@@ -62,6 +65,7 @@ void Camera::moveCamera(const float &dir)
 void Camera::moveCameraUp(const float& dir)
 {
 	float rad=(camPitch+dir)*M_PI/180.0;
+
 	loc.y+=sin(rad)*speed;
 }
 
@@ -87,6 +91,7 @@ void Camera::control()
 		}else if(state[SDLK_s])
 		{
 				moveCamera(180.0);
+
 		}
 		if(state[SDLK_a])
 			moveCamera(90.0);
@@ -103,7 +108,8 @@ void Camera::update()
 	glTranslatef(-loc.x,-loc.y,-loc.z);
 }
 
-Vector3f Camera::getLocation()
+
+Vector3<float> Camera::getLocation()
 {
 	return loc;
 }
@@ -117,7 +123,8 @@ float Camera::getPitch()
 	return camPitch;
 }
 
-void Camera::setLocation(const Vector3f& newcoord)
+
+void Camera::setLocation(const Vector3<float>& newcoord)
 {
 	loc=newcoord;
 }
@@ -143,7 +150,8 @@ Vector3<float> Camera::getVector()
 {
 //	std::cout << camYaw << " " << camPitch << std::endl;
 	// change spherical coordinates to cartesian
-	return (Vector3f(-cos(camPitch*M_PI/180.0)*sin(camYaw*M_PI/180.0),sin(camPitch*M_PI/180.0),-cos(camPitch*M_PI/180.0)*cos(camYaw*M_PI/180.0)));
+
+	return (Vector3<float>(-cos(camPitch*M_PI/180.0)*sin(camYaw*M_PI/180.0),sin(camPitch*M_PI/180.0),-cos(camPitch*M_PI/180.0)*cos(camYaw*M_PI/180.0)));
 }
 
 bool Camera::IsMouseIn()

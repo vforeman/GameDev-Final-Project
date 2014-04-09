@@ -1,4 +1,7 @@
 #include "GraphicsRenderer.h"
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include "Vmath.h"
 namespace graphics{
 
 bool Renderer::_instanceFlag = false;

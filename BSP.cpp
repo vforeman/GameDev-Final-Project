@@ -35,19 +35,25 @@ bool Leaf::split()
  return true;
 }
 
-/**************************************************************/
 /**
  * @brief [Partition Tree Constructor]
  * @details [Initialize root Leaf of tree as well
  * as the leafList "_leaves"]
  */
+
+/**************************************************************/
+
 PartitionTree::PartitionTree()
 {
 	_root = new Leaf(0,0,MAPWIDTH,MAPHEIGHT);
-	_leaves.push_back(_root);
+	_leaves.push_back(_root);////////////
 	build();
 	roomify(_root);
 }
+
+
+/**************************************************************/
+
 /**
  * @brief [generate Partition Tree]
  * @details [Generate Tree by subdiving Leaves until

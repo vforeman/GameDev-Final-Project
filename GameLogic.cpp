@@ -1,4 +1,4 @@
-	#include "GameLogic.h"
+#include "GameLogic.h"
 
 namespace logic
 {
@@ -8,13 +8,14 @@ extern DATA GameLogic::_data;
 
 GameLogic::GameLogic()
 {
-	std::clog << "GameLogic::GameLogic()\n";
 	GameLogic::_data._wController = window::Window::get();
 	GameLogic::_data._wController->open();
 	GameLogic::_data._cam = new Camera();
 	GameLogic::_data._cam->setLocation(Vector3f(0,0.8,0));
 	GameLogic::_data._iController = gamein::InputController::get();
+	GameLogic::_data._lContainer = level::LevelContainer::get();
 	GameLogic::_data._obj = new Dummy();
+
 	glClearColor(1.0,1.0,1.0,1.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -33,7 +34,6 @@ void GameLogic::start()
 {
 	std::clog << "GameLogic::start()\n";
  level::createLevel("Flat");
-
 	float angle =0.0;
 	const int FPS = 30;
 	Uint32 start;
@@ -45,6 +45,7 @@ void GameLogic::start()
 	//handle logic and rendering below
 	update();
 	show();
+
 	SDL_GL_SwapBuffers();
 	angle+= 0.5;
 	if(angle >360)
@@ -69,9 +70,7 @@ void GameLogic::show()
 	GameLogic::_data._cam->update();
 	glTranslatef(10.0,0.0,0.0);
 	GameLogic::_data._obj->drawSphere();
-
-	/*
-	GameLogic::_data._obj->drawEnvironment();*/
+	GameLogic::_data._obj->drawEnvironment();
 /*	level::PartitionTree::get();
 *//* level::LevelContainer::get()->drawLevel();
 */
