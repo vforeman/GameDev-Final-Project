@@ -5,6 +5,7 @@
 #include "GameLogic.h"
 #include "Util.h"
 #include "GameLogic.h"
+#include <iostream>
 
 using namespace window;
 using namespace physics;

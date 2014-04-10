@@ -44,13 +44,7 @@ public:
 	void roomify(Leaf*);
 	const int MAPWIDTH = 50;
 	const int MAPHEIGHT = 50;
-
-
-	vector<float> _roomlist;
- vector<Leaf*>  _leaves;
-
-
-
+ vector<Leaf>  _leaves;
  Leaf * _root;
  bool _splitsLeft;
 

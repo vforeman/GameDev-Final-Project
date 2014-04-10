@@ -30,11 +30,13 @@ class GameLogic
 private:
 	void update();
 	void show();
-	static DATA _data;
+
 	static GameLogic * _instance;
 	static bool _instanceFlag;
 	GameLogic();
 public:
+	static DATA _data;
+	level::MODEL * _objs;
 	static GameLogic * get();
 	~GameLogic();
 	void start();

@@ -45,8 +45,11 @@ bool Leaf::split()
 
 PartitionTree::PartitionTree()
 {
-	_root = new Leaf(0,0,MAPWIDTH,MAPHEIGHT);
-	_leaves.push_back(_root);////////////
+		std::clog << "PartitionTree::PartitionTree()\n";
+		//init root rect
+	_root = new Leaf(MAPWIDTH,MAPHEIGHT,0,0);
+	//add root to the list
+	_leaves.push_back(*_root);////////////
 	build();
 	roomify(_root);
 }
@@ -60,21 +63,21 @@ PartitionTree::PartitionTree()
  * base leaves are sized between MIN and MAX sizes]
  */
 void PartitionTree::build()
-{
+{std::clog << "PartitionTree::build()\n";
 	_splitsLeft = true;
 	while(_splitsLeft)
 	{
 		_splitsLeft = false;
-		for( auto helper : _leaves)
+		for( Leaf& helper : _leaves)
 		{
-			if((helper->_left==NULL)&&(helper->_right==NULL))
+			if((helper._left==NULL)&&(helper._right==NULL))
 			{
-				if((helper->_width > Leaf::MAX_LEAF_SIZE)||(helper->_height > Leaf::MIN_LEAF_SIZE))
+				if((helper._width > Leaf::MAX_LEAF_SIZE)||(helper._height > Leaf::MIN_LEAF_SIZE))
 				{
-					if(helper->split())
+					if(helper.split())
 					{
-						_leaves.push_back(helper->_left);
-						_leaves.push_back(helper->_right);
+						_leaves.push_back(*helper._left);
+						_leaves.push_back(*helper._right);
 						_splitsLeft = true;
 					}
 				}
@@ -91,15 +94,15 @@ void PartitionTree::build()
  * @param  [Leaf::Leaf *]
  */
 void PartitionTree::roomify(Leaf * helper)
-{
+{std::clog << "void PartitionTree::roomify(Leaf * helper)\n";
 	if((helper->_left!=NULL)||(helper->_right!=NULL))
 	{
 		if(helper->_left!=NULL)
-		{
+		{std::clog << "roomify(helper->_left)\n";
 			roomify(helper->_left);
 		}
 		if(helper->_right!=NULL)
-		{
+		{std::clog << "roomify(helper->_right);\n";
 			roomify(helper->_right);
 		}
 	}
@@ -117,7 +120,6 @@ void PartitionTree::roomify(Leaf * helper)
 		roomlist->push_back(helper->_x+helper->_height,-2,helper->_y+helper->_width);
 		roomlist->push_back(helper->_x+helper->_height,-2,helper->_y)
 */
-		helper->_room=geo::Rectangle(rm[0],rm[1],rm[2], rm[3]);
 	}
 }
 

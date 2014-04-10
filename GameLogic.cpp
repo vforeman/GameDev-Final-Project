@@ -4,7 +4,7 @@ namespace logic
 {
 GameLogic * GameLogic::_instance = NULL;
 bool GameLogic::_instanceFlag = false;
-extern DATA GameLogic::_data;
+DATA GameLogic::_data;
 
 GameLogic::GameLogic()
 {
@@ -13,7 +13,7 @@ GameLogic::GameLogic()
 	GameLogic::_data._cam = new Camera();
 	GameLogic::_data._cam->setLocation(Vector3f(0,0.8,0));
 	GameLogic::_data._iController = gamein::InputController::get();
-	GameLogic::_data._lContainer = level::LevelContainer::get();
+	level::LevelContainer::get()->genFlat(_objs,40,40);
 	GameLogic::_data._obj = new Dummy();
 
 	glClearColor(1.0,1.0,1.0,1.0);
@@ -33,7 +33,7 @@ GameLogic::~GameLogic()
 void GameLogic::start()
 {
 	std::clog << "GameLogic::start()\n";
- level::createLevel("Flat");
+
 	float angle =0.0;
 	const int FPS = 30;
 	Uint32 start;

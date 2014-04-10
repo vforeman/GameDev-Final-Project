@@ -5,7 +5,13 @@
 #include "PhysicsEngine.h"
 #include "Geometry.h"
 #include "BSP.h"
+#include "Util.h"
 namespace level{
+
+typedef struct
+{
+	float * _mesh;
+}MODEL;
 
 class FlatLevel
 {
@@ -34,11 +40,7 @@ public:
  void draw();
 };
 
-typedef struct
-{
-	PartitionTree* _ptree;
-	GLfloat * _mesh;
-}DATA;
+
 
 class LevelContainer
 {
@@ -47,13 +49,14 @@ private:
 	static bool _instanceFlag;
 	LevelContainer();
 public:
-	static DATA _data;
+ static const float map[20][20];
+	void genFlat();
 	static LevelContainer * get();
 	~LevelContainer();
 
 };
 
-void createLevel(std::string);
+
 
 }//end of level namespace
 #endif //LEVELFACTORY_H
