@@ -25,7 +25,7 @@ typedef struct
 	Camera * _cam;
 	gamein::InputController * _iController;
 	window::Window * _wController;
-	level::LevelContainer * _lContainer;
+	level::LevelFactory * _lFactory;
 	Dummy * _obj;
 }DATA;
 

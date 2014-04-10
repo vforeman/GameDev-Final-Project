@@ -32,8 +32,6 @@ GameLogic::~GameLogic()
 void GameLogic::start()
 {
 	std::clog << "GameLogic::start()\n";
- level::createLevel("Flat");
-
 	float angle =0.0;
 	const int FPS = 30;
 	Uint32 start;
@@ -70,7 +68,6 @@ void GameLogic::show()
 	glTranslatef(10.0,0.0,0.0);
 	GameLogic::_data._obj->drawSphere();
 	GameLogic::_data._obj->drawEnvironment();
-	//level::LevelContainer::get()->drawLevel();
 };
 
 GameLogic * GameLogic::get()
