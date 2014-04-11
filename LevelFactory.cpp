@@ -14,10 +14,23 @@ LevelFactory::LevelFactory()
 LevelFactory::~LevelFactory()
 {
   std::clog << "Destructing Level Factory\n";
-}
+  _instanceFlag = false;
+  assert(_instanceFlag == false);
+ }
 LevelFactory * LevelFactory::get()
 {
   std::clog << "Accessing Level Factory Instance\n";
+  if(!_instanceFlag)
+  {
+  	assert(!_instanceFlag);
+  	if(_instance == NULL)
+  	{
+  		assert(_instance == NULL);
+  		std::clog << "Instantiating Level Factory\n";
+  		_instance = new LevelFactory();
+  		return _instance;
+  	}
+  }
 }
 LevelContainer * LevelFactory::getLevel(string lvl)
 {
