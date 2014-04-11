@@ -18,11 +18,11 @@ public:
 	static Renderer * get();
 	~Renderer();
  void init();//start drawing pipeline
+	void drawStatic();//draw ModelAsset reference
 private:
 	static Renderer * _instance;
 	static bool _instanceFlag;
 	Renderer();
-	void drawStatic();//draw ModelAsset reference
 	void drawDynamic();//draw dynamic data
 
 };

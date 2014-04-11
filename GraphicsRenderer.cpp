@@ -28,7 +28,6 @@ void Renderer::init()
 {}
 void Renderer::drawStatic()
 {
-	glPushMatrix();
 
      //Enable vertex arrays we want to draw with
   glEnableClientState(GL_VERTEX_ARRAY);
@@ -39,16 +38,21 @@ void Renderer::drawStatic()
   glVertexPointer(3, GL_FLOAT, 0, tileface);
   glNormalPointer(GL_FLOAT, 0, tilenormal);
   glColorPointer(4, GL_FLOAT, 0, tilecolor);
-
-  //Draw command - draw everything
-  glDrawArrays(GL_QUADS, 0,4);
-
+	  for(float z =-10; z < 10; ++z)
+ 	{
+ 		for(float x = -10; x < 10; ++x)
+   {
+   	glPushMatrix();
+   	glTranslatef(2*z,-2,2*x);
+  	 glDrawArrays(GL_QUADS, 0,24);
+ 			glPopMatrix();
+  	}
+  }
   //Disable vertex arrays that are no longer in use
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
 
- glPopMatrix();
 
 }
 void Renderer::drawDynamic()

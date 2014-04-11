@@ -68,8 +68,9 @@ void GameLogic::show()
 	glLoadIdentity();
 	_cam->control();
 	_cam->update();
-	glTranslatef(10.0,0.0,0.0);
+	glTranslatef(0.0,0.0,0.0);
 	GameLogic::_data._obj->drawSphere();
+	_renderer->drawStatic();
 /*	GameLogic::_data._obj->drawEnvironment();
 */
 

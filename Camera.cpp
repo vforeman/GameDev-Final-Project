@@ -100,7 +100,7 @@ void Camera::control()
 
 void Camera::update()
 {
-	glTranslatef(-loc.x,-loc.y,-loc.z);
+	glTranslatef(10*-loc.x,-loc.y,10*-loc.z);
 }
 
 Vector3f Camera::getLocation()
