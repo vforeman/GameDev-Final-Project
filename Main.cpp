@@ -16,13 +16,15 @@ using namespace graphics;
 using namespace std;
 using namespace logic;
 
+
 int main()
 {
 
 	GameLogic* gameObject = GameLogic::get();
-	assert(gameObject == GameLogic::get());
 	gameObject->start();
 
 
  return 0;
 }
+
+

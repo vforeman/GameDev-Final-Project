@@ -2,7 +2,8 @@
 namespace level{
 
 LevelContainer LevelFactory::_levelContainer ={
-  "Main Static Level Container"
+	"Singleton Level Mesh",
+	{}
 };
 LevelFactory * LevelFactory::_instance = NULL;
 bool LevelFactory::_instanceFlag = false;
@@ -28,13 +29,22 @@ LevelFactory * LevelFactory::get()
   		assert(_instance == NULL);
   		std::clog << "Instantiating Level Factory\n";
   		_instance = new LevelFactory();
+  		_instanceFlag = true;
   		return _instance;
   	}
   }
+  else
+ 	{
+ 		assert(_instance != NULL);
+ 		return _instance;
+ 	}
 }
 LevelContainer * LevelFactory::getLevel(string lvl)
 {
  std::clog << "Accessing Level Container Instance\n";
+ //tell the render to draw flat map already in resources
+
+ return &_levelContainer;
 }
 
 

@@ -7,6 +7,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdio.h>
+#include <vector>
 #include "BSP.h"
 #include "Vmath.h"
 #include "Geometry.h"
@@ -18,6 +19,7 @@ namespace level{
 typedef struct
 {
 	string name;
+	vector<float> v;//mapmesh
 }LevelContainer;
 
 class LevelFactory

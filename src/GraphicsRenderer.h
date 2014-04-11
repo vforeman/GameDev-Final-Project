@@ -13,11 +13,14 @@ class Renderer
 public:
 	static Renderer * get();
 	~Renderer();
-
+ void init();//start drawing pipeline
 private:
 	static Renderer * _instance;
 	static bool _instanceFlag;
 	Renderer();
+	void drawStatic();//draw static objects
+	void drawDynamic();//draw dynamic data
+
 };
 
 

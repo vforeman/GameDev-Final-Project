@@ -5,7 +5,6 @@ bool Renderer::_instanceFlag = false;
 Renderer * Renderer::_instance = NULL;
 
 Renderer::Renderer(){}
-
 Renderer::~Renderer()
 {
 	_instanceFlag = false;
@@ -25,6 +24,12 @@ Renderer * Renderer::get()
  }
 }
 
+void Renderer::init()
+{}
+void Renderer::drawStatic()
+{}
+void Renderer::drawDynamic()
+{}
 
 
 }// namespace graphics
