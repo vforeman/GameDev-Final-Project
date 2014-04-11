@@ -6,7 +6,11 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "Vmath.h"
+#include "Assets.h"
 namespace graphics{
+
+
+
 
 class Renderer
 {
@@ -18,10 +22,11 @@ private:
 	static Renderer * _instance;
 	static bool _instanceFlag;
 	Renderer();
-	void drawStatic();//draw static objects
+	void drawStatic();//draw ModelAsset reference
 	void drawDynamic();//draw dynamic data
 
 };
+
 
 
 

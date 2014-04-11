@@ -9,6 +9,7 @@ extern DATA GameLogic::_data;
 GameLogic::GameLogic()
 {
 	std::clog << "GameLogic::GameLogic()\n";
+	_renderer = graphics::Renderer::get();
 	_lFactory = level::LevelFactory::get();
 	_level = _lFactory->getLevel("Flat");
 	_wController = window::Window::get();
@@ -69,7 +70,9 @@ void GameLogic::show()
 	_cam->update();
 	glTranslatef(10.0,0.0,0.0);
 	GameLogic::_data._obj->drawSphere();
-	GameLogic::_data._obj->drawEnvironment();
+/*	GameLogic::_data._obj->drawEnvironment();
+*/
+
 };
 
 GameLogic * GameLogic::get()

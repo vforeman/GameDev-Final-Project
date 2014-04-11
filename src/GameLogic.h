@@ -44,6 +44,7 @@ public:
 	window::Window * _wController;
 	Camera * _cam;
 	gamein::InputController * _iController;
+	graphics::Renderer * _renderer;
 	static GameLogic * get();
 	~GameLogic();
 	void start();
