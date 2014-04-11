@@ -25,7 +25,7 @@ typedef struct
 	Camera * _cam;
 	gamein::InputController * _iController;
 	window::Window * _wController;
-	level::LevelFactory * _lFactory;
+
 	Dummy * _obj;
 }DATA;
 
@@ -39,6 +39,11 @@ private:
 	static bool _instanceFlag;
 	GameLogic();
 public:
+	level::LevelContainer * _level;
+	level::LevelFactory * _lFactory;
+	window::Window * _wController;
+	Camera * _cam;
+	gamein::InputController * _iController;
 	static GameLogic * get();
 	~GameLogic();
 	void start();

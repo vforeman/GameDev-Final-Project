@@ -9,11 +9,13 @@ extern DATA GameLogic::_data;
 GameLogic::GameLogic()
 {
 	std::clog << "GameLogic::GameLogic()\n";
-	GameLogic::_data._wController = window::Window::get();
-	GameLogic::_data._wController->open();
-	GameLogic::_data._cam = new Camera();
-	GameLogic::_data._cam->setLocation(Vector3f(0,0.8,0));
-	GameLogic::_data._iController = gamein::InputController::get();
+	_lFactory = level::LevelFactory::get();
+	_level = _lFactory->getLevel("Flat");
+	_wController = window::Window::get();
+	_wController->open();
+	_cam = new Camera();
+	_cam->setLocation(Vector3f(0,0.8,0));
+	_iController = gamein::InputController::get();
 	GameLogic::_data._obj = new Dummy();
 	glClearColor(1.0,1.0,1.0,1.0);
 	glMatrixMode(GL_PROJECTION);
@@ -39,7 +41,7 @@ void GameLogic::start()
 	while(running)
 	{
 		start = SDL_GetTicks();
-		running = GameLogic::_data._iController->HandleInput(GameLogic::_data._cam,running);
+		running = _iController->HandleInput(_cam,running);
 	//handle logic and rendering below
 	update();
 	show();
@@ -63,8 +65,8 @@ void GameLogic::show()
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	GameLogic::_data._cam->control();
-	GameLogic::_data._cam->update();
+	_cam->control();
+	_cam->update();
 	glTranslatef(10.0,0.0,0.0);
 	GameLogic::_data._obj->drawSphere();
 	GameLogic::_data._obj->drawEnvironment();
