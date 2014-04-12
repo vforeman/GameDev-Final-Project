@@ -7,6 +7,7 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <cstdint>
 using namespace std;
 namespace util{
 
