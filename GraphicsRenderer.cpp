@@ -39,12 +39,13 @@ void Renderer::drawStatic()
   glNormalPointer(GL_FLOAT, 0, tilenormal);
   glColorPointer(4, GL_FLOAT, 0, tilecolor);
 	 //draw floor
-	  for(float z =-10; z < 10; ++z)
+	  for(float z =-50; z < 50; ++z)
  	{
- 		for(float x = -10; x < 10; ++x)
+ 		for(float x = -50; x < 50; ++x)
    {
    	glPushMatrix();
-   	glTranslatef(2*z,-2,2*x);
+   	glTranslatef(4*z,-2,4*x);
+    glScalef(2,.1,2);
   	 glDrawArrays(GL_QUADS, 0,24);
 
 
