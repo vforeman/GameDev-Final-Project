@@ -1,4 +1,4 @@
-#include "Node.h"
+#include "src/Node.h"
 
 Node::Node() : _x(0),    _y(0),    _z(0),
                _f(0.0f), _g(0.0f), _h(0.0f), _parent(NULL)
@@ -71,5 +71,39 @@ Node& Node::operator= (const Node& that)
 
 bool Node::isSamePosition(const Node& that)
 {
-    return false;
+
+    if(std::abs(that._x - this->_x) <= 15 && std::abs(that._z - this->_z) <= 15)
+        return true;
+    else
+        return false;
 }
+
+bool Node::isSamePosition(const Node* that)
+{
+    if(std::abs(that->_x - this->_x) <= 15 && std::abs(that->_z - this->_z) <= 15)
+        return true;
+    else
+        return false;
+
+}
+
+void Node::calculateFn()
+{
+    _f  = _g + _h;
+}
+
+void Node::traverse(std::vector < Vector3f >& path)
+{
+    Node *temp = new Node();
+    *temp = *this;
+
+    while(temp != NULL)
+    {
+        path.push_back(Vector3f(float(temp->_x),
+                                float(temp->_y),
+                                float(temp->_z)));
+        temp = temp->_parent;
+    }
+}
+
+

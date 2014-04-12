@@ -9,7 +9,7 @@ class AIManager
 {
     public:
         static AIManager& getInstance();
-        void astar( Vector3f, Vector3f );       //A-Star search
+        Node* astar( Vector3f, Vector3f );       //A-Star search
     private:
         static AIManager* _instance;
         AIManager(const AIManager&);

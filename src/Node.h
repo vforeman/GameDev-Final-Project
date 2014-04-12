@@ -12,10 +12,10 @@ class Node
         Node(int, int, int);
         Node(Vector3f);
         int _x, _y, _z;         //position operators
-        float _f, _g;
+        float _g, _h;
         bool isSamePosition(const Node&);
         bool isSamePosition(const Node*);
-        void calculateH();      //calculate heuristic
+        void calculateFn();      //calculate F = step + heuristic
         void setParent(Node*);
         void traverse(std::vector< Vector3f >& );
         void traverseFl(std::vector< float* >&);
@@ -30,7 +30,7 @@ class Node
         Node& operator= (const Node&);
     private:
         Node* _parent;
-        float _h;       //heuristic value
+        float _f;       
 };
 
 #endif

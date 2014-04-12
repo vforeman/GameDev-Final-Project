@@ -22,11 +22,11 @@ namespace physics{
 class PhysicsEntity
 {
 public:
- float _radius;
- Vector3f _position;
- Vector3f _velocity;
- Vector3f _force;
- void update();
+    float _radius;
+    Vector3f _position;
+    Vector3f _velocity;
+    Vector3f _force;
+    void update();
 
 };
 
