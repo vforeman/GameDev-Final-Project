@@ -43,7 +43,10 @@ LevelContainer * LevelFactory::getLevel(string lvl)
 {
  std::clog << "Accessing Level Container Instance\n";
  //tell the render to draw flat map already in resources
+ if(lvl == "Flat")
+ {
 
+ }
  return &_levelContainer;
 }
 

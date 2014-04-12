@@ -1,5 +1,6 @@
-/**@Dependencies
-*	Vmath.h
+/**@TODO
+*	add state attributes
+*
 **/
 #ifndef GRAPHICSRENDERER_H
 #define GRAPHICSRENDERER_H
@@ -7,6 +8,7 @@
 #include <GL/glu.h>
 #include "Vmath.h"
 #include "Assets.h"
+#include "Util.h"
 namespace graphics{
 
 
@@ -24,7 +26,7 @@ private:
 	static bool _instanceFlag;
 	Renderer();
 	void drawDynamic();//draw dynamic data
-
+ GLuint loadTextureFile();
 };
 
 
