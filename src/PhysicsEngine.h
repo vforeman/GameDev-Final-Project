@@ -22,11 +22,11 @@ namespace physics{
 class PhysicsEntity
 {
 public:
- float _radius;
- Vector3f _position;
- Vector3f _velocity;
- Vector3f _force;
- void update();
+    float _radius;
+    Vector3f _position;
+    Vector3f _velocity;
+    Vector3f _force;
+    void update();
 
 };
 
@@ -67,47 +67,33 @@ private:
 
 
 
-/***********************************
-*						QUADTREE SPECIFICATION
-*************************************/
-class QuadTree
-{
-public:
-	QuadTree();
-	QuadTree( int, geo::Rectangle);
-	~QuadTree();
-	static const int MAX_QT_OBJECTS;
-	static const int MAX_QT_DEGREES;
-	int _degree;
- PhysicsEntity * _objs;
-	geo::Rectangle _bound;
-	QuadTree *_nodes;
-	void setQuadConsts(int , int );
-private:
 
-};
 
-/***********************************
-*					PHYSICS ENGINE SPECIFICATION
-*************************************/
-typedef struct
-{
-	QuadTree * _qtree;
-	PhysicsEntity * _objs;
-}DATA;
+
+
+
+
+
+
+
+
+
+
+
 
 class PhysicsEngine
 {
 public:
 	static PhysicsEngine * get();
 	~PhysicsEngine();
-	static DATA _data;
-	void addToTree();
+
 private:
 	static PhysicsEngine * _instance;
 	static bool _instanceFlag;
 	PhysicsEngine();
 };
+
+
 
 
 }//namespace physics

@@ -39,8 +39,7 @@ private:
 	static bool _instanceFlag;
 	GameLogic();
 public:
-	level::LevelContainer * _level;
-	level::LevelFactory * _lFactory;
+	physics::PhysicsEngine * _pEngine;
 	window::Window * _wController;
 	Camera * _cam;
 	gamein::InputController * _iController;
