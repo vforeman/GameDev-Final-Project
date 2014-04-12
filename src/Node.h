@@ -3,6 +3,7 @@
 
 #include "Vmath.h"
 #include <vector>
+#include <cmath>
 
 class Node
 {
@@ -13,6 +14,7 @@ class Node
         int _x, _y, _z;         //position operators
         float _f, _g;
         bool isSamePosition(const Node&);
+        bool isSamePosition(const Node*);
         void calculateH();      //calculate heuristic
         void setParent(Node*);
         void traverse(std::vector< Vector3f >& );
@@ -30,8 +32,5 @@ class Node
         Node* _parent;
         float _h;       //heuristic value
 };
-
-
-
 
 #endif
