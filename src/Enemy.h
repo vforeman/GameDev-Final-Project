@@ -21,7 +21,8 @@ public:
  void die();
  void patrol();
 private:
- std::vector< Vector3f > patrolPath;
+ bool _alive;
+ std::vector< Vector3f > _patrolPath;
  void createSimplePatrol();
  void target();
 };
