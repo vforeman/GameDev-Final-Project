@@ -1,7 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include "../Vmath.h"
+#include "Vmath.h"
 #include <vector>
 
 class Node
@@ -28,7 +28,7 @@ class Node
         Node& operator= (const Node&);
     private:
         Node* _parent;
-        float _h;       //heuristic value 
+        float _h;       //heuristic value
 };
 
 
