@@ -9,6 +9,7 @@
 #include "Vmath.h"
 #include "Assets.h"
 #include "Util.h"
+#include "Level.h"
 namespace graphics{
 
 
@@ -21,7 +22,10 @@ public:
 	~Renderer();
  void init();//start drawing pipeline
 	void drawStatic();//draw ModelAsset reference
+	void drawStatic(Level);
+	void drawLevel();
 private:
+	Level _level;
 	static Renderer * _instance;
 	static bool _instanceFlag;
 	Renderer();

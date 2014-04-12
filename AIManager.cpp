@@ -1,4 +1,4 @@
-#include "src/AIManager.h"
+#include "AIManager.h"
 
 AIManager& AIManager::getInstance()
 {
@@ -16,9 +16,9 @@ Node* AIManager::astar(Vector3f end, Vector3f begin) //Needs map parameter
     Node* current = new Node();
     std::vector<Node*> openlist;
     std::vector<Node*> closelist;
-    
+
     openlist.push_back(start);
-    
+
     std::make_heap(openlist.begin(), openlist.end());
 
     while(!openlist.empty())
