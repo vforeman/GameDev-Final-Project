@@ -82,7 +82,7 @@ GLuint LoadTexture( )
 
 void Renderer::drawStatic()
 {
-  LoadTexture();
+  GLuint text =LoadTexture();
       //loaded with cube data right now
      //Enable vertex arrays we want to draw with
   glEnableClientState(GL_VERTEX_ARRAY);

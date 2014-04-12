@@ -1,21 +1,24 @@
 #ifndef OVERLAY_H
 #define OVERLAY_H
-#include "Constants.h"
+#include "Vmath.h"
+#include "Util.h"
 
-class Overlay
+using namespace util;
+
+class OverLay
 {
 	public:
-		Overlay();
-		~Overlay();
+		OverLay();
+		~OverLay();
 		void GenerateOverlay();
 		static bool isObstacle(Vector3<float>);
 		static bool isObstacle(int, int, int);
 		void constructQuadrant();
 	protected:
-		 char _overlay[20][20];
+		 char _overlay[200][200];
 	private:
 		void initialize();
-		
+
 };
 
 #endif
