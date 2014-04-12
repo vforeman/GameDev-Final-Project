@@ -10,9 +10,7 @@ void PhysicsEntity::update()
 };
 
 
-/***********************************
-*					ENEMY IMPLEMENTATION
-*************************************/
+
 
 /***********************************
 *					BULLET IMPLEMENTATION
@@ -51,6 +49,13 @@ StaticEntity::~StaticEntity()
 
 
 
+Level::Level()
+{}
+Level::~Level()
+{}
+void Level::initialize()
+{}
+
 
 
 /***********************************
@@ -58,7 +63,7 @@ StaticEntity::~StaticEntity()
 *************************************/
 bool PhysicsEngine::_instanceFlag = false;
 PhysicsEngine * PhysicsEngine::_instance = NULL;
-extern DATA PhysicsEngine::_data;
+
 
 PhysicsEngine::PhysicsEngine(){}
 
@@ -81,8 +86,10 @@ PhysicsEngine * PhysicsEngine::get()
 	}
 }
 
-void PhysicsEngine::addToTree(){}
 
 
 
 }//namespace physics
+
+
+

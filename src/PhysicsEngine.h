@@ -69,26 +69,51 @@ private:
 
 
 
-/***********************************
-*					PHYSICS ENGINE SPECIFICATION
-*************************************/
-typedef struct
+
+
+
+
+
+class Overlay
 {
-	PhysicsEntity * _objs;
-}DATA;
+public:
+Overlay();
+~Overlay();
+private:
+
+
+};
+
+
+class Level
+{
+public:
+Level();
+~Level();
+void initialize();
+private:
+
+
+};
+
+
+
+
 
 class PhysicsEngine
 {
 public:
 	static PhysicsEngine * get();
 	~PhysicsEngine();
-	static DATA _data;
-	void addToTree();
+
+	Level _level;
 private:
 	static PhysicsEngine * _instance;
 	static bool _instanceFlag;
 	PhysicsEngine();
 };
+
+
 
 
 }//namespace physics

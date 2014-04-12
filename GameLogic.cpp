@@ -10,8 +10,8 @@ GameLogic::GameLogic()
 {
 	std::clog << "GameLogic::GameLogic()\n";
 	_renderer = graphics::Renderer::get();
-	_lFactory = level::LevelFactory::get();
-	_level = _lFactory->getLevel("Flat");
+	_pEngine = physics::PhysicsEngine::get();
+	_pEngine ->_level.initialize();
 	_wController = window::Window::get();
 	_wController->open();
 	_cam = new Camera();
@@ -71,8 +71,7 @@ void GameLogic::show()
 	glTranslatef(0.0,0.0,0.0);
 	GameLogic::_data._obj->drawSphere();
 	_renderer->drawStatic();
-/*	GameLogic::_data._obj->drawEnvironment();
-*/
+
 
 };
 
