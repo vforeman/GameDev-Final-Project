@@ -71,4 +71,5 @@ Node& Node::operator= (const Node& that)
 
 bool Node::isSamePosition(const Node& that)
 {
+    return false;
 }
