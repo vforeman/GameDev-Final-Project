@@ -51,31 +51,6 @@ StaticEntity::~StaticEntity()
 
 
 
-/***********************************
-*						QUADTREE IMPLEMENTATION
-*************************************/
-//INIT static const attributes
-const int QuadTree::MAX_QT_OBJECTS = 10;
-const int QuadTree::MAX_QT_DEGREES = 5;
-
-QuadTree::QuadTree()
-{
-	QuadTree(1,geo::Rectangle(0,-1,0,0));
-}
-QuadTree::QuadTree(int degree, geo::Rectangle bound)
-{
-	_degree = degree;
-	_bound = bound;
-	_nodes = new QuadTree[4];
-	_objs = new PhysicsEntity[MAX_QT_OBJECTS];
-}
-QuadTree::~QuadTree()
-{
-	delete[] _nodes;
-	delete[] _objs;
-}
-
-
 
 
 /***********************************

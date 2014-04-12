@@ -37,7 +37,7 @@ void Renderer::drawStatic()
   //Connect the arrays themselves
   glVertexPointer(3, GL_FLOAT, 0, tileface);
   glNormalPointer(GL_FLOAT, 0, tilenormal);
-  glColorPointer(4, GL_FLOAT, 0, tilecolor);
+  glColorPointer(3, GL_FLOAT, 6, checker);
 	 //draw floor
 	  for(float z =-50; z < 50; ++z)
  	{
