@@ -7,8 +7,9 @@ AIManager& AIManager::getInstance()
 }
 
 bool isGoal(Node*, Node*);
+float calculateHn(Vector3f, Vector3f);
 
-void AIManager::astar(Vector3f end, Vector3f begin) //Needs map parameter
+Node* AIManager::astar(Vector3f end, Vector3f begin) //Needs map parameter
 {
     Node* start = new Node(begin);
     Node* goal = new Node(end);
@@ -24,7 +25,7 @@ void AIManager::astar(Vector3f end, Vector3f begin) //Needs map parameter
     {
         if(isGoal(current, goal))
         {
-            return;
+            return current;
         }
     }
 }
@@ -35,6 +36,15 @@ void getSuccessors(Node* current , std::vector<Node*> list, std::vector<Node*> c
     //add adjacent positions to list
 }
 
+float calculateHn(Vector3f curr, Vector3f goal)
+{
+    float dx = std::abs(curr._x - goal._x);
+    float dy = std::abs(curr._y - goal._y);
+    
+
+    //return D * (dx * dx + dy * dy);
+    return dx * dx + dy * dy;
+}
 
 bool isGoal(Node* current, Node* goal)
 {
