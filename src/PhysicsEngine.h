@@ -74,27 +74,8 @@ private:
 
 
 
-class Overlay
-{
-public:
-Overlay();
-~Overlay();
-private:
 
 
-};
-
-
-class Level
-{
-public:
-Level();
-~Level();
-void initialize();
-private:
-
-
-};
 
 
 
@@ -106,7 +87,6 @@ public:
 	static PhysicsEngine * get();
 	~PhysicsEngine();
 
-	Level _level;
 private:
 	static PhysicsEngine * _instance;
 	static bool _instanceFlag;

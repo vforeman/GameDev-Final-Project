@@ -49,12 +49,7 @@ StaticEntity::~StaticEntity()
 
 
 
-Level::Level()
-{}
-Level::~Level()
-{}
-void Level::initialize()
-{}
+
 
 
 

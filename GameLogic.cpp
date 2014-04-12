@@ -11,7 +11,7 @@ GameLogic::GameLogic()
 	std::clog << "GameLogic::GameLogic()\n";
 	_renderer = graphics::Renderer::get();
 	_pEngine = physics::PhysicsEngine::get();
-	_pEngine ->_level.initialize();
+
 	_wController = window::Window::get();
 	_wController->open();
 	_cam = new Camera();
