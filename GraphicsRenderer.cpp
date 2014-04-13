@@ -113,7 +113,6 @@ void Renderer::drawStatic()
 glDisableClientState(GL_VERTEX_ARRAY);   glDisableClientState(GL_NORMAL_ARRAY);
 glDisableClientState(GL_COLOR_ARRAY);
 
-
 }
 
 void Renderer::drawStatic(Level l)
