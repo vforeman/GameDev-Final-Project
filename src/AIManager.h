@@ -2,6 +2,7 @@
 #define AIMANAGER_H
 
 #include "Node.h"
+#include "Overlay.h"
 #include <vector>
 #include <algorithm>
 

@@ -13,6 +13,7 @@ class Node
         Node(Vector3f);
         int _x, _y, _z;         //position operators
         float _g, _h;
+        bool isSamePosition(int, int, int);
         bool isSamePosition(const Node&);
         bool isSamePosition(const Node*);
         void calculateFn();      //calculate F = step + heuristic

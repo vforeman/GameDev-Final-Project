@@ -6,6 +6,7 @@
 
 #include <vector>
 #include "PhysicsEngine.h"
+#include "AIManager.h"
 #include "Vmath.h"
 #include "Util.h"
 namespace physics{
@@ -15,16 +16,18 @@ namespace physics{
 class Enemy : public PhysicsEntity
 {
 public:
- Enemy();
- int _health;
- void attack();
- void die();
- void patrol();
+    Enemy();
+    int _health;
+    void attack();
+    void die();
+    void patrol();
 private:
- bool _alive;
- std::vector< Vector3f > _patrolPath;
- void createSimplePatrol();
- void target();
+    bool _alive;
+    unsigned int _point;    //Point on patrol path, treated as iterator
+    std::vector< Vector3f > _patrolPath;
+    void createSimplePatrol();
+    void createStrongPatrol();  
+    void target();
 };
 }//namespace physics
 #endif// ENEMY_H
