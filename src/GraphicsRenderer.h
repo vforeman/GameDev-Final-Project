@@ -10,6 +10,10 @@
 #include "Assets.h"
 #include "Util.h"
 #include "Level.h"
+#include "Geometry.h"
+using namespace std;
+using namespace geo;
+using namespace util;
 namespace graphics{
 
 
@@ -24,13 +28,18 @@ public:
 	void drawStatic();//draw ModelAsset reference
 	void drawStatic(Level);
 	void drawLevel();
+	void drawSphere();
+	void drawDynamic();
+
 private:
 	Level _level;
+	Sphere s;
 	static Renderer * _instance;
 	static bool _instanceFlag;
 	Renderer();
-	void drawDynamic();//draw dynamic data
+
  GLuint loadTextureFile();
+
 };
 
 
