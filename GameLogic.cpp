@@ -19,11 +19,13 @@ GameLogic::GameLogic()
 	_iController = gamein::InputController::get();
 	GameLogic::_data._obj = new Dummy();
 	glClearColor(1.0,1.0,1.0,1.0);
+	glEnable( GL_TEXTURE_2D );
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(45,640/480.0,1,500.0);
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_DEPTH_TEST);
+
 };
 
 GameLogic::~GameLogic()

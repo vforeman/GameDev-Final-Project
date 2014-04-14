@@ -26,47 +26,11 @@ Renderer * Renderer::get()
 
 void Renderer::init()
 {}
-void Renderer::drawStatic()
-{
-			//loaded with cube data right now
-     //Enable vertex arrays we want to draw with
-  glEnableClientState(GL_VERTEX_ARRAY);
-  glEnableClientState(GL_NORMAL_ARRAY);
-  glEnableClientState(GL_COLOR_ARRAY);
-
-  //Connect the arrays themselves
-  glVertexPointer(3, GL_FLOAT, 0, tileface);
-  glNormalPointer(GL_FLOAT, 0, tilenormal);
-  glColorPointer(3, GL_FLOAT, 6, checker);
-	 //draw floor
-	  for(float z =-50; z < 50; ++z)
- 	{
- 		for(float x = -50; x < 50; ++x)
-   {
-   	glPushMatrix();
-   	glTranslatef(4*z,-2,4*x);
-    glScalef(2,.1,2);
-  	 glDrawArrays(GL_QUADS, 0,24);
 
 
 
- 			glPopMatrix();
-  	}
-  }
-  //draw randome pillars
 
-  //Disable vertex arrays that are no longer in use
-  glDisableClientState(GL_VERTEX_ARRAY);
-  glDisableClientState(GL_NORMAL_ARRAY);
-  glDisableClientState(GL_COLOR_ARRAY);
-
-
-}
-void Renderer::drawDynamic()
-{}
-
-
-GLuint LoadTexture( const char * filename )
+GLuint LoadTexture( )
 {
 
   GLuint texture;
@@ -77,11 +41,11 @@ GLuint LoadTexture( const char * filename )
 
   FILE * file;
 
-  file = fopen( filename, "rb" );
+  file = fopen( "tile.png", "rb" );
 
   if ( file == NULL ) return 0;
-  width = 128;
-  height = 128;
+  width = 512;
+  height = 512;
   data = (unsigned char *)malloc( width * height * 3 );
   //int size = fseek(file,);
   fread( data, width * height * 3, 1, file );
@@ -114,6 +78,43 @@ GLuint LoadTexture( const char * filename )
 
   return texture;
 }
+
+void Renderer::drawStatic()
+{
+  GLuint text =LoadTexture();
+      //loaded with cube data right now
+     //Enable vertex arrays we want to draw with
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+
+  //Connect the arrays themselves
+  glVertexPointer(3, GL_FLOAT, 0, tileface);
+  glNormalPointer(GL_FLOAT, 0, tilenormal);
+  glColorPointer(3, GL_FLOAT, 6, checker);
+   //draw floor
+    for(float z =-50; z < 50; ++z)
+  {
+    for(float x = -50; x < 50; ++x)
+   {
+    glPushMatrix();
+    glTranslatef(4*z,-2,4*x);
+    glScalef(2,.1,2);
+     glDrawArrays(GL_QUADS, 0,24);
+
+
+
+      glPopMatrix();
+    }
+  }
+  //draw randome pillars
+
+  //Disable vertex arrays that are no longer in use
+glDisableClientState(GL_VERTEX_ARRAY);   glDisableClientState(GL_NORMAL_ARRAY);
+glDisableClientState(GL_COLOR_ARRAY);
+
+}
+
 void Renderer::drawStatic(Level l)
 {}
 
@@ -131,7 +132,7 @@ void Renderer::drawLevel()
   // glNormalPointer(GL_FLOAT, 0, tilenormal);
   glColorPointer(3, GL_FLOAT, 6, checker);
 
-     glDrawArrays(GL_QUADS, 0,_level._wallPoints.size());
+  glDrawArrays(GL_QUADS, 0,_level._wallPoints.size());
 
   //draw randome pillars
 
@@ -142,6 +143,30 @@ void Renderer::drawLevel()
 
 }
 
+void Renderer::drawSphere()
+{
+ drawDynamic();
+}
+void Renderer::drawDynamic()
+{
+    glEnableClientState(GL_VERTEX_ARRAY);
+  // glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+
+  //Connect the arrays themselves
+  glVertexPointer(3, GL_FLOAT, 0,&s._verts);
+  // glNormalPointer(GL_FLOAT, 0, tilenormal);
+  glColorPointer(3, GL_FLOAT, 6, checker);
+
+     glDrawArrays(GL_QUADS, 0,s._verts.size());
+
+  //draw randome pillars
+
+  //Disable vertex arrays that are no longer in use
+  glDisableClientState(GL_VERTEX_ARRAY);
+  // glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+}
 
 }// namespace graphics
 
