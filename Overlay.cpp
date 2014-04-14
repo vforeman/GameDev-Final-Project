@@ -1,6 +1,6 @@
 #include "Overlay.h"
-int Overlay::OVERLAY_HEIGHT = 20;
-int Overlay::OVERLAY_WIDTH = 20;
+unsigned int Overlay::OVERLAY_HEIGHT = 200;
+unsigned int Overlay::OVERLAY_WIDTH = 200;
 char ** Overlay::_overlay = new char*[Overlay::OVERLAY_WIDTH];
 
 Overlay::Overlay()
@@ -9,7 +9,11 @@ Overlay::Overlay()
 };
 Overlay::~Overlay()
 {
-
+    for(int c = 0; c< Overlay::OVERLAY_HEIGHT;++c)
+    {
+        delete[] _overlay[c];
+    }
+    delete[] _overlay;
 };
 
 /*char Overlay::getObstacle(float radius,Vector3<float> pos)
@@ -63,12 +67,12 @@ void Overlay::initialize()
     {
         _overlay[c] = new char[Overlay::OVERLAY_HEIGHT];
     }
-	for(unsigned int i = 0; i < 20; ++i)
-        for(unsigned int j = 0; j < 20; ++j)
+	for(unsigned int i = 0; i < Overlay::OVERLAY_HEIGHT; ++i)
+        for(unsigned int j = 0; j < Overlay::OVERLAY_WIDTH; ++j)
             _overlay[i][j] = 'F';
-
-	 for(unsigned int i = 0; i < 5; ++i)
-        xorshift(); // Random function from util class instead of generator, Random function was a intermediate call to the Rand() function
+        //!!this for loop does absolutely nothing
+	 /*for(unsigned int i = 0; i < 5; ++i)
+        xorshift(); // Random function from util class instead of generator, Random function was a intermediate call to the Rand() function*/
 
 	constructQuadrant();
 
