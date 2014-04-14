@@ -4,10 +4,10 @@
 include makefile.inc
 
 %.o:	%.cpp
-	$(CXX) $(CXXFLAGS) $(LIBS) -c $< -o	$(addprefix build/,$(@F))
+	$(CXX) $(CXXFLAGS)  -c $< -o	$(addprefix build/,$(@F))
 all: Main
 Main: $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(LIBS) $(addprefix build/,$(OBJECTS)) -o Main
+	$(CXX) $(CXXFLAGS) $(addprefix build/,$(OBJECTS)) $(LIBS) -o Main
 
 # RULES
 PhysicsEngine.o: PhysicsEngine.cpp Vmath.h Geometry.h
@@ -27,6 +27,7 @@ Overlay.o:	Overlay.cpp
 Level.o: Level.cpp
 AIManager.o: AIManager.cpp Node.h
 Node.o: Node.cpp Vmath.h
+Graphics.o: Graphics.cpp
 # trace.o:	trace.cpp
 # Syntax for adding new Rules:
 # [TARGET] : [DEPENDENCIES]
@@ -48,4 +49,4 @@ splash:
 	"objects: $(OBJECTS)\n\n"\
 	"libs: $(LIBS)\n\n"\
 	"cppfiles: $(CPPFILES)\n\n"\
-	"curdir: $(CURDIR)/something\n\n"\
+	"curdir: $(CURDIR)"
