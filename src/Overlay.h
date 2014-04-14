@@ -11,9 +11,8 @@ class Overlay
 	public:
 		Overlay();//calls initialize function
 		~Overlay();
-		void GenerateOverlay();
 		static bool isObstacle(Vector3f);
-		static bool isObstacle(int, int, int);
+		static bool isObstacle(int, int);
 		void constructQuadrant();
 
 		static char ** _overlay;
@@ -22,7 +21,8 @@ class Overlay
 		static unsigned int OVERLAY_WIDTH;
 		/**
 		 * @details [instantiates each char in 2d array
-		 * and assigned the value of 'F' as floor to each char]
+		 * and assigned the value of 'F' as floor to each char.
+		 * calls void constructQuadrant()]
 		 */
 		void initialize();
 

@@ -51,15 +51,15 @@ Overlay::~Overlay()
     return val;
 } */
 
-/*bool Overlay::isObstacle(Vector3<float>)
+bool Overlay::isObstacle(Vector3f pos)
 {
-	return;
-};
-bool Overlay:: isObstacle(int, int, int)
+	return _overlay[(int)pos.x][(int)pos.z] == 'W';
+}
+bool Overlay::isObstacle(int x, int z)
 {
+    return _overlay[x][z] == 'W';
+}
 
-};
-*/
 
 void Overlay::initialize()
 {
