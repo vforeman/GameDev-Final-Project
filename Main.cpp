@@ -6,7 +6,7 @@
 #include "GraphicsRenderer.h"
 #include "GameLogic.h"
 #include "Util.h"
-#include "OverLay.h"
+#include "Overlay.h"
 #include <iostream>
 
 

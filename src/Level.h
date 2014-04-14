@@ -18,8 +18,9 @@ class Level
 		Level();
 		void buildLevel(float x, float z, unsigned int i, unsigned int j);
 		void CreateWallPoints(Overlay);
-	private:
+
 		std::vector<float> _wallPoints;
+	private:
 		Overlay createOverLay;
 };
 

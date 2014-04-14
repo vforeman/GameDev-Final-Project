@@ -2,13 +2,13 @@
 
 Level::Level()
 {
-	
+
 
 
 };
 void Level::buildLevel(float x, float z, unsigned int i, unsigned int j)
 {
-	
+
                 float addX = x;
                 float addZ = z;
                 //Front face of wall
@@ -39,11 +39,11 @@ void Level::buildLevel(float x, float z, unsigned int i, unsigned int j)
 
 void Level::CreateWallPoints(Overlay createOverlay)
 {
-	
+
 	 for(unsigned int i = 0; i < 10; ++i)
         for(unsigned int j = 0; j < 10; ++j)
         {
-            if(Overlay::_overlay[i][j] == 'W')
+            if(createOverlay._overlay[i][j] == 'W')
             {
                 //float x = 10.0f, z = 10.0f;
                 buildLevel(10.0f, 10.0f, i, j);
@@ -52,7 +52,7 @@ void Level::CreateWallPoints(Overlay createOverlay)
     for(unsigned int i = 0; i < 10; ++i)
         for(unsigned int j = 0; j < 10; ++j)
         {
-            if(Overlay::_overlay[i][j] == 'W')
+            if(createOverlay._overlay[i][j] == 'W')
             {
                 //float x = -10.0f, z = 10.0f;
                 buildLevel(-10.0f, 10.0f, i, j);
@@ -61,7 +61,7 @@ void Level::CreateWallPoints(Overlay createOverlay)
     for(unsigned int i = 0; i < 10; ++i)
         for(unsigned int j = 0; j < 10; ++j)
         {
-            if(Overlay::_overlay[i][j] == 'W')
+            if(createOverlay._overlay[i][j] == 'W')
             {
                 //float x = -10.0f, z = -10.0f;
                 buildLevel(-10.0f, -10.0f, i, j);
@@ -71,7 +71,7 @@ void Level::CreateWallPoints(Overlay createOverlay)
     for(unsigned int i = 0; i < 10; ++i)
         for(unsigned int j = 0; j < 10; ++j)
         {
-            if(Overlay::_overlay[i][j] == 'W')
+            if(createOverlay._overlay[i][j] == 'W')
             {
                 //float x = 10.0f, z = -10.0f;
                 buildLevel(10.0f, -10.0f, i, j);

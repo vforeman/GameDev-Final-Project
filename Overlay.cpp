@@ -1,8 +1,11 @@
 #include "Overlay.h"
-char Overlay::_overlay[][];
+int Overlay::OVERLAY_HEIGHT = 20;
+int Overlay::OVERLAY_WIDTH = 20;
+char ** Overlay::_overlay = new char*[Overlay::OVERLAY_WIDTH];
+
 Overlay::Overlay()
 {
-	Initialize();
+	initialize();
 };
 Overlay::~Overlay()
 {
@@ -18,7 +21,7 @@ Overlay::~Overlay()
     float z = pos.z;
     unsigned int i = 0;
     unsigned int j = 0;
-     
+
             i = std::abs((int)roundf(x))/10;
             j = std::abs((int)roundf(z))/10;
 
@@ -54,27 +57,31 @@ bool Overlay:: isObstacle(int, int, int)
 };
 */
 
-void Overlay::Initialize()
+void Overlay::initialize()
 {
+    for(int c = 0; c< Overlay::OVERLAY_HEIGHT;++c)
+    {
+        _overlay[c] = new char[Overlay::OVERLAY_HEIGHT];
+    }
 	for(unsigned int i = 0; i < 20; ++i)
         for(unsigned int j = 0; j < 20; ++j)
             _overlay[i][j] = 'F';
 
 	 for(unsigned int i = 0; i < 5; ++i)
-        Generator::Random(); // Random function from util class instead of generator, Random function was a intermediate call to the Rand() function
+        xorshift(); // Random function from util class instead of generator, Random function was a intermediate call to the Rand() function
 
-	ConstructQuadrant();
+	constructQuadrant();
 
 
 };
 
-void Overlay::ConstructQuadrant()
+void Overlay::constructQuadrant()
 {
-    
+
     for(unsigned int i = 0; i < 20; ++i)
         for(unsigned int j = 0; j < 20; ++j)
         {
-            if(Generator::Random() % 100 >= 90)
+            if(xorshift() % 100 >= 90)
                 _overlay[i][j] = 'W';
         }
 };
