@@ -21,7 +21,7 @@ Camera.o: Camera.cpp Vmath.h
 Dummy.o: Dummy.cpp
 InputController.o:	InputController.cpp	Vmath.h	Camera.h
 Weapon.o: Weapon.cpp	Vmath.h	PhysicsEngine.h
-Enemy.o: Enemy.cpp Vmath.h PhysicsEngine.h Util.h
+Enemy.o: Enemy.cpp Vmath.h PhysicsEngine.h Util.h Graphics.h
 BSP.o: BSP.cpp Util.h
 Overlay.o:	Overlay.cpp
 Level.o: Level.cpp

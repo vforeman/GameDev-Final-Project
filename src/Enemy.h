@@ -9,11 +9,13 @@
 #include "AIManager.h"
 #include "Vmath.h"
 #include "Util.h"
+#include "Graphics.h"
+
 namespace physics{
 /***********************************
 *                   ENEMY SPECIFICATION
 *************************************/
-class Enemy : public PhysicsEntity
+class Enemy : public PhysicsEntity, public Graphics
 {
 public:
     Enemy();
