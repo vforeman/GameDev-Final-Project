@@ -5,12 +5,12 @@
 #define UTIL_H
 #include <iostream>
 #include <string>
-#include <ctime>
+#include <time.h>
 #include <cstdlib>
 #include <cstdint>
 using namespace std;
 namespace util{
-
+static bool init = false;
 
 
 inline uint32_t xorshift()
@@ -31,15 +31,26 @@ inline uint32_t xorshift()
 
 inline bool coinToss()
 {
-	srand(time(NULL));
+	if(!init)
+	{
+		srand(time(NULL));
+		init=true;
+	}
 	return rand()%2;
 }
 
 inline int randomRange(int a, int z)
 {
+	if(!init)
+	{
+		srand(time(NULL));
+		init=true;
+	}
+	cout<<a<<"->"<<z<<endl;
 	int high = ((a < z )? z : a);
 	int low = ((a < z )? a : z);
-	srand(time(NULL));
+
+	cout<<rand()<<" "<<rand()<<endl;
 	return (rand()%(high-low)) + low;
 
 }

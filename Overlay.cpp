@@ -82,10 +82,13 @@ void Overlay::initialize()
 void Overlay::constructQuadrant()
 {
 
-    for(unsigned int i = 0; i < 20; ++i)
-        for(unsigned int j = 0; j < 20; ++j)
+    for(unsigned int i = 0; i < Overlay::OVERLAY_HEIGHT; ++i)
+        for(unsigned int j = 0; j < Overlay::OVERLAY_WIDTH; ++j)
         {
-            if(xorshift() % 100 >= 90)
+            int opt = randomRange(0,100) % 100;
+            std::cout<<opt<<std::endl;
+            if( opt>= 90)
+                cout<<"wall"<<endl;
                 _overlay[i][j] = 'W';
         }
 };
