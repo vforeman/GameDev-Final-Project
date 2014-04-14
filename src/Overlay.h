@@ -13,7 +13,7 @@ class Overlay
 		//static bool isObstacle(Vector3<float>);
 		//static bool isObstacle(int, int, int);
 		void ConstructQuadrant();
-		static char _overlay[20][20];
+		char _overlay[20][20];
 	protected:
 		 
 	private:
