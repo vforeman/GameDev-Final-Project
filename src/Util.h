@@ -44,6 +44,7 @@ inline int randomRange(int a, int z)
 
 }
 
+
 /*inline long unsigned int * randomBinaryMap(int row=0, int col=0)
 :const _row(length),_col(col)
 {
