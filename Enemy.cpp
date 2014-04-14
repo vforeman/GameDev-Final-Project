@@ -2,7 +2,8 @@
 namespace physics{
 
 
-Enemy::Enemy() : _health(100), _alive(true), _point(0)
+Enemy::Enemy() : _health(100),  _alive(true), _point(0),
+                 _alert(false), _ALERT_RADIUS(20.0f)
 {
     
 }

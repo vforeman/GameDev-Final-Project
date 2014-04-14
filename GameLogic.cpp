@@ -1,4 +1,4 @@
-#include "GameLogic.h"
+#include "src/GameLogic.h"
 
 namespace logic
 {

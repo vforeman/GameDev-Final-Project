@@ -1,11 +1,11 @@
 #include <string>
 #include <cassert>
-#include "WindowController.h"
-#include "PhysicsEngine.h"
-#include "LevelFactory.h"
-#include "GraphicsRenderer.h"
-#include "GameLogic.h"
-#include "Util.h"
+#include "src/WindowController.h"
+#include "src/PhysicsEngine.h"
+#include "src/LevelFactory.h"
+#include "src/GraphicsRenderer.h"
+#include "src/GameLogic.h"
+#include "src/Util.h"
 #include <iostream>
 
 
