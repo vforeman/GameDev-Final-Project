@@ -8,7 +8,6 @@
 #include <string>
 #include <string.h>
 #include <vector>
-#include "Generator.h"
 //#include "Constants.h"
 #include "Overlay.h"
 
