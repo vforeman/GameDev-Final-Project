@@ -11,9 +11,9 @@
 #define PHYSICSENGINE_H
 //#include "LevelFactory.h"
 #include "Geometry.h"
-#include "Graphics.h"
 #include "Vmath.h"
 #include <string>
+#include <vector>
 namespace physics{
 
 
@@ -37,7 +37,7 @@ public:
 /***********************************
 *					BULLET SPECIFICATION
 *************************************/
-class Bullet : public PhysicsEntity, public Graphics
+class Bullet : public PhysicsEntity
 {
 public:
  Bullet();
@@ -87,7 +87,9 @@ class PhysicsEngine
 public:
 	static PhysicsEngine * get();
 	~PhysicsEngine();
-
+	static bool spheresphere(Vector3<float>& c1,float r1,Vector3<float> c2,float r2);
+	static float pointdistacesquare(Vector3<float> p1,Vector3<float> p2);
+	
 private:
 	static PhysicsEngine * _instance;
 	static bool _instanceFlag;

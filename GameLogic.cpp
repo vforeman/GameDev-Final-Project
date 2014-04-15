@@ -61,6 +61,23 @@ void GameLogic::start()
 void GameLogic::update()
 {
 	// Handles Check for Collision and other functions that need to be updated
+	// functions test collision with the player against all other spheres
+	// enemposit was a test variable, a vector containing the position of all other spheres, should be replaced with the actual vector
+	// containing enemy positions
+	/*
+	Vector3<float> cameraPos = cam.getLocation();
+	int ii;
+	//std::cout<< enemposit.size() <<std::endl;
+	for(ii=0; ii < enemposit.size(); ii++)
+	{
+		//std::cout<<enemposit[ii]<<std::endl;
+		if(PhysicsEngine::spheresphere(cameraPos,2.0,enemposit[ii],radvec[ii]))
+		{
+		//std::cout<<"collision"<<std::endl;
+		cam.setLocation(Vector3<float>(cameraPos));
+		break;
+		}
+	} */
 };
 //TODO: use Renderer Singleton Here
 
