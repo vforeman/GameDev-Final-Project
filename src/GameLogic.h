@@ -20,21 +20,18 @@ namespace logic{
 /***********************************
 *						GAME LOGIC SPECIFICATION
 *************************************/
-typedef struct
-{
-	Camera * _cam;
-	gamein::InputController * _iController;
-	window::Window * _wController;
+// typedef struct
+// {
 
-	Dummy * _obj;
-}DATA;
+
+// 	Dummy * _obj;
+// }DATA;
 
 class GameLogic
 {
 private:
 	void update();
 	void show();
-	static DATA _data;
 	static GameLogic * _instance;
 	static bool _instanceFlag;
 	GameLogic();

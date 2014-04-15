@@ -30,6 +30,97 @@ void Renderer::init()
 
 
 
+
+void Renderer::drawStatic()
+{std::clog << "Renderer::drawStatic()\n";
+
+  //   if(count%3==0)
+  //     cout<<'\n';
+  //   ++count;
+  //   cout<<f<<',';
+  //   if(count==1024)break;
+  // }
+  // GLuint text =LoadTexture();
+  // glPushMatrix();
+      //loaded with cube data right now
+     //Enable vertex arrays we want to draw with
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+  //glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+  //Connect the arrays themselves
+  // glVertexPointer(3, GL_FLOAT, 0, tileface);
+  cout<<_lvl._staticVertices.size()<<endl;
+  glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
+  glNormalPointer(GL_FLOAT, 0, normals);
+  glColorPointer(3, GL_FLOAT, 0, tilecolor);
+    glPushMatrix();
+     glDrawArrays(GL_LINES, 0,_lvl._staticVertices.size()/3);
+    glPopMatrix();
+
+  //Disable vertex arrays that are no longer in use
+glDisableClientState(GL_VERTEX_ARRAY);
+glDisableClientState(GL_NORMAL_ARRAY);
+glDisableClientState(GL_COLOR_ARRAY);
+// glPopMatrix();
+
+}
+
+void Renderer::drawStatic(Level l)
+{}
+
+void Renderer::drawLevel()
+{
+  drawStatic();
+        //loaded with cube data right now
+     //Enable vertex arrays we want to draw with
+  glEnableClientState(GL_VERTEX_ARRAY);
+  // glEnableClientState(GL_NORMAL_ARRAY);
+  // glEnableClientState(GL_COLOR_ARRAY);
+
+  //Connect the arrays themselves
+  glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices);
+  // glNormalPointer(GL_FLOAT, 0, tilenormal);
+  // glColorPointer(3, GL_FLOAT, 6, checker);
+
+  glDrawArrays(GL_QUADS, 0,_lvl._staticVertices.size());
+
+  //draw randome pillars
+
+  //Disable vertex arrays that are no longer in use
+  glDisableClientState(GL_VERTEX_ARRAY);
+  // glDisableClientState(GL_NORMAL_ARRAY);
+  // glDisableClientState(GL_COLOR_ARRAY);
+
+}
+
+void Renderer::drawSphere()
+{
+ drawDynamic();
+}
+void Renderer::drawDynamic()
+{
+    glEnableClientState(GL_VERTEX_ARRAY);
+  // glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
+
+  //Connect the arrays themselves
+  glVertexPointer(3, GL_FLOAT, 0,&s._verts);
+  // glNormalPointer(GL_FLOAT, 0, tilenormal);
+  glColorPointer(3, GL_FLOAT, 6, checker);
+
+     glDrawArrays(GL_QUADS, 0,s._verts.size());
+
+  //draw randome pillars
+
+  //Disable vertex arrays that are no longer in use
+  glDisableClientState(GL_VERTEX_ARRAY);
+  // glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+}
+
+
+
 GLuint LoadTexture( )
 {
 
@@ -77,96 +168,6 @@ GLuint LoadTexture( )
   free( data );
 
   return texture;
-}
-
-void Renderer::drawStatic()
-{
-  int count =0;
-  /*for(float f : _level.createOverlay._wallPoints)
-  {
-
-    if(count%3==0)
-      cout<<'\n';
-    ++count;
-    cout<<f<<',';
-    if(count==1024)break;
-  }
-  // GLuint text =LoadTexture();
-  // glPushMatrix();
-      //loaded with cube data right now
-     //Enable vertex arrays we want to draw with
-  glEnableClientState(GL_VERTEX_ARRAY);
-  // glEnableClientState(GL_NORMAL_ARRAY);
-  glEnableClientState(GL_COLOR_ARRAY);
-
-  //Connect the arrays themselves
-  // glVertexPointer(3, GL_FLOAT, 0, tileface);
-  glVertexPointer(3, GL_FLOAT, 0, &_level.createOverlay._wallPoints);
-  // glNormalPointer(GL_FLOAT, 0, normals);
-  glColorPointer(3, GL_FLOAT, 0, colors);
-
-     glDrawArrays(GL_QUADS, 0,64);
-
-
-  //Disable vertex arrays that are no longer in use
-glDisableClientState(GL_VERTEX_ARRAY);
-// glDisableClientState(GL_NORMAL_ARRAY);
-glDisableClientState(GL_COLOR_ARRAY);
-// glPopMatrix();*/
-
-}
-
-void Renderer::drawStatic(Level l)
-{}
-
-void Renderer::drawLevel()
-{
-  drawStatic();
-        //loaded with cube data right now
-     //Enable vertex arrays we want to draw with
-  glEnableClientState(GL_VERTEX_ARRAY);
-  // glEnableClientState(GL_NORMAL_ARRAY);
-  glEnableClientState(GL_COLOR_ARRAY);
-
-  //Connect the arrays themselves
-  glVertexPointer(3, GL_FLOAT, 0, &_level.createOverlay._staticVertices);
-  // glNormalPointer(GL_FLOAT, 0, tilenormal);
-  glColorPointer(3, GL_FLOAT, 6, checker);
-
-  glDrawArrays(GL_QUADS, 0,_level.createOverlay._staticVertices.size());
-
-  //draw randome pillars
-
-  //Disable vertex arrays that are no longer in use
-  glDisableClientState(GL_VERTEX_ARRAY);
-  // glDisableClientState(GL_NORMAL_ARRAY);
-  glDisableClientState(GL_COLOR_ARRAY);
-
-}
-
-void Renderer::drawSphere()
-{
- drawDynamic();
-}
-void Renderer::drawDynamic()
-{
-    glEnableClientState(GL_VERTEX_ARRAY);
-  // glEnableClientState(GL_NORMAL_ARRAY);
-  glEnableClientState(GL_COLOR_ARRAY);
-
-  //Connect the arrays themselves
-  glVertexPointer(3, GL_FLOAT, 0,&s._verts);
-  // glNormalPointer(GL_FLOAT, 0, tilenormal);
-  glColorPointer(3, GL_FLOAT, 6, checker);
-
-     glDrawArrays(GL_QUADS, 0,s._verts.size());
-
-  //draw randome pillars
-
-  //Disable vertex arrays that are no longer in use
-  glDisableClientState(GL_VERTEX_ARRAY);
-  // glDisableClientState(GL_NORMAL_ARRAY);
-  glDisableClientState(GL_COLOR_ARRAY);
 }
 
 }// namespace graphics

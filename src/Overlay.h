@@ -10,7 +10,7 @@
 
 using namespace std;
 using namespace util;
-typedef GLfloat Mesh[6][4][3];
+// typedef GLfloat Mesh[6][4][3];
 // typedef GLfloat ** Mesh;
 
 // void destructMesh(Mesh * );
@@ -26,7 +26,7 @@ class Overlay
 		void constructOverlay();
 
 		static vector<vector<char>> _overlay;
-		static vector<Mesh> _staticVertices;
+		static vector<GLfloat> _staticVertices;
 	private:
 		int _numOfWalls;
 		int _numOfFloors;

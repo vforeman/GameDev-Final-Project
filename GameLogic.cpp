@@ -4,29 +4,29 @@ namespace logic
 {
 GameLogic * GameLogic::_instance = NULL;
 bool GameLogic::_instanceFlag = false;
-extern DATA GameLogic::_data;
 
 GameLogic::GameLogic()
 {
 	std::clog << "GameLogic::GameLogic()\n";
 	_renderer = graphics::Renderer::get();
 	_pEngine = physics::PhysicsEngine::get();
-
 	_wController = window::Window::get();
 	_wController->open();
 	_cam = new Camera();
 	_cam->setLocation(Vector3f(0,0.8,0));
 	_iController = gamein::InputController::get();
-	GameLogic::_data._obj = new Dummy();
+	// GameLogic::_data._obj = new Dummy();
+
+	// glClearDepth(100.0);
 	glClearColor(1.0,1.0,1.0,1.0);
-	glEnable( GL_TEXTURE_2D );
+	// glEnable( GL_TEXTURE_2D );
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(45,640/480.0,1,500.0);
 	glMatrixMode(GL_MODELVIEW);
-	glEnable(GL_DEPTH_TEST);
-
-};
+		glEnable(GL_DEPTH_TEST);
+ std::clog << "GameLogic::GameLogic()\n";
+}
 
 GameLogic::~GameLogic()
 {
@@ -46,7 +46,9 @@ void GameLogic::start()
 		start = SDL_GetTicks();
 		running = _iController->HandleInput(_cam,running);
 	//handle logic and rendering below
+	std::clog << "GameLogic::start()->update();\n";
 	update();
+	show();
 	SDL_GL_SwapBuffers();
 	angle+= 0.5;
 	if(angle >360)
@@ -55,7 +57,8 @@ void GameLogic::start()
 	if(1000/FPS > SDL_GetTicks() - start)
 		SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
 	}
-};
+	std::clog << "GameLogic::start()\n";
+}
 
 void GameLogic::update()
 {
@@ -64,18 +67,17 @@ void GameLogic::update()
 //TODO: use Renderer Singleton Here
 
 void GameLogic::show()
-{
+{std::clog << "GameLogic::show()\n";
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	_cam->control();
 	_cam->update();
+	std::cout<<_cam->loc.x<<','<<_cam->loc.y<<','<<_cam->loc.z<<'\n';
 	glTranslatef(0.0,0.0,0.0);
-	GameLogic::_data._obj->drawSphere();
-	glPushMatrix();
+	// GameLogic::_data._obj->drawSphere();
 	_renderer->drawStatic();
-	glPopMatrix();
-
-};
+ std::clog << "GameLogic::show()\n";
+}
 
 GameLogic * GameLogic::get()
 {

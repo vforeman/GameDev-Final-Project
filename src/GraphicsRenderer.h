@@ -12,6 +12,7 @@
 #include "Level.h"
 #include "Geometry.h"
 #include <iostream>
+#include "Overlay.h"
 using namespace std;
 using namespace geo;
 using namespace util;
@@ -33,7 +34,7 @@ public:
 	void drawDynamic();
 
 private:
-	Level _level;
+	Overlay _lvl;
 	Sphere s;
 	static Renderer * _instance;
 	static bool _instanceFlag;

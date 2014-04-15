@@ -1,11 +1,11 @@
 #include "Overlay.h"
 unsigned int Overlay::OVERLAY_HEIGHT = 200;
 unsigned int Overlay::OVERLAY_WIDTH = 200;
-typedef GLfloat  Mesh[6][4][3];
-static Mesh tile;
+// typedef GLfloat  Mesh[6][4][3];
+
 
 vector<vector<char>> Overlay::_overlay (Overlay::OVERLAY_HEIGHT);
-vector<Mesh> Overlay::_staticVertices;
+vector<GLfloat> Overlay::_staticVertices;
 
 // void destructMesh(Mesh * m){
 //     for()
@@ -21,12 +21,8 @@ Overlay::Overlay(){
     //are adjusted for offset from the world origin
     _tx = -((float)Overlay::OVERLAY_WIDTH)/2;
     _ty = -3.0f;//constant floor level
-    _tz = ((float)Overlay::OVERLAY_HEIGHT)/2;
-
+    _tz = -((float)Overlay::OVERLAY_HEIGHT)/2;
     initialize();
-    cout<<typeid(_staticVertices).name()<<endl;
-    cout<<typeid(wall_vertices).name()<<endl;
-    cout<<typeid(Mesh).name()<<endl;
 }
 Overlay::~Overlay(){}
 //initiale and populate char obstacle map
@@ -37,38 +33,40 @@ void Overlay::initialize(){
         //columns of the map; _tz
         for(char &c : s){
             c =  (randomRange(1,10)%10 == 9) ? W() : F();
+            // _tz == ((float)Overlay::OVERLAY_HEIGHT)/2 ? _tz = 0 : ++_tz;
+            ++_tx;
         }
-        _tx == (GLfloat)Overlay::OVERLAY_WIDTH ? _tx = 0 : ++_tx;
-        _tx == (GLfloat)Overlay::OVERLAY_HEIGHT ? _tz = 0 : ++_tz;
+        _tx = -((float)Overlay::OVERLAY_HEIGHT)/2;
+        // _tx == ((float)Overlay::OVERLAY_WIDTH)/2 ? _tx = 0: ++_tx;
+        ++_tz;
+
     }
-    constructOverlay();
 }
 char Overlay::W(){
+    GLfloat tile[] ={
 
-    // for( float (&vertices)[3] : *wall_vertices){
-    //     for(float (&coords) : vertices){
-    //         cout<<coords<<endl;
-    //         staticVertices.emplace_back(coords);
-    //     }
-    // }
-    cout<<'\n';
+         0.4f+_tx , 10.0f+_ty , 0.4f+_tz     ,-0.4f+_tx , 10.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 10.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 10.0f+_ty ,-0.4f+_tz,  //top
+         0.4f+_tx , 10.0f+_ty , 0.4f+_tz     ,-0.4f+_tx , 10.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    , 0.4f+_tx , 0.0f+_ty , 0.4f+_tz , //north
+         0.4f+_tx , 10.0f+_ty , 0.4f+_tz     , 0.4f+_tx , 10.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty , 0.4f+_tz,  //east
+         0.4f+_tx , 10.0f+_ty ,-0.4f+_tz     ,-0.4f+_tx , 10.0f+_ty ,-0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //south
+        -0.4f+_tx , 10.0f+_ty ,-0.4f+_tz     ,-0.4f+_tx , 10.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //west
+         0.4f+_tx , 0.0f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //bot
+    };
+    _staticVertices.insert( _staticVertices.end() , tile , tile + sizeof(tile)/sizeof(GLfloat));
     _numOfWalls++;
     return 'W';
 }
 char Overlay::F(){
-    Mesh tile ={
+    GLfloat tile[] ={
 
-        {{ 0.4f+_tx , 0.2f+_ty , 0.4f+_tz } , {-0.4f+_tx , 0.2f+_ty , 0.4f+_tz } ,{-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz } ,{ 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz }} ,//top
-        {{ 0.4f+_tx , 0.2f+_ty , 0.4f+_tz } , {-0.4f+_tx , 0.2f+_ty , 0.4f+_tz } ,{-0.4f+_tx , 0.0f+_ty , 0.4f+_tz } ,{ 0.4f+_tx , 0.0f+_ty , 0.4f+_tz }} ,//north
-        {{ 0.4f+_tx , 0.2f+_ty , 0.4f+_tz } , { 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz } ,{ 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz } ,{ 0.4f+_tx , 0.0f+_ty , 0.4f+_tz }} ,//east
-        {{ 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz } , {-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz } ,{-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz } ,{ 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz }} ,//south
-        {{-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz } , {-0.4f+_tx , 0.2f+_ty , 0.4f+_tz } ,{-0.4f+_tx , 0.0f+_ty , 0.4f+_tz } ,{-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz }} ,//west
-        {{ 0.4f+_tx , 0.0f+_ty , 0.4f+_tz } , {-0.4f+_tx , 0.0f+_ty , 0.4f+_tz } ,{-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz } ,{ 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz }}  //bot
+         0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //top
+         0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    , 0.4f+_tx , 0.0f+_ty , 0.4f+_tz , //north
+         0.4f+_tx , 0.2f+_ty , 0.4f+_tz     , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty , 0.4f+_tz,  //east
+         0.4f+_tx , 0.2f+_ty ,-0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //south
+        -0.4f+_tx , 0.2f+_ty ,-0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //west
+         0.4f+_tx , 0.0f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //bot
     };
-    _staticVertices.emplace_back(&tile);
-
-
-
+    _staticVertices.insert( _staticVertices.end() , tile , tile + sizeof(tile)/sizeof(GLfloat));
     ++_numOfFloors;
     return 'F';
 }

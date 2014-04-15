@@ -11,10 +11,9 @@ class Level
 	public:
 		Level();
 		// void buildLevel(float x, float z, unsigned int i, unsigned int j);
-		void CreateWallPoints(Overlay);
+		void CreateWallPoints();
 
 
-		Overlay createOverlay;
 };
 
 

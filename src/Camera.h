@@ -13,7 +13,7 @@
 
 class Camera
 {
-	Vector3f loc;
+
 	float camYaw;
 	float camPitch;
 	float speed;
@@ -23,6 +23,7 @@ class Camera
 	void moveCamera(const float& dir);
 	void moveCameraUp(const float& dir);
 	public:
+	Vector3f loc;
 	Camera();
 	Camera(const Vector3f & loc);
 	Camera(const Vector3f & loc,const float& yaw,const float& pitch);

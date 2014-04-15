@@ -37,7 +37,7 @@ Level::Level()
 };*/
 
 
-void Level::CreateWallPoints(Overlay createOverlay)
+void Level::CreateWallPoints()
 {
     // for(std::vector<Mesh>::iterator it;it != createOverlay._staticVertices.end() ; ++it)
     // {
