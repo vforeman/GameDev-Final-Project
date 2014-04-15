@@ -81,37 +81,38 @@ GLuint LoadTexture( )
 
 void Renderer::drawStatic()
 {
-  GLuint text =LoadTexture();
+  int count =0;
+  /*for(float f : _level.createOverlay._wallPoints)
+  {
+
+    if(count%3==0)
+      cout<<'\n';
+    ++count;
+    cout<<f<<',';
+    if(count==1024)break;
+  }
+  // GLuint text =LoadTexture();
+  // glPushMatrix();
       //loaded with cube data right now
      //Enable vertex arrays we want to draw with
   glEnableClientState(GL_VERTEX_ARRAY);
-  glEnableClientState(GL_NORMAL_ARRAY);
+  // glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
 
   //Connect the arrays themselves
-  glVertexPointer(3, GL_FLOAT, 0, tileface);
-  glNormalPointer(GL_FLOAT, 0, tilenormal);
-  glColorPointer(3, GL_FLOAT, 6, checker);
-   //draw floor
-    for(float z =-50; z < 50; ++z)
-  {
-    for(float x = -50; x < 50; ++x)
-   {
-    glPushMatrix();
-    glTranslatef(4*z,-2,4*x);
-    glScalef(2,.1,2);
-     glDrawArrays(GL_QUADS, 0,24);
+  // glVertexPointer(3, GL_FLOAT, 0, tileface);
+  glVertexPointer(3, GL_FLOAT, 0, &_level.createOverlay._wallPoints);
+  // glNormalPointer(GL_FLOAT, 0, normals);
+  glColorPointer(3, GL_FLOAT, 0, colors);
 
+     glDrawArrays(GL_QUADS, 0,64);
 
-
-      glPopMatrix();
-    }
-  }
-  //draw randome pillars
 
   //Disable vertex arrays that are no longer in use
-glDisableClientState(GL_VERTEX_ARRAY);   glDisableClientState(GL_NORMAL_ARRAY);
+glDisableClientState(GL_VERTEX_ARRAY);
+// glDisableClientState(GL_NORMAL_ARRAY);
 glDisableClientState(GL_COLOR_ARRAY);
+// glPopMatrix();*/
 
 }
 
@@ -128,11 +129,11 @@ void Renderer::drawLevel()
   glEnableClientState(GL_COLOR_ARRAY);
 
   //Connect the arrays themselves
-  glVertexPointer(3, GL_FLOAT, 0, &_level._wallPoints);
+  glVertexPointer(3, GL_FLOAT, 0, &_level.createOverlay._staticVertices);
   // glNormalPointer(GL_FLOAT, 0, tilenormal);
   glColorPointer(3, GL_FLOAT, 6, checker);
 
-  glDrawArrays(GL_QUADS, 0,_level._wallPoints.size());
+  glDrawArrays(GL_QUADS, 0,_level.createOverlay._staticVertices.size());
 
   //draw randome pillars
 

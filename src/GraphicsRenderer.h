@@ -11,6 +11,7 @@
 #include "Util.h"
 #include "Level.h"
 #include "Geometry.h"
+#include <iostream>
 using namespace std;
 using namespace geo;
 using namespace util;

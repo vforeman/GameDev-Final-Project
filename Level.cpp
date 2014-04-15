@@ -6,7 +6,7 @@ Level::Level()
 
 
 };
-void Level::buildLevel(float x, float z, unsigned int i, unsigned int j)
+/*void Level::buildLevel(float x, float z, unsigned int i, unsigned int j)
 {
 
                 float addX = x;
@@ -34,13 +34,16 @@ void Level::buildLevel(float x, float z, unsigned int i, unsigned int j)
                 _wallPoints.push_back(x*float(i)+addX);   _wallPoints.push_back(10.0f);      _wallPoints.push_back(z*float(j));
                 _wallPoints.push_back(x*float(i)+addX);   _wallPoints.push_back(10.0f);      _wallPoints.push_back(z*float(j)+addZ);
                 _wallPoints.push_back(x*float(i)+addX);   _wallPoints.push_back(0.0f);       _wallPoints.push_back(z*float(j)+addZ);
-};
+};*/
 
 
 void Level::CreateWallPoints(Overlay createOverlay)
 {
-
-	 for(unsigned int i = 0; i < 10; ++i)
+    // for(std::vector<Mesh>::iterator it;it != createOverlay._staticVertices.end() ; ++it)
+    // {
+    //     clog<<"running\n";
+    // }
+/*	 for(unsigned int i = 0; i < 10; ++i)
         for(unsigned int j = 0; j < 10; ++j)
         {
             if(createOverlay._overlay[i][j] == 'W')
@@ -76,5 +79,5 @@ void Level::CreateWallPoints(Overlay createOverlay)
                 //float x = 10.0f, z = -10.0f;
                 buildLevel(10.0f, -10.0f, i, j);
             }
-        }
+        }*/
 };

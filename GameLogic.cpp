@@ -47,7 +47,6 @@ void GameLogic::start()
 		running = _iController->HandleInput(_cam,running);
 	//handle logic and rendering below
 	update();
-	show();
 	SDL_GL_SwapBuffers();
 	angle+= 0.5;
 	if(angle >360)
@@ -72,8 +71,9 @@ void GameLogic::show()
 	_cam->update();
 	glTranslatef(0.0,0.0,0.0);
 	GameLogic::_data._obj->drawSphere();
+	glPushMatrix();
 	_renderer->drawStatic();
-
+	glPopMatrix();
 
 };
 
