@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "src/Overlay.h"
 
 unsigned int Overlay::OVERLAY_HEIGHT = 200;
