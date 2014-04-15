@@ -60,7 +60,10 @@ bool Overlay::isObstacle(int x, int z)
 {
     return _overlay[x][z] == 'W';
 }
-
+bool Overlay::isObstacle(int x, int y, int z)
+{
+    return Overlay::isObstacle(x, z);
+}
 
 void Overlay::initialize()
 {

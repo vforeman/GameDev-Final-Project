@@ -15,14 +15,15 @@ class Weapon
 {
 public:
  Weapon();
+ Weapon(unsigned int);
  void fire(/*Vector3f*/);
  void iterate(); //Container iterate update on all bullets fired
  void reload();
 private:
  bool _reloading;
  unsigned int _clip;
- static int MAX_CLIP_SIZE;
- Bullet _magazine;
+ const int _MAX_CLIP_SIZE;
+ Bullet** _magazine;
 };
 }// namespace physics
 #endif //WEAPON_H

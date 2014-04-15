@@ -1,4 +1,4 @@
-#include "Generator.h"
+#include "src/Generator.h"
 
 
 uint32_t Generator::Rand()
