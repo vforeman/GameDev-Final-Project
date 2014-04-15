@@ -1,4 +1,4 @@
-#include "PhysicsEngine.h"
+#include "src/PhysicsEngine.h"
 namespace physics{
 
 /***********************************
@@ -83,14 +83,16 @@ PhysicsEngine * PhysicsEngine::get()
 }
 
 
-bool PhysicsEngine::spheresphere(Vector3<float>& c1,float r1,Vector3<float> c2,float r2)
+bool PhysicsEngine::spheresphere(Vector3<float>& c1,float _radius1,Vector3<float> c2,float _radius2)
 {
 	//std::cout<<c2<<std::endl;
 	float dist=pointdistacesquare(c1,c2);
-	if(dist<=(r1+r2)*(r1+r2))
+	std::cout<<dist<<std::endl;
+	//float dist = 0.0f;
+	if(dist<=(_radius1+_radius2)*(_radius1+_radius2))
 	{
 		std::cout<<c2<<std::endl;
-		float a=sqrt(dist)-(r1+r2);
+		float a=sqrt(dist)-(_radius1+_radius2);
 		Vector3<float> vec(c2-c1);
 		vec.normalize();
 		c1=c1+vec*a;
@@ -101,6 +103,7 @@ bool PhysicsEngine::spheresphere(Vector3<float>& c1,float r1,Vector3<float> c2,f
 
 float PhysicsEngine::pointdistacesquare(Vector3<float> p1,Vector3<float> p2)
 {
+	//std::cout<<p2<<std::endl;
 	Vector3<float> vec(p2.x-p1.x,p2.y-p1.y,p2.z-p1.z);
 	return (vec.x*vec.x+vec.y*vec.y+vec.z*vec.z);
 }

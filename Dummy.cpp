@@ -15,7 +15,7 @@ void Dummy::drawSphere()
 
 
 	glPushMatrix();
-
+	glTranslatef(pos.x,pos.y,pos.z);
 	for(angle2 = -T_PI/2 ; angle2<=T_PI/2; angle2+= RESL)
 	{
 		glBegin(GL_QUAD_STRIP);
@@ -52,6 +52,19 @@ void Dummy::drawEnvironment()
 	glPopMatrix();
 
 
+};
+
+void Dummy::setPosition(float x, float y, float z)
+{
+	pos.x = x;
+	pos.y = y;
+	pos.z = z;
+
+};
+
+Vector3<float> Dummy::getPosition()
+{
+	return pos;
 };
 
 

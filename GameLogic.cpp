@@ -15,9 +15,10 @@ GameLogic::GameLogic()
 	_wController = window::Window::get();
 	_wController->open();
 	_cam = new Camera();
-	_cam->setLocation(Vector3f(0,0.8,0));
+	_cam->setLocation(Vector3f(0,0.2,0));
 	_iController = gamein::InputController::get();
 	GameLogic::_data._obj = new Dummy();
+	GameLogic::_data._obj->setPosition(10.0,0.0,0.0);
 	glClearColor(1.0,1.0,1.0,1.0);
 	glEnable( GL_TEXTURE_2D );
 	glMatrixMode(GL_PROJECTION);
@@ -78,6 +79,14 @@ void GameLogic::update()
 		break;
 		}
 	} */
+
+	Vector3<float> cameraPos = _cam->getLocation();
+	Vector3<float> enempos = GameLogic::_data._obj->getPosition();
+	if(physics::PhysicsEngine::spheresphere(cameraPos,2.0,enempos,2.0))
+		{
+		std::cout<<"collision"<<std::endl;
+		_cam->setLocation(Vector3<float>(cameraPos));
+		} 
 };
 //TODO: use Renderer Singleton Here
 
@@ -87,7 +96,7 @@ void GameLogic::show()
 	glLoadIdentity();
 	_cam->control();
 	_cam->update();
-	glTranslatef(0.0,0.0,0.0);
+	//glTranslatef(0.0,0.0,0.0);
 	GameLogic::_data._obj->drawSphere();
 	_renderer->drawStatic();
 
