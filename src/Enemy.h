@@ -6,25 +6,32 @@
 
 #include <vector>
 #include "PhysicsEngine.h"
+#include "AIManager.h"
 #include "Vmath.h"
 #include "Util.h"
+#include "Graphics.h"
+
 namespace physics{
 /***********************************
 *                   ENEMY SPECIFICATION
 *************************************/
-class Enemy : public PhysicsEntity
+class Enemy : public PhysicsEntity, public Graphics
 {
 public:
- Enemy();
- int _health;
- void attack();
- void die();
- void patrol();
+    Enemy();
+    int _health;
+    const float _ALERT_RADIUS;
+    void attack();
+    void die();
+    void patrol();
 private:
- bool _alive;
- std::vector< Vector3f > _patrolPath;
- void createSimplePatrol();
- void target();
+    bool _alive;
+    bool _alert;
+    unsigned int _point;    //Point on patrol path, treated as iterator
+    std::vector< Vector3f > _patrolPath;
+    void createSimplePatrol();
+    void createStrongPatrol();  
+    void target();
 };
 }//namespace physics
 #endif// ENEMY_H

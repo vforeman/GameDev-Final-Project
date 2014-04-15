@@ -80,16 +80,30 @@ bool Node::isSamePosition(const Node& that)
 
 bool Node::isSamePosition(const Node* that)
 {
-    if(std::abs(that->_x - this->_x) <= 15 && std::abs(that->_z - this->_z) <= 15)
+    if(std::abs(that->_x - this->_x) < 10 && std::abs(that->_z - this->_z) < 10)
         return true;
     else
         return false;
 
 }
 
+bool Node::isSamePosition(int x, int y, int z)
+{
+    if(std::abs(x - this->_x) < 10 && std::abs(z - this->_z) < 10)
+        return true;
+    else 
+        return false;
+}
+    
 void Node::calculateFn()
 {
     _f  = _g + _h;
+}
+
+void Node::setParent(Node* that)
+{
+    this->_parent = new Node();
+    this->_parent = that;
 }
 
 void Node::traverse(std::vector < Vector3f >& path)

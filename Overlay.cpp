@@ -1,4 +1,5 @@
-#include "Overlay.h"
+#include "src/Overlay.h"
+
 unsigned int Overlay::OVERLAY_HEIGHT = 200;
 unsigned int Overlay::OVERLAY_WIDTH = 200;
 // typedef GLfloat  Mesh[6][4][3];
@@ -131,7 +132,10 @@ bool Overlay::isObstacle(int x, int z)
 {
     return _overlay[x][z] == 'W';
 }
-
+bool Overlay::isObstacle(int x, int y, int z)
+{
+    return Overlay::isObstacle(x, z);
+}
 
 // void Overlay::initialize()
 // {

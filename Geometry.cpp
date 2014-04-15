@@ -1,4 +1,4 @@
-#include "Geometry.h"
+#include "src/Geometry.h"
 namespace geo{
 
 Rectangle::Rectangle():_bound(Vector4f())

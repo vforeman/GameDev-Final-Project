@@ -22,6 +22,7 @@ class Overlay
 		Overlay();//calls initialize function
 		~Overlay();
 		static bool isObstacle(Vector3f);
+        static bool isObstacle(int, int, int);
 		static bool isObstacle(int, int);
 		void constructOverlay();
 

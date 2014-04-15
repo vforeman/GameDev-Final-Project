@@ -1,4 +1,4 @@
-#include "WindowController.h"
+#include "src/WindowController.h"
 namespace window{
 
 bool Window::_instanceFlag = false;

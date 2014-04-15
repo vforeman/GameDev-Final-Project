@@ -2,12 +2,14 @@
 #define AIMANAGER_H
 
 #include "Node.h"
+#include "Overlay.h"
 #include <vector>
 #include <algorithm>
 
 class AIManager
 {
     public:
+        Vector3f _player;                       //Position of player updated, used to determine alert of enemies
         static AIManager& getInstance();
         Node* astar( Vector3f, Vector3f );       //A-Star search
     private:

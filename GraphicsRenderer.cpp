@@ -1,4 +1,4 @@
-#include "GraphicsRenderer.h"
+#include "src/GraphicsRenderer.h"
 namespace graphics{
 
 bool Renderer::_instanceFlag = false;

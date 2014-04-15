@@ -1,4 +1,4 @@
-#include "InputController.h"
+#include "src/InputController.h"
 namespace gamein{
 bool InputController::_instanceFlag = false;
 InputController * InputController::_instance = NULL;
