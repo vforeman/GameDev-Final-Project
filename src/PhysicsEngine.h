@@ -11,6 +11,7 @@
 #define PHYSICSENGINE_H
 //#include "LevelFactory.h"
 #include "Geometry.h"
+#include "Graphics.h"
 #include "Vmath.h"
 #include <string>
 namespace physics{
@@ -36,7 +37,7 @@ public:
 /***********************************
 *					BULLET SPECIFICATION
 *************************************/
-class Bullet : public PhysicsEntity
+class Bullet : public PhysicsEntity, public Graphics
 {
 public:
  Bullet();
