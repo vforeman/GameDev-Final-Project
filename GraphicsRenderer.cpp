@@ -52,9 +52,39 @@ void Renderer::drawStatic()
 
 void Renderer::drawDynamic()
 {
-
+    for(unsigned int i = 0; i < _drawObjects.size(); ++i)
+    {
+        try
+        {
+            ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
+            glPushMatrix();
+                glTranslatef(e->_position.x, e->_position.y, e->_position.z);
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glVertexPointer(3, GL_FLOAT, 0, &e->_verts[0]);
+                glDrawArrays(GL_TRIANGLES, 0, e->_verts.size()/3);
+                glDisableClientState(GL_VERTEX_ARRAY);
+            glPopMatrix();
+        }
+        catch(exception e)
+        {
+            printf("Exception: %s\n", e.what());
+        }
+    }
 }
 
+void Renderer::registerGraphics(Graphics* g)
+{
+    //Register graphics Objects with dynamic draw array
+    _drawObjects.push_back(g);
+}
+
+void Renderer::emptyObjects()
+{
+    //If all enemies are defeated empty draw container
+    //Will clear the graphics array
+    //Might be good with end cleanup of game
+    _drawObjects.clear();
+}
 
 GLuint Renderer::loadBMP(){
 

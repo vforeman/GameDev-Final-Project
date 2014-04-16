@@ -9,6 +9,14 @@ Enemy::Enemy() : _health(100),  _alive(true), _point(0),
     createSimplePatrol();
 }
 
+Enemy::Enemy(Vector3f pos) : _health(100), _alive(true), _point(0),
+                             _alert(false), _ALERT_RADIUS(20.0f)
+{
+    _position = pos;
+    initialize("Circle");
+    createSimplePatrol();
+}
+
 void Enemy::attack(Vector3f target)
 {
     

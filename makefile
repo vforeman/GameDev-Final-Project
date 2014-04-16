@@ -13,7 +13,7 @@ Main: $(OBJECTS)
 PhysicsEngine.o: PhysicsEngine.cpp Vmath.h Geometry.h Graphics.h
 Main.o: Main.cpp WindowController.o PhysicsEngine.o Enemy.o Weapon.o GraphicsRenderer.o GameLogic.o BSP.o Overlay.o AIManager.o InputController.h WindowController.h Camera.h GraphicsRenderer.h WindowController.h
 WindowController.o: WindowController.cpp PhysicsEngine.h InputController.h Util.h GraphicsRenderer.h
-GraphicsRenderer.o: GraphicsRenderer.cpp Vmath.h Assets.h Geometry.h Overlay.h Util.h Graphics.h
+GraphicsRenderer.o: GraphicsRenderer.cpp Vmath.h Assets.h Geometry.h Overlay.h Util.h Graphics.h Enemy.h
 Geometry.o: Geometry.cpp Vmath.h
 GameLogic.o: GameLogic.cpp InputController.h WindowController.h Camera.h GraphicsRenderer.h Enemy.h
 Camera.o: Camera.cpp Vmath.h

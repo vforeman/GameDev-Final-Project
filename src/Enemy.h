@@ -16,10 +16,11 @@ namespace physics{
 /***********************************
 *                   ENEMY SPECIFICATION
 *************************************/
-class Enemy : public PhysicsEntity, public Graphics
+class Enemy : public PhysicsEntity, virtual public Graphics
 {
 public:
     Enemy();
+    Enemy(Vector3f);
     int _health;
     const float _ALERT_RADIUS;
     void attack(Vector3f);

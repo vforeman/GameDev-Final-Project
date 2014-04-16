@@ -13,8 +13,10 @@
 #include <iostream>
 #include "Overlay.h"
 #include "Graphics.h"
+#include "Enemy.h"
 #include <string>
 #include <vector>
+#include <exception>
 
 using namespace std;
 using namespace geo;
@@ -31,12 +33,14 @@ public:
 	~Renderer();
 	void drawStatic();
 	void drawDynamic();
-
+    void registerGraphics(Graphics*);
+    void emptyObjects();
 private:
 	Overlay _lvl;
 	static Renderer * _instance;
 	static bool _instanceFlag;
 	static bool _firstDraw;
+    std::vector<Graphics*> _drawObjects;    //Register graphics objects i.e. Enemy
 	bool _textureFlag;
 	Renderer();
  GLuint loadBMP();

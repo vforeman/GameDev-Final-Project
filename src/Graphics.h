@@ -26,7 +26,7 @@ class Graphics
 {
     public:
         Graphics();
-        void initialize(std::string);
+        virtual void initialize(std::string);
         std::vector<float> _verts;
     protected:
         bool _initialized;

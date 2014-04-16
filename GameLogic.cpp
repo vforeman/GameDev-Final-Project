@@ -28,7 +28,9 @@ void GameLogic::start()
 	_cam = new Camera();
 	_cam->setLocation(Vector3f(0,0.8,0));
 	_iController = gamein::InputController::get();
-    _enemies.push_back(new ::physics::Enemy());
+    
+    _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.0f, 0.0f)));
+    _renderer->registerGraphics(_enemies[0]);
 
 	glEnable(GL_DEPTH_TEST);
 	// glEnable(GL_LIGHTING);
@@ -94,6 +96,7 @@ void GameLogic::show()
 	_cam->update();
 	// glTranslatef(0.0,0.0,0.0);
 	_renderer->drawStatic();
+    //_renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
  std::clog << "GameLogic::show()\n";
 }
 
