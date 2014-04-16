@@ -8,6 +8,7 @@
 #include "Vmath.h"
 #include "Util.h"
 #include "Assets.h"
+#include "levels.h"
 
 using namespace std;
 using namespace util;
@@ -40,10 +41,10 @@ class Overlay
 		 * calls void constructQuadrant()]
 		 */
 		void initialize();
-		void init();
+		void initializeTestLevel();
 		char W();//add wall to static data
 		char F();//add tile to static data
-  void initializeTestLevel();
+
 };
 
 #endif

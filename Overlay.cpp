@@ -18,12 +18,15 @@ Overlay::Overlay(){
     _ty = -3.0f;//constant floor level
     _tz = -((float)Overlay::OVERLAY_HEIGHT)/2.0;
     // initializeTestLevel();
-    init();
+    initialize();
 
 }
-Overlay::~Overlay(){}
+
+Overlay::~Overlay()
+{}
+
 //initiate and populate char obstacle map
-void Overlay::init(){
+void Overlay::initialize(){
     char connected = 'U';
     //rows of the map; _tx
     for(vector<char> &s : _overlay){
@@ -81,55 +84,5 @@ bool Overlay::isObstacle(int x, int y, int z)
     return Overlay::isObstacle(x, z);
 }
 
-/*
-void Overlay::initialize()
-{
-    for(int c = 0; c< Overlay::OVERLAY_HEIGHT;++c)
-    {
-        _overlay[c] = new char[Overlay::OVERLAY_HEIGHT];
-    }
-	for(unsigned int i = 0; i < Overlay::OVERLAY_HEIGHT; ++i)
-        for(unsigned int j = 0; j < Overlay::OVERLAY_WIDTH; ++j)
-            _overlay[i][j] = 'F';
-        //!!this for loop does absolutely nothing
-	 for(unsigned int i = 0; i < 5; ++i)
-        xorshift(); // Random function from util class instead of generator, Random function was a intermediate call to the Rand() function
-
-	constructQuadrant();
-
-
-};
-
-void Overlay::constructQuadrant()
-{
-
-    for(unsigned int i = 0; i < Overlay::OVERLAY_HEIGHT; ++i)
-        for(unsigned int j = 0; j < Overlay::OVERLAY_WIDTH; ++j)
-        {
-            int opt = randomRange(0,100) % 100;
-            std::cout<<opt<<std::endl;
-            if( opt>= 90)
-                cout<<"wall"<<endl;
-                _overlay[i][j] = 'W';
-        }
-};
-
-void Overlay::initializeTestLevel()
-{
-    for(unsigned int c = 0; c < Overlay::OVERLAY_HEIGHT; ++c)
-        _overlay[c] = new char[Overlay::OVERLAY_HEIGHT];
-
-
-    if(Overlay::OVERLAY_HEIGHT == 100)
-        for(unsigned int i = 0; i < Overlay::OVERLAY_HEIGHT; ++i)
-            for(unsigned int j = 0; j < Overlay::OVERLAY_WIDTH; ++j)
-                _overlay[i][j] = LEVEL_ONE[i][j];
-    else if(Overlay::OVERLAY_HEIGHT == 200)
-        for(unsigned int i = 0; i < Overlay::OVERLAY_HEIGHT; ++i)
-            for(unsigned int j = 0; j < Overlay::OVERLAY_WIDTH; ++j)
-                _overlay[i][j] = LEVEL_TWO[i][j];
-    else
-        initialize();
-}*/
 
 
