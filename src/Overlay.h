@@ -2,6 +2,7 @@
 #define OVERLAY_H
 #include "Vmath.h"
 #include "Util.h"
+#include "levels.h"
 #include <iostream>
 
 using namespace util;
@@ -26,7 +27,7 @@ class Overlay
 		 * calls void constructQuadrant()]
 		 */
 		void initialize();
-
+        void initializeTestLevel();
 };
 
 #endif

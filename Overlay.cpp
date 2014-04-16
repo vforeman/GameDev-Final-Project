@@ -97,3 +97,20 @@ void Overlay::constructQuadrant()
         }
 };
 
+void Overlay::initializeTestLevel()
+{
+    for(unsigned int c = 0; c < Overlay::OVERLAY_HEIGHT; ++c)
+        _overlay[c] = new char[Overlay::OVERLAY_HEIGHT];
+
+    
+    if(Overlay::OVERLAY_HEIGHT == 100)
+        for(unsigned int i = 0; i < Overlay::OVERLAY_HEIGHT; ++i)
+            for(unsigned int j = 0; j < Overlay::OVERLAY_WIDTH; ++j)
+                _overlay[i][j] = LEVEL_ONE[i][j];
+    else if(Overlay::OVERLAY_HEIGHT == 200)
+        for(unsigned int i = 0; i < Overlay::OVERLAY_HEIGHT; ++i)
+            for(unsigned int j = 0; j < Overlay::OVERLAY_WIDTH; ++j)
+                _overlay[i][j] = LEVEL_TWO[i][j];
+    else
+        initialize();
+}
