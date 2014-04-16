@@ -28,7 +28,7 @@ inline uint32_t xorshift()
  _x = _y;
  _y = _z;
  _z = _w;
- return _w = _w & (((_w >> 19) ^ _t) ^ (_t>>8));
+ return _w = _w ^ (((_w >> 19) ^ _t) ^ (_t>>8));
 }
 
 inline bool coinToss(){
