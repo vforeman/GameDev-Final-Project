@@ -34,7 +34,7 @@ public:
 	std::vector<Vector3<float> > enempos;
     void run();
 	void start();
-	void ranjaytest(std::vector<Vector3<float> > e);
+	void ranjaytest(std::vector<Vector3<float> >& e);
 
 };
 

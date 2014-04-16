@@ -106,7 +106,7 @@ bool PhysicsEngine::spheresphere(Vector3<float>& c1,float _radius1,Vector3<float
 	//temp.x = temp.z * 10;
 	//std::cout<<"first object: "<<c1<<std::endl;
 	std::cout<<"first object: "<<c1<<std::endl;
-	//std::cout<<"secod object: "<<c2<<std::endl; 
+	std::cout<<"secod object: "<<c2<<std::endl; 
 	/*if(temp.x > 10)
 	temp.x / 10; */
 	float dist=pointdistacesquare(c1,c2);

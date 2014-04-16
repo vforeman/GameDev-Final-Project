@@ -28,7 +28,7 @@ void GameLogic::start()
 	_cam = new Camera();
 	_cam->setLocation(Vector3f(0,0.2,0));
 	_iController = gamein::InputController::get();
-    
+
     _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.0f, 0.0f)));
     _renderer->registerGraphics(_enemies[0]);
 
@@ -63,17 +63,17 @@ void GameLogic::update()
 	//Vector3<float> enempos(10,0,0);
 	//std::cout<<"camera posit: "<<cameraPos<<std::endl;
 	
-	/*
+	
 	for(int i = 0 ; i < enempos.size(); i++)
 	{
-		std::cout<<"for loop!!!!!"<<std::endl;
+		//std::cout<<"for loop!!!!!"<<std::endl;
 	if(physics::PhysicsEngine::spheresphere(cameraPos,2.0,enempos[i],2.0))
 		{
-		std::cout<<"collision "<<std::endl;
-		//_cam->setLocation(Vector3<float>(cameraPos));
+		std::cout<<"collision \n collision \n collision "<<std::endl;
+		//_cam->setLocation(Vec tor3<float>(cameraPos));
 		}  
 	}
-	*/
+	
 };	
 
 
@@ -90,27 +90,25 @@ void GameLogic::run()
 		start = SDL_GetTicks();
 		running = _iController->HandleInput(_cam,running);
 
-	  //handle logic and rendering below
+
 	    std::clog << "GameLogic::start()->update();\n";
 	    update();
 	    show();
-	    
+
         // glDepthFunc(GL_LESS);//Would this help?
 	    SDL_GL_SwapBuffers();
 	    angle+= 0.5;
 	    if(angle >360)
 		    angle-=360;
-	    
+
         // handle framemanagement
 	    if(1000/FPS > SDL_GetTicks() - start)
 		    SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
-	}   
+	}
 	std::clog << "GameLogic::start()\n";
-	
-};
 
+}
 
-//TODO: use Renderer Singleton Here
 
 
 void GameLogic::show()
@@ -121,7 +119,6 @@ void GameLogic::show()
 	_cam->update();
 
 
-	// glTranslatef(0.0,0.0,0.0);
 	_renderer->drawStatic();
     //_renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
  std::clog << "GameLogic::show()\n";
@@ -142,30 +139,42 @@ GameLogic * GameLogic::get()
 }
 
 
-void GameLogic::ranjaytest(std::vector<Vector3<float> > e)
+void GameLogic::ranjaytest(std::vector<Vector3<float> >& e)
 {
 	Vector3f test = Vector3f(10.0f, 0.0f, 0.0f);
 	for (int i = 0; i <= 20; i++)
 	{
-		test.x = test.z + i;
+		test.z = test.z + i;
 		e.push_back(test );
 	}
 	test = Vector3f(10.0f, 0.0f, 0.0f);
 	for (int i = 0; i <= 20; i++)
 	{
-		test.x = test.z - i;
+		test.z = test.z - i;
+		e.push_back(test );
+	}
+	test = Vector3f(-10.0f, 0.0f, 0.0f);
+	for (int i = 0; i <= 20; i++)
+	{
+		test.z = test.z + i;
+		e.push_back(test );
+	}
+	test = Vector3f(-10.0f, 0.0f, 0.0f);
+	for (int i = 0; i <= 20; i++)
+	{
+		test.z = test.z - i;
 		e.push_back(test );
 	}
 	test = Vector3f(10.0f, 0.0f, 10.0f);
 	for (int i = 0; i <= 20; i++)
 	{
-		test.z = test.x - i;
+		test.x = test.x - i;
 		e.push_back(test );
 	}
-	test = Vector3f(10.0f, 0.0f, -10.0f);
+	test = Vector3f(-10.0f, 0.0f, -10.0f);
 	for (int i = 0; i <= 20; i++)
 	{
-		test.z = test.x + i;
+		test.x = test.x + i;
 		e.push_back(test );
 	}
 
