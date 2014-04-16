@@ -28,7 +28,7 @@ public:
 	~Renderer();
 	void drawStatic();
 	void drawDynamic();
-
+ void drawHud();
 private:
 	Overlay _lvl;
 	static Renderer * _instance;

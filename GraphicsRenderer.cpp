@@ -44,6 +44,8 @@ void Renderer::drawStatic()
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
+
+  drawHud();
 }
 
 void Renderer::drawDynamic()
@@ -88,6 +90,40 @@ GLuint Renderer::loadBMP(){
 
 }
 
+void Renderer::drawHud(){
+
+  int playerbullets = 10;
+  glMatrixMode(GL_PROJECTION);
+  glPushMatrix();
+  glLoadIdentity();
+  glOrtho(0.0, 640, 480, 0.0, -1.0, 10.0);
+  glMatrixMode(GL_MODELVIEW);
+
+  glLoadIdentity();
+  glDisable(GL_CULL_FACE);
+  glClear(GL_DEPTH_BUFFER_BIT);
+  glDepthMask(GL_FALSE);
+  glDisable(GL_DEPTH_TEST);
+
+  for(int k =0; k < playerbullets; ++k){
+
+    glBegin(GL_QUADS);
+      glColor3f(1.0f, 0.0f, 0.0);
+      glVertex2f(10.0, 10*k+0.0);
+      glVertex2f(0.0, 10*k+0.0);
+      glVertex2f(10.0, 10*k+10.0);
+      glVertex2f(0.0, 10*k+10.0);
+    glEnd();
+
+  }
+
+
+  glMatrixMode(GL_PROJECTION);
+  glPopMatrix();
+  glMatrixMode(GL_MODELVIEW);
+  glDepthMask(GL_TRUE);
+  glEnable(GL_DEPTH_TEST);
+}
 
 
 
