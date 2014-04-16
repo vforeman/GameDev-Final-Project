@@ -32,14 +32,18 @@ class Overlay
 		GLfloat _tx,_ty,_tz;//translation coordinates
 		static unsigned int OVERLAY_HEIGHT;
 		static unsigned int OVERLAY_WIDTH;
+		static void constructQuadrant();
+
 		/**
 		 * @details [instantiates each char in 2d array
 		 * and assigned the value of 'F' as floor to each char.
 		 * calls void constructQuadrant()]
 		 */
 		void initialize();
+		void init();
 		char W();//add wall to static data
 		char F();//add tile to static data
+  void initializeTestLevel();
 };
 
 #endif

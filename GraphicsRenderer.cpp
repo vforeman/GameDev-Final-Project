@@ -36,6 +36,8 @@ void Renderer::drawStatic()
   !_textureFlag ? glEnableClientState(GL_COLOR_ARRAY)
     :glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+
+
   //Connect the arrays themselves
   glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
   glNormalPointer(GL_FLOAT, 0, &_lvl._staticNormals[0]);
@@ -57,7 +59,10 @@ void Renderer::drawDynamic()
 
 }
 
-
+/*{
+  glEnable(GL_TEXTURE_1D);
+  glTexEnvi
+}*/
 
 GLuint LoadTexture( )
 {
