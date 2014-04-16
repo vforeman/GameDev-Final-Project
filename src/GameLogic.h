@@ -8,6 +8,7 @@
 #include "GraphicsRenderer.h"
 #include "PhysicsEngine.h"
 #include "Camera.h"
+#include "Enemy.h"
 
 namespace logic{
 /***********************************
@@ -24,11 +25,13 @@ private:
 public:
 	physics::PhysicsEngine * _pEngine;
 	window::Window * _wController;
+    std::vector<physics::Enemy*> _enemies;
 	Camera * _cam;
 	gamein::InputController * _iController;
 	graphics::Renderer * _renderer;
 	static GameLogic * get();
 	~GameLogic();
+    void run();
 	void start();
 
 };

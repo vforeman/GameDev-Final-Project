@@ -12,7 +12,10 @@
 #include "Geometry.h"
 #include <iostream>
 #include "Overlay.h"
+#include "Graphics.h"
 #include <string>
+#include <vector>
+
 using namespace std;
 using namespace geo;
 using namespace util;

@@ -40,6 +40,10 @@ void Renderer::drawStatic()
   //removed encapsulating stack moves, hopeful speedup
   glDrawArrays(GL_QUADS, 0,_lvl._staticVertices.size()/3);
   //TODO::I dont think I should be loading the vertex data every call
+  //REPLY(REM):: You should load the vertex data for static every time
+  //             Because the screen is cleared each frame; so, the walls must be redrawn.
+  //             Therefore, the GraphicsRenderer needs to have the draw arrays again.
+  //             The benefit of sending the data in a vertex array outweights any performance issues (MY OPINION)
   //Disable vertex arrays that are no longer in use
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
