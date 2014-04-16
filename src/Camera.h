@@ -1,19 +1,16 @@
-/**@Dependencies:
-*	Vmath.h
-**/
 #ifndef Camera_H
 #define Camera_H
+
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <cmath>
 #include <iostream>
 #include "Vmath.h"
-//#include "Vector3<float>.h"
 
 class Camera
 {
-	Vector3f loc;
+
 	float camYaw;
 	float camPitch;
 	float speed;
@@ -22,7 +19,10 @@ class Camera
 	void lockCamera();
 	void moveCamera(const float& dir);
 	void moveCameraUp(const float& dir);
+
 	public:
+	Vector3f _multX;
+	Vector3f loc;
 	Camera();
 	Camera(const Vector3f & loc);
 	Camera(const Vector3f & loc,const float& yaw,const float& pitch);

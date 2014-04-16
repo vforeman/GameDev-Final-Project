@@ -41,10 +41,7 @@ StaticEntity::StaticEntity(float radius, Vector3f position, Vector3f force)
 	_velocity = Vector3f(0,0,0);
 	_force = force;
 }
-StaticEntity::~StaticEntity()
-{
 
-}
 
 
 
