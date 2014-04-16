@@ -83,19 +83,32 @@ PhysicsEngine * PhysicsEngine::get()
 }
 
 
-bool PhysicsEngine::spheresphere(Vector3<float>& c1,float _radius1,Vector3<float> c2,float _radius2)
+bool PhysicsEngine::spheresphere(Vector3<float>& c1,float _radius1,Vector3<float>& c2,float _radius2)
 {
-	//std::cout<<c2<<std::endl;
-	float dist=pointdistacesquare(c1,c2);
-	std::cout<<dist<<std::endl;
+	Vector3<float> temp = c1;
+	//temp.x = temp.x * 20;
+	//temp.x = temp.y * 10;
+	//temp.x = temp.z * 10;
+	//std::cout<<"first object: "<<c1<<std::endl;
+	std::cout<<"first object: "<<temp<<std::endl;
+	//std::cout<<"secod object: "<<c2<<std::endl; 
+	if(temp.x > 10)
+	temp.x / 10;
+	float dist=pointdistacesquare(temp,c2);
+	//std::cout<<"distance "<<dist<<std::endl;
 	//float dist = 0.0f;
-	if(dist<=(_radius1+_radius2)*(_radius1+_radius2))
+	std::cout<<"radius squared "<<(_radius1+_radius2)*(_radius1+_radius2)<<std::endl;
+	if(std::abs(dist)<=(_radius1+_radius2)*(_radius1+_radius2))
 	{
-		std::cout<<c2<<std::endl;
+		//c2.x/10;
+		/*c2.y/10;
+		c2.z/10;*/
+		//std::cout<<"collisions"<<std::endl;
 		float a=sqrt(dist)-(_radius1+_radius2);
 		Vector3<float> vec(c2-c1);
 		vec.normalize();
 		c1=c1+vec*a;
+		//std::cout<<"Distance insdie if st "<<dist<<std::endl;
 		return 1;
 	}
 	return 0;
