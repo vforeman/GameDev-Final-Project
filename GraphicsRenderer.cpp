@@ -1,59 +1,49 @@
 #include "src/GraphicsRenderer.h"
 namespace graphics{
-
+bool Renderer::_firstDraw = true;
 bool Renderer::_instanceFlag = false;
 Renderer * Renderer::_instance = NULL;
 
 Renderer::Renderer()
 :_textureFlag(false)
-{}
+{
+
+}
 
 Renderer::~Renderer()
 {
 	_instanceFlag = false;
 }
 
-Renderer * Renderer::get()
-{
- if(_instance == NULL)
- {
-  _instance = new Renderer();
-  _instanceFlag = true;
-  return _instance;
- }
- else
- {
-  return _instance;
- }
-}
 
 void Renderer::drawStatic()
 {std::clog << "Renderer::drawStatic()\n";
-  loadBMP();
+
+  glDisable(GL_DEPTH_TEST);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
   //loaded with cube data right now
   //Enable vertex arrays we want to draw with
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
-  !_textureFlag ? glEnableClientState(GL_COLOR_ARRAY)
-    :glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
 
-
-
-  //Connect the arrays themselves
-  glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
-  glNormalPointer(GL_FLOAT, 0, &_lvl._staticNormals[0]);
-  !_textureFlag ? glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0])
-    :glTexCoordPointer(2,GL_SHORT,0,&_lvl._staticTexCoords[0]);
-
-    //removed encapsulating stack moves, hopeful speedup
-    glDrawArrays(GL_QUADS, 0,_lvl._staticVertices.size()/3);
-    //TODO::I dont think I should be loading the vertex data every call
-    //Disable vertex arrays that are no longer in use
+  if(_firstDraw){
+    _firstDraw=false;
+    //Connect the arrays themselves
+    glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
+    glNormalPointer(GL_FLOAT, 0, &_lvl._staticNormals[0]);
+    glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
+  }
+  //removed encapsulating stack moves, hopeful speedup
+  glDrawArrays(GL_QUADS, 0,_lvl._staticVertices.size()/3);
+  //TODO::I dont think I should be loading the vertex data every call
+  //Disable vertex arrays that are no longer in use
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
-  !_textureFlag ? glDisableClientState(GL_COLOR_ARRAY)
-    :glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
 }
 
 void Renderer::drawDynamic()
@@ -61,13 +51,9 @@ void Renderer::drawDynamic()
 
 }
 
-/*{
-  glEnable(GL_TEXTURE_1D);
-  glTexEnvi
-}*/
 
 GLuint Renderer::loadBMP(){
-  GLuint texture;
+
   int width, height;
   unsigned char * data;
   FILE * file;
@@ -89,8 +75,8 @@ GLuint Renderer::loadBMP(){
      data[index] = R;
      data[index+2] = B;
   }
-  glGenTextures( 1, &texture );
-  glBindTexture( GL_TEXTURE_2D, texture );
+  glGenTextures( 1, &_texture );
+  glBindTexture( GL_TEXTURE_2D, _texture );
   glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE );
   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST );
   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_LINEAR );
@@ -99,8 +85,26 @@ GLuint Renderer::loadBMP(){
   gluBuild2DMipmaps( GL_TEXTURE_2D, 3, width, height,GL_RGB, GL_UNSIGNED_BYTE, data );
   free( data );
 
-  return texture;
+
 }
+
+
+
+
+Renderer * Renderer::get()
+{
+ if(_instance == NULL)
+ {
+  _instance = new Renderer();
+  _instanceFlag = true;
+  return _instance;
+ }
+ else
+ {
+  return _instance;
+ }
+}
+
 
 }// namespace graphics
 
