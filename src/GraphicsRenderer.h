@@ -9,8 +9,15 @@
 #include "Vmath.h"
 #include "Assets.h"
 #include "Util.h"
-#include "Level.h"
 #include "Geometry.h"
+#include <iostream>
+#include "Overlay.h"
+#include "Graphics.h"
+#include "Enemy.h"
+#include <string>
+#include <vector>
+#include <exception>
+
 using namespace std;
 using namespace geo;
 using namespace util;
@@ -24,26 +31,22 @@ class Renderer
 public:
 	static Renderer * get();
 	~Renderer();
- void init();//start drawing pipeline
-	void drawStatic();//draw ModelAsset reference
-	void drawStatic(Level);
-	void drawLevel();
-	void drawSphere();
+	void drawStatic();
 	void drawDynamic();
-
+ void drawHud();
+    void registerGraphics(Graphics*);
+    void emptyObjects();
 private:
-	Level _level;
-	Sphere s;
+	Overlay _lvl;
 	static Renderer * _instance;
 	static bool _instanceFlag;
+	static bool _firstDraw;
+    std::vector<Graphics*> _drawObjects;    //Register graphics objects i.e. Enemy
+	bool _textureFlag;
 	Renderer();
-
- GLuint loadTextureFile();
-
+ GLuint loadBMP();
+ GLuint _texture;
 };
-
-
-
 
 }// namespace graphic
 #endif //GRAPHICSRENDERER_H

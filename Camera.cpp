@@ -99,8 +99,8 @@ void Camera::control()
 }
 
 void Camera::update()
-{
-	glTranslatef(10*-loc.x,-loc.y,10*-loc.z);
+{//commented out the 10 times land speed scalar
+	glTranslatef(-loc.x,-loc.y,-loc.z);
 }
 
 Vector3f Camera::getLocation()

@@ -1,13 +1,25 @@
 #include "src/PhysicsEngine.h"
+
 namespace physics{
 
 /***********************************
 *						PHYSICS ENTITY IMPLEMENTATION
 *************************************/
 
+PhysicsEntity::PhysicsEntity() : _position(Vector3f(0.0f, 0.0f, 0.0f)),
+                                 _velocity(Vector3f(0.0f, 0.0f, 0.0f))
+{
+}
+
+PhysicsEntity::PhysicsEntity(Vector3f pos) : _position(pos),
+                                             _velocity(Vector3f(0.0f, 0.0f, 0.0f))
+{
+}
+
 void PhysicsEntity::update()
 {
-
+    //x  = x0 + velocity * time
+    _position = _position+ _velocity * 1.0f;
 };
 
 
@@ -19,6 +31,12 @@ void PhysicsEntity::update()
 Bullet::Bullet()
 {
     _type = "";
+}
+
+Bullet::Bullet(Vector3f pos) 
+{
+    _type = "";
+    _position = pos;
 }
 /***********************************
 *					PLAYER IMPLEMENTATION
@@ -41,10 +59,7 @@ StaticEntity::StaticEntity(float radius, Vector3f position, Vector3f force)
 	_velocity = Vector3f(0,0,0);
 	_force = force;
 }
-StaticEntity::~StaticEntity()
-{
 
-}
 
 
 
@@ -85,24 +100,22 @@ PhysicsEngine * PhysicsEngine::get()
 
 bool PhysicsEngine::spheresphere(Vector3<float>& c1,float _radius1,Vector3<float>& c2,float _radius2)
 {
-	Vector3<float> temp = c1;
+	//Vector3<float> temp = c1;
 	//temp.x = temp.x * 20;
 	//temp.x = temp.y * 10;
 	//temp.x = temp.z * 10;
 	//std::cout<<"first object: "<<c1<<std::endl;
-	std::cout<<"first object: "<<temp<<std::endl;
+	std::cout<<"first object: "<<c1<<std::endl;
 	//std::cout<<"secod object: "<<c2<<std::endl; 
-	if(temp.x > 10)
-	temp.x / 10;
-	float dist=pointdistacesquare(temp,c2);
+	/*if(temp.x > 10)
+	temp.x / 10; */
+	float dist=pointdistacesquare(c1,c2);
 	//std::cout<<"distance "<<dist<<std::endl;
 	//float dist = 0.0f;
-	std::cout<<"radius squared "<<(_radius1+_radius2)*(_radius1+_radius2)<<std::endl;
+	//std::cout<<"radius squared "<<(_radius1+_radius2)*(_radius1+_radius2)<<std::endl;
 	if(std::abs(dist)<=(_radius1+_radius2)*(_radius1+_radius2))
 	{
-		//c2.x/10;
-		/*c2.y/10;
-		c2.z/10;*/
+		
 		//std::cout<<"collisions"<<std::endl;
 		float a=sqrt(dist)-(_radius1+_radius2);
 		Vector3<float> vec(c2-c1);

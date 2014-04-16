@@ -6,17 +6,26 @@ Enemy::Enemy() : _health(100),  _alive(true), _point(0),
                  _alert(false), _ALERT_RADIUS(20.0f)
 {
     initialize("Circle");    
+    createSimplePatrol();
 }
 
-void Enemy::attack()
+Enemy::Enemy(Vector3f pos) : _health(100), _alive(true), _point(0),
+                             _alert(false), _ALERT_RADIUS(20.0f)
 {
+    _position = pos;
+    initialize("Circle");
+    createSimplePatrol();
+}
 
+void Enemy::attack(Vector3f target)
+{
+    
 }
 
 void Enemy::createSimplePatrol()
 {
     unsigned int range = util::xorshift()%512;
-    unsigned int rangeZ = util::xorshift()%256;
+    unsigned int rangeZ = util::xorshift()%512;
     Vector3f pos = _position;
     for(unsigned int i = 0; i < range; ++i)
     {
