@@ -123,6 +123,31 @@ static const GLfloat normals[6][4][3] ={
  { { 0,-1, 0} , { 0,-1, 0} , { 0,-1, 0} , { 0,-1, 0} }//bottom
 
 };
+const GLfloat tile_normals[] = {
+        0,1,0,  0,1,0,  0,1,0, 0,1,0
+    };
+const GLfloat tile_colors[] = {
+        0.54, 0, 0.1/*,0.3*///Burgandy
+    };
+const GLshort tile_tex_coords[] = {
+        0,0,    1,0,    1,1,    0,1
+    };
+
+const GLfloat wall_normals[] = {
+        0,1,0,  0,1,0,  0,1,0, 0,1,0,//top
+        0,0,1,  0,0,1,  0,0,1,  0,0,1,//north^
+        1,0,0, 1,0,0, 1,0,0, 1,0,0,//east>
+        0,0,-1,  0,0,-1,  0,0,-1,  0,0,-1,//south\/
+        -1,0,0, -1,0,0, -1,0,0, -1,0,0,//west<
+        0,-1,0,  0,-1,0,  0,-1,0, 0,-1,0,//bottom
+    };
+const GLfloat wall_colors[] = {
+        0,0.54, 0.1/*,0.3*/
+    };
+const GLshort wall_tex_coords[] = {
+        0,0,    1,0,    1,1,    0,1
+    };
+
 
 //original 3d floor tile vertex data
 /*

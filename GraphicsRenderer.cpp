@@ -29,12 +29,16 @@ Renderer * Renderer::get()
 
 void Renderer::drawStatic()
 {std::clog << "Renderer::drawStatic()\n";
+  loadBMP();
+
   //loaded with cube data right now
   //Enable vertex arrays we want to draw with
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
   !_textureFlag ? glEnableClientState(GL_COLOR_ARRAY)
     :glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+
 
   //Connect the arrays themselves
   glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
@@ -57,15 +61,17 @@ void Renderer::drawDynamic()
 
 }
 
+/*{
+  glEnable(GL_TEXTURE_1D);
+  glTexEnvi
+}*/
 
-
-GLuint LoadTexture( )
-{
+GLuint Renderer::loadBMP(){
   GLuint texture;
   int width, height;
   unsigned char * data;
   FILE * file;
-  file = fopen( "tile.png", "rb" );
+  file = fopen( "src/tile.png", "rb" );
   if ( file == NULL ){
     return 0;
   }

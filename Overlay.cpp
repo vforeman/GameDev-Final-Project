@@ -14,12 +14,17 @@ Overlay::Overlay(){
     _numOfFloors = 0;
     //NW corner is structural ~ origin,(0,0) and trans_values
     //are adjusted for offset from the world origin
-    _tx = -((float)Overlay::OVERLAY_WIDTH)/2;
+    _tx = -((float)Overlay::OVERLAY_WIDTH)/2.0;
     _ty = -3.0f;//constant floor level
-    _tz = -((float)Overlay::OVERLAY_HEIGHT)/2;
+    _tz = -((float)Overlay::OVERLAY_HEIGHT)/2.0;
+    // initializeTestLevel();
     initialize();
+
 }
-Overlay::~Overlay(){}
+
+Overlay::~Overlay()
+{}
+
 //initiate and populate char obstacle map
 void Overlay::initialize(){
     char connected = 'U';
@@ -48,22 +53,8 @@ char Overlay::W(){
          0.4f+_tx , 0.0f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //bot
     };
     _staticVertices.insert( _staticVertices.end() , wall , wall + sizeof(wall)/sizeof(GLfloat));
-    GLfloat wall_normals[] = {
-        0,1,0,  0,1,0,  0,1,0, 0,1,0,//top
-        0,0,1,  0,0,1,  0,0,1,  0,0,1,//north^
-        1,0,0, 1,0,0, 1,0,0, 1,0,0,//east>
-        0,0,-1,  0,0,-1,  0,0,-1,  0,0,-1,//south\/
-        -1,0,0, -1,0,0, -1,0,0, -1,0,0,//west<
-        0,-1,0,  0,-1,0,  0,-1,0, 0,-1,0,//bottom
-    };
     _staticNormals.insert(_staticNormals.end(),wall_normals, wall_normals + sizeof(GLfloat));
-    GLfloat wall_colors[] = {
-        0,0.54, 0.1/*,0.3*/
-    };
     _staticColors.insert(_staticColors.end(), wall_colors, wall_colors + sizeof(GLfloat));
-    GLshort wall_tex_coords[] = {
-        0,0,    1,0,    1,1,    0,1
-    };
     _staticTexCoords.insert(_staticTexCoords.end(), wall_tex_coords, wall_tex_coords + sizeof(GLshort));
     _numOfWalls++;
     return 'W';
@@ -73,17 +64,8 @@ char Overlay::F(){
          0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //top
     };//didn't think the floor needed to be so 3D
     _staticVertices.insert( _staticVertices.end() , tile , tile + sizeof(tile)/sizeof(GLfloat));
-    GLfloat tile_normals[] = {
-        0,1,0,  0,1,0,  0,1,0, 0,1,0
-    };
     _staticNormals.insert(_staticNormals.end(),tile_normals,tile_normals + sizeof(GLfloat));
-    GLfloat tile_colors[] = {
-        0.54, 0, 0.1/*,0.3*///Burgandy
-    };
     _staticColors.insert(_staticColors.end(),tile_colors,tile_colors + sizeof(GLfloat));
-     GLshort tile_tex_coords[] = {
-        0,0,    1,0,    1,1,    0,1
-    };
     _staticTexCoords.insert(_staticTexCoords.end(), tile_tex_coords, tile_tex_coords + sizeof(GLshort));
 
     ++_numOfFloors;
@@ -103,24 +85,4 @@ bool Overlay::isObstacle(int x, int y, int z)
 }
 
 
-//Read from a two dimensional character array that is already created
-//LEVEL_ONE AND LEVEL_TWO are levels of size 100x100 and 200x200
-//src/levels.h has LEVEL_ONE and LEVEL_TWO
-void Overlay::initializeTestLevel()
-{
-/*    for(unsigned int c = 0; c < Overlay::OVERLAY_HEIGHT; ++c)
-        _overlay[c] = new char[Overlay::OVERLAY_HEIGHT];
 
-    
-    if(Overlay::OVERLAY_HEIGHT == 100)
-        for(unsigned int i = 0; i < Overlay::OVERLAY_HEIGHT; ++i)
-            for(unsigned int j = 0; j < Overlay::OVERLAY_WIDTH; ++j)
-                _overlay[i][j] = LEVEL_ONE[i][j];
-    else if(Overlay::OVERLAY_HEIGHT == 200)
-        for(unsigned int i = 0; i < Overlay::OVERLAY_HEIGHT; ++i)
-            for(unsigned int j = 0; j < Overlay::OVERLAY_WIDTH; ++j)
-                _overlay[i][j] = LEVEL_TWO[i][j];
-    else
-        initialize();
-*/
-}

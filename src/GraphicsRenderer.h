@@ -34,7 +34,8 @@ private:
 	static bool _instanceFlag;
 	bool _textureFlag;
 	Renderer();
- GLuint loadTextureFile();
+ GLuint loadBMP();
+ GLuint * textures;
 };
 
 }// namespace graphic

@@ -16,15 +16,19 @@ GameLogic::GameLogic()
 	_cam->setLocation(Vector3f(0,0.8,0));
 	_iController = gamein::InputController::get();
 
-	// glEnable(GL_LIGHTING);
-	// glEnable(GL_LIGHT0);
-	// glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	glShadeModel(GL_SMOOTH);
+	glEnable(GL_CULL_FACE);
 	glClearDepth(100.0);
 	glClearColor(1.0,1.0,1.0,1.0);
 	glEnable( GL_TEXTURE_2D );
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(45,640/480.0,1,500.0);
+
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_DEPTH_TEST);
  std::clog << "GameLogic::GameLogic()\n";
