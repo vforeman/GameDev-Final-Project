@@ -40,6 +40,18 @@ class Camera
 	bool IsMouseIn();
 	void setSpeed(float sp,float ms);
 };
+class HUD{
+public:
+	HUD();
+	~HUD();
 
+protected:
+	void update();
+	void draw();
+
+private:
+
+
+};
 
 #endif

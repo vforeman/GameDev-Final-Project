@@ -12,6 +12,7 @@
 #include "Geometry.h"
 #include <iostream>
 #include "Overlay.h"
+#include <string>
 using namespace std;
 using namespace geo;
 using namespace util;
@@ -32,10 +33,11 @@ private:
 	Overlay _lvl;
 	static Renderer * _instance;
 	static bool _instanceFlag;
+	static bool _firstDraw;
 	bool _textureFlag;
 	Renderer();
  GLuint loadBMP();
- GLuint * textures;
+ GLuint _texture;
 };
 
 }// namespace graphic

@@ -1,7 +1,7 @@
 #include "src/Overlay.h"
 
-unsigned int Overlay::OVERLAY_HEIGHT = 25;
-unsigned int Overlay::OVERLAY_WIDTH = 25;
+unsigned int Overlay::OVERLAY_HEIGHT = 50;
+unsigned int Overlay::OVERLAY_WIDTH = 50;
 
 vector<vector<char>> Overlay::_overlay (Overlay::OVERLAY_HEIGHT);
 vector<GLfloat> Overlay::_staticVertices;
@@ -16,7 +16,7 @@ Overlay::Overlay(){
     //are adjusted for offset from the world origin
     _tx = -((float)Overlay::OVERLAY_WIDTH)/2.0;
     _ty = -3.0f;//constant floor level
-    _tz = -((float)Overlay::OVERLAY_HEIGHT)/2.0;
+    _tz =-((float)Overlay::OVERLAY_HEIGHT)/2.0;
     // initializeTestLevel();
     initialize();
 
@@ -53,20 +53,20 @@ char Overlay::W(){
          0.4f+_tx , 0.0f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //bot
     };
     _staticVertices.insert( _staticVertices.end() , wall , wall + sizeof(wall)/sizeof(GLfloat));
-    _staticNormals.insert(_staticNormals.end(),wall_normals, wall_normals + sizeof(GLfloat));
-    _staticColors.insert(_staticColors.end(), wall_colors, wall_colors + sizeof(GLfloat));
-    _staticTexCoords.insert(_staticTexCoords.end(), wall_tex_coords, wall_tex_coords + sizeof(GLshort));
+    _staticNormals.insert(_staticNormals.end(),wall_normals, wall_normals + sizeof(wall_normals)/sizeof(GLfloat));
+    _staticColors.insert(_staticColors.end(), wall_colors, wall_colors + sizeof(wall_colors)/sizeof(GLfloat));
+    _staticTexCoords.insert(_staticTexCoords.end(), wall_tex_coords, wall_tex_coords + sizeof(wall_tex_coords)/sizeof(GLshort));
     _numOfWalls++;
     return 'W';
 }
 char Overlay::F(){
     GLfloat tile[] ={
-         0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //top
+         0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz  //top
     };//didn't think the floor needed to be so 3D
     _staticVertices.insert( _staticVertices.end() , tile , tile + sizeof(tile)/sizeof(GLfloat));
-    _staticNormals.insert(_staticNormals.end(),tile_normals,tile_normals + sizeof(GLfloat));
-    _staticColors.insert(_staticColors.end(),tile_colors,tile_colors + sizeof(GLfloat));
-    _staticTexCoords.insert(_staticTexCoords.end(), tile_tex_coords, tile_tex_coords + sizeof(GLshort));
+    _staticNormals.insert(_staticNormals.end(),tile_normals,tile_normals + sizeof(tile_normals)/sizeof(GLfloat));
+    _staticColors.insert(_staticColors.end(),tile_colors,tile_colors + sizeof(tile_colors)/sizeof(GLfloat));
+    _staticTexCoords.insert(_staticTexCoords.end(), tile_tex_coords, tile_tex_coords + sizeof(tile_tex_coords)/sizeof(GLshort));
 
     ++_numOfFloors;
     return 'F';

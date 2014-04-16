@@ -16,21 +16,23 @@ GameLogic::GameLogic()
 	_cam->setLocation(Vector3f(0,0.8,0));
 	_iController = gamein::InputController::get();
 
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHT1);
+
+	glEnable(GL_DEPTH_TEST);
+	// glEnable(GL_LIGHTING);
+	// glEnable(GL_LIGHT0);
+	// glEnable(GL_LIGHT1);
 	glShadeModel(GL_SMOOTH);
-	glEnable(GL_CULL_FACE);
+	// glEnable(GL_CULL_FACE);
+	// glCullFace(GL_FRONT);
 	glClearDepth(100.0);
 	glClearColor(1.0,1.0,1.0,1.0);
-	glEnable( GL_TEXTURE_2D );
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(45,640/480.0,1,500.0);
 
 	glMatrixMode(GL_MODELVIEW);
-	glEnable(GL_DEPTH_TEST);
+
  std::clog << "GameLogic::GameLogic()\n";
 }
 
@@ -38,7 +40,7 @@ GameLogic::~GameLogic()
 {
 	std::clog << "GameLogic::~GameLogic()\n";
 	_instanceFlag = false;
-};
+}
 
 void GameLogic::start()
 {
@@ -55,7 +57,7 @@ void GameLogic::start()
 	std::clog << "GameLogic::start()->update();\n";
 	update();
 	show();
-	// glDepthFunc(GL_LESS);//Would this help?
+	glDepthFunc(GL_LESS);//Would this help?
 	SDL_GL_SwapBuffers();
 	angle+= 0.5;
 	if(angle >360)
@@ -79,7 +81,7 @@ void GameLogic::show()
 	glLoadIdentity();
 	_cam->control();
 	_cam->update();
-	glTranslatef(0.0,0.0,0.0);
+	// glTranslatef(0.0,0.0,0.0);
 	_renderer->drawStatic();
  std::clog << "GameLogic::show()\n";
 }
