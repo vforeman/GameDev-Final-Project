@@ -103,34 +103,14 @@ const GLfloat cube[] = {
   1.0f, 1.0f, 1.0f, 0.0f, 1.0f
 };
 
-static const GLfloat floor_vertices[6][4][3]={
-  {{},{},{},{}},//top
-  {{},{},{},{}},//north
-  {{},{},{},{}},//east
-  {{},{},{},{}},//south
-  {{},{},{},{}},//west
-  {{},{},{},{}}//bottom
-};
-static const GLfloat wall_vertices[6][4][3]={
-  {{},{},{},{}},//top
-  {{},{},{},{}},//north
-  {{},{},{},{}},//east
-  {{},{},{},{}},//south
-  {{},{},{},{}},//west
-  {{},{},{},{}}//bottom
-};
-
-
 //Vertex array for faces of a cube
 static const GLfloat tileface[24][3] ={
-
   { .9, .9, .9}, { .9,0.7, .9}, { .9,0.7,-.9}, { .9, .9,-.9} ,//east
   { .9, .9,-.9}, { .9,0.7,-.9}, {-.9,0.7,-.9}, {-.9, .9,-.9} ,//south
   {-.9, .9,-.9}, {-.9,0.7,-.9}, {-.9,0.7, .9}, {-.9, .9, .9} ,//west
   {-.9, .9, .9}, {-.9,0.7, .9}, { .9,0.7, .9}, { .9, .9, .9} ,//north
   {-.9, .9,-.9}, {-.9, .9, .9}, { .9, .9, .9}, { .9, .9,-.9} ,//top
   { .9,0.7, .9}, { .9,0.7,-.9}, {-.9,0.7,-.9}, {-.9,0.7, .9}//bot
-
 };
 
 //Vertex array for normals of the cube
@@ -143,4 +123,18 @@ static const GLfloat normals[6][4][3] ={
  { { 0,-1, 0} , { 0,-1, 0} , { 0,-1, 0} , { 0,-1, 0} }//bottom
 
 };
+
+//original 3d floor tile vertex data
+/*
+GLfloat tile[] ={
+         0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //top
+         0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    , 0.4f+_tx , 0.0f+_ty , 0.4f+_tz , //north
+         0.4f+_tx , 0.2f+_ty , 0.4f+_tz     , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty , 0.4f+_tz,  //east
+         0.4f+_tx , 0.2f+_ty ,-0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //south
+        -0.4f+_tx , 0.2f+_ty ,-0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //west
+         0.4f+_tx , 0.0f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //bot
+    };//didn't think the floor needed to be so 3D
+
+*/
+
 #endif

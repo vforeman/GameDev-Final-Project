@@ -1,13 +1,13 @@
-/**@Dependencies:
-*	Camera.h	Vmath.h
-**/
 #ifndef INPUTCONTROLLER_H
 #define INPUTCONTROLLER_H
+
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "Vmath.h"
 #include "Camera.h"
+
 namespace gamein{
+
 class InputController
 {
 public:

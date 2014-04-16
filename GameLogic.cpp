@@ -15,16 +15,18 @@ GameLogic::GameLogic()
 	_cam = new Camera();
 	_cam->setLocation(Vector3f(0,0.8,0));
 	_iController = gamein::InputController::get();
-	// GameLogic::_data._obj = new Dummy();
 
-	// glClearDepth(100.0);
+	// glEnable(GL_LIGHTING);
+	// glEnable(GL_LIGHT0);
+	// glEnable(GL_LIGHT1);
+	glClearDepth(100.0);
 	glClearColor(1.0,1.0,1.0,1.0);
-	// glEnable( GL_TEXTURE_2D );
+	glEnable( GL_TEXTURE_2D );
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(45,640/480.0,1,500.0);
 	glMatrixMode(GL_MODELVIEW);
-		glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
  std::clog << "GameLogic::GameLogic()\n";
 }
 
@@ -49,6 +51,7 @@ void GameLogic::start()
 	std::clog << "GameLogic::start()->update();\n";
 	update();
 	show();
+	// glDepthFunc(GL_LESS);//Would this help?
 	SDL_GL_SwapBuffers();
 	angle+= 0.5;
 	if(angle >360)
@@ -64,7 +67,7 @@ void GameLogic::update()
 {
 	// Handles Check for Collision and other functions that need to be updated
 };
-//TODO: use Renderer Singleton Here
+
 
 void GameLogic::show()
 {std::clog << "GameLogic::show()\n";
@@ -72,9 +75,7 @@ void GameLogic::show()
 	glLoadIdentity();
 	_cam->control();
 	_cam->update();
-	std::cout<<_cam->loc.x<<','<<_cam->loc.y<<','<<_cam->loc.z<<'\n';
 	glTranslatef(0.0,0.0,0.0);
-	// GameLogic::_data._obj->drawSphere();
 	_renderer->drawStatic();
  std::clog << "GameLogic::show()\n";
 }

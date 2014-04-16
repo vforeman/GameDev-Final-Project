@@ -9,7 +9,6 @@
 #include "Vmath.h"
 #include "Assets.h"
 #include "Util.h"
-#include "Level.h"
 #include "Geometry.h"
 #include <iostream>
 #include "Overlay.h"
@@ -26,26 +25,17 @@ class Renderer
 public:
 	static Renderer * get();
 	~Renderer();
- void init();//start drawing pipeline
-	void drawStatic();//draw ModelAsset reference
-	void drawStatic(Level);
-	void drawLevel();
-	void drawSphere();
+	void drawStatic();
 	void drawDynamic();
 
 private:
 	Overlay _lvl;
-	Sphere s;
 	static Renderer * _instance;
 	static bool _instanceFlag;
+	bool _textureFlag;
 	Renderer();
-
  GLuint loadTextureFile();
-
 };
-
-
-
 
 }// namespace graphic
 #endif //GRAPHICSRENDERER_H
