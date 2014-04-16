@@ -7,6 +7,19 @@ bool GameLogic::_instanceFlag = false;
 
 GameLogic::GameLogic()
 {
+    //SINGLETON CONSTRUCTORS & DESTRUCTORS ARE EMPTY
+}
+
+GameLogic::~GameLogic()
+{
+	std::clog << "GameLogic::~GameLogic()\n";
+	_instanceFlag = false;
+}
+
+
+
+void GameLogic::start()
+{
 	std::clog << "GameLogic::GameLogic()\n";
 	_renderer = graphics::Renderer::get();
 	_pEngine = physics::PhysicsEngine::get();
@@ -15,7 +28,9 @@ GameLogic::GameLogic()
 	_cam = new Camera();
 	_cam->setLocation(Vector3f(0,0.8,0));
 	_iController = gamein::InputController::get();
-
+    
+    _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.0f, 0.0f)));
+    _renderer->registerGraphics(_enemies[0]);
 
 	glEnable(GL_DEPTH_TEST);
 	// glEnable(GL_LIGHTING);
@@ -36,13 +51,14 @@ GameLogic::GameLogic()
  std::clog << "GameLogic::GameLogic()\n";
 }
 
-GameLogic::~GameLogic()
+void GameLogic::update()
 {
-	std::clog << "GameLogic::~GameLogic()\n";
-	_instanceFlag = false;
-}
+	// Handles Check for Collision and other functions that need to be updated
+    _enemies[0]->patrol();
+};
 
-void GameLogic::start()
+
+void GameLogic::run()
 {
 	std::clog << "GameLogic::start()\n";
 	float angle =0.0;
@@ -53,27 +69,24 @@ void GameLogic::start()
 	{
 		start = SDL_GetTicks();
 		running = _iController->HandleInput(_cam,running);
-	//handle logic and rendering below
-	std::clog << "GameLogic::start()->update();\n";
-	update();
-	show();
-	glDepthFunc(GL_LESS);//Would this help?
-	SDL_GL_SwapBuffers();
-	angle+= 0.5;
-	if(angle >360)
-		angle-=360;
-	// handle framemanagement
-	if(1000/FPS > SDL_GetTicks() - start)
-		SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
-	}
+	    
+        //handle logic and rendering below
+	    std::clog << "GameLogic::start()->update();\n";
+	    update();
+	    show();
+	    
+        // glDepthFunc(GL_LESS);//Would this help?
+	    SDL_GL_SwapBuffers();
+	    angle+= 0.5;
+	    if(angle >360)
+		    angle-=360;
+	    
+        // handle framemanagement
+	    if(1000/FPS > SDL_GetTicks() - start)
+		    SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
+	}   
 	std::clog << "GameLogic::start()\n";
 }
-
-void GameLogic::update()
-{
-	// Handles Check for Collision and other functions that need to be updated
-};
-
 
 void GameLogic::show()
 {std::clog << "GameLogic::show()\n";
@@ -83,6 +96,7 @@ void GameLogic::show()
 	_cam->update();
 	// glTranslatef(0.0,0.0,0.0);
 	_renderer->drawStatic();
+    //_renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
  std::clog << "GameLogic::show()\n";
 }
 

@@ -1,13 +1,25 @@
 #include "src/PhysicsEngine.h"
+
 namespace physics{
 
 /***********************************
 *						PHYSICS ENTITY IMPLEMENTATION
 *************************************/
 
+PhysicsEntity::PhysicsEntity() : _position(Vector3f(0.0f, 0.0f, 0.0f)),
+                                 _velocity(Vector3f(0.0f, 0.0f, 0.0f))
+{
+}
+
+PhysicsEntity::PhysicsEntity(Vector3f pos) : _position(pos),
+                                             _velocity(Vector3f(0.0f, 0.0f, 0.0f))
+{
+}
+
 void PhysicsEntity::update()
 {
-
+    //x  = x0 + velocity * time
+    _position = _position+ _velocity * 1.0f;
 };
 
 
@@ -19,6 +31,12 @@ void PhysicsEntity::update()
 Bullet::Bullet()
 {
     _type = "";
+}
+
+Bullet::Bullet(Vector3f pos) 
+{
+    _type = "";
+    _position = pos;
 }
 /***********************************
 *					PLAYER IMPLEMENTATION

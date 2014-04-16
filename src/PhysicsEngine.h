@@ -28,7 +28,9 @@ public:
     Vector3f _velocity;
     Vector3f _force;
     void update();
-
+protected:
+    PhysicsEntity();
+    PhysicsEntity(Vector3f);    //Initialize position
 };
 
 
@@ -41,6 +43,7 @@ class Bullet : public PhysicsEntity, public Graphics
 {
 public:
  Bullet();
+ Bullet(Vector3f);
  std::string _type;
 };
 

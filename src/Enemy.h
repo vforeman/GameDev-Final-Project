@@ -10,21 +10,23 @@
 #include "Vmath.h"
 #include "Util.h"
 #include "Graphics.h"
+#include "Weapon.h"
 
 namespace physics{
 /***********************************
 *                   ENEMY SPECIFICATION
 *************************************/
-class Enemy : public PhysicsEntity, public Graphics
+class Enemy : public PhysicsEntity, virtual public Graphics
 {
 public:
     Enemy();
+    Enemy(Vector3f);
     int _health;
     const float _ALERT_RADIUS;
-    void attack();
+    void attack(Vector3f);
     void die();
     void patrol();
-private:
+protected:
     bool _alive;
     bool _alert;
     unsigned int _point;    //Point on patrol path, treated as iterator
@@ -32,6 +34,7 @@ private:
     void createSimplePatrol();
     void createStrongPatrol();  
     void target();
+    Weapon _weapon;
 };
 }//namespace physics
 #endif// ENEMY_H

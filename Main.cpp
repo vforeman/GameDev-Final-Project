@@ -19,7 +19,7 @@ int main()
 
 	GameLogic* gameObject = GameLogic::get();
 	gameObject->start();
-
+    gameObject->run();
 
  return 0;
 }
