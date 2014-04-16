@@ -47,19 +47,22 @@ void GameLogic::start()
 	{
 		start = SDL_GetTicks();
 		running = _iController->HandleInput(_cam,running);
-	//handle logic and rendering below
-	std::clog << "GameLogic::start()->update();\n";
-	update();
-	show();
-	// glDepthFunc(GL_LESS);//Would this help?
-	SDL_GL_SwapBuffers();
-	angle+= 0.5;
-	if(angle >360)
-		angle-=360;
-	// handle framemanagement
-	if(1000/FPS > SDL_GetTicks() - start)
-		SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
-	}
+	    
+        //handle logic and rendering below
+	    std::clog << "GameLogic::start()->update();\n";
+	    update();
+	    show();
+	    
+        // glDepthFunc(GL_LESS);//Would this help?
+	    SDL_GL_SwapBuffers();
+	    angle+= 0.5;
+	    if(angle >360)
+		    angle-=360;
+	    
+        // handle framemanagement
+	    if(1000/FPS > SDL_GetTicks() - start)
+		    SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
+	}   
 	std::clog << "GameLogic::start()\n";
 }
 

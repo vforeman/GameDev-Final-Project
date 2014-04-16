@@ -16,7 +16,7 @@ class Weapon
 public:
  Weapon();
  Weapon(unsigned int);
- void fire(/*Vector3f*/);
+ void fire(Vector3f, Vector3f);
  void iterate(); //Container iterate update on all bullets fired
  void reload();
 private:
