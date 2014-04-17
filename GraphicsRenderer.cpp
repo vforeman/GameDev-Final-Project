@@ -161,11 +161,13 @@ void Renderer::drawHud(){
   for(int k =0; k < playerbullets; ++k){
 
     glBegin(GL_QUADS);
-      glColor3f(1.0f, 0.0f, 0.0);
+      glColor4f(1.0f, 0.0f, 0.0, 0.);
       glVertex2f(10.0, 10*k+0.0);
       glVertex2f(0.0, 10*k+0.0);
       glVertex2f(10.0, 10*k+10.0);
       glVertex2f(0.0, 10*k+10.0);
+
+
     glEnd();
 
   }
