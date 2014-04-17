@@ -14,7 +14,7 @@ class InputController
 public:
 	static InputController * get();
 	~InputController();
-	bool HandleInput(Camera * ,bool);
+	bool HandleInput(Camera *, ::physics::Weapon*, bool);
 
 private:
     bool _mouseHidden = false;

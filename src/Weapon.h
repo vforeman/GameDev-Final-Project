@@ -16,9 +16,11 @@ class Weapon
 public:
  Weapon();
  Weapon(unsigned int);
+ unsigned int getClip();
  void fire(Vector3f, Vector3f);
  void iterate(); //Container iterate update on all bullets fired
  void reload();
+ Bullet* getBullet(unsigned int);
 private:
  bool _reloading;
  unsigned int _clip;

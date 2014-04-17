@@ -110,13 +110,27 @@ void Node::traverse(std::vector < Vector3f >& path)
 {
     Node *temp = new Node();
     *temp = *this;
-
-    while(temp != NULL)
+    if(path.empty())
     {
-        path.push_back(Vector3f(float(temp->_x),
-                                float(temp->_y),
-                                float(temp->_z)));
-        temp = temp->_parent;
+        while(temp != NULL)
+        {
+            path.push_back(Vector3f(float(temp->_x),
+                                    float(temp->_y),
+                                    float(temp->_z)));
+            temp = temp->_parent;
+        }
+    }
+    else
+    {
+        std::vector < Vector3f > extendedPath;
+        while(temp != NULL)
+        {
+            extendedPath.push_back(Vector3f(float(temp->_x),
+                                    float(temp->_y),
+                                    float(temp->_z)));
+            temp = temp->_parent;
+        }
+        path.insert(path.end(), extendedPath.begin(), extendedPath.end()); 
     }
 }
 

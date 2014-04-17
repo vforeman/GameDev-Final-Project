@@ -24,7 +24,7 @@ InputController * InputController::get()
  }
 }
 
-bool InputController::HandleInput(Camera * cam,bool running)
+bool InputController::HandleInput(Camera * cam, physics::Weapon* wep, bool running)
 {
 	SDL_Event event;
 		while(SDL_PollEvent(&event))
@@ -66,9 +66,17 @@ bool InputController::HandleInput(Camera * cam,bool running)
 					break;
 
 				case SDL_MOUSEBUTTONDOWN:
-					cam->mouseIn();
-					SDL_ShowCursor(SDL_DISABLE);
-                    _mouseHidden = true;
+					if(!_mouseHidden)
+                    {
+                        cam->mouseIn();
+					    SDL_ShowCursor(SDL_DISABLE);
+                        _mouseHidden = true;
+                    }
+                    else
+                    {
+                        wep->fire(cam->getLocation(), cam->getLocation());
+                        printf("Fire\n");
+                    }
 					break;
 				default: break;
 			}

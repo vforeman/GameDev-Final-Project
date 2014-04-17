@@ -12,6 +12,7 @@
 //#include "LevelFactory.h"
 #include "Geometry.h"
 #include "Vmath.h"
+#include "Graphics.h"
 #include <string>
 #include <vector>
 namespace physics{
@@ -39,11 +40,12 @@ protected:
 /***********************************
 *					BULLET SPECIFICATION
 *************************************/
-class Bullet : public PhysicsEntity
+class Bullet : public PhysicsEntity, virtual public Graphics
 {
 public:
  Bullet();
  Bullet(Vector3f);
+ bool active = false;   //If bullet is active draw to the screen 
  std::string _type;
 };
 
