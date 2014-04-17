@@ -57,7 +57,7 @@ void Enemy::die()
 
 void Enemy::patrol(Vector3f target)
 {
-    if(physics::PhysicsEngines::spheresphere(position,alertradius,targetposition,secondradius) )
+    if(physics::PhysicsEngine::spheresphere(_position, _ALERT_RADIUS, target, 0.5f) )
     {
         //Fire at player
         printf("MUST DESTROY!!!\n");

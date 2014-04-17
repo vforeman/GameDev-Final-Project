@@ -25,7 +25,7 @@ public:
     const float _ALERT_RADIUS;
     void attack(Vector3f);
     void die();
-    void patrol();
+    void patrol(Vector3f);
 protected:
     bool _alive;
     bool _alert;

@@ -93,6 +93,28 @@ PhysicsEngine * PhysicsEngine::get()
 }
 
 
+bool PhysicsEngine::spheresphere(Vector3<float>& c1,float _radius1,Vector3<float>& c2,float _radius2)
+{
+	Vector3<float> temp = c1;
+	if(temp.x > 10)
+	temp.x / 10;
+	float dist=pointdistacesquare(temp,c2);
+	if(std::abs(dist)<=(_radius1+_radius2)*(_radius1+_radius2))
+	{
+		float a=sqrt(dist)-(_radius1+_radius2);
+		Vector3<float> vec(c2-c1);
+		vec.normalize();
+		c1=c1+vec*a;
+		return 1;
+	}
+	return 0;
+}
+
+float PhysicsEngine::pointdistacesquare(Vector3<float> p1,Vector3<float> p2)
+{
+	Vector3<float> vec(p2.x-p1.x,p2.y-p1.y,p2.z-p1.z);
+	return (vec.x*vec.x+vec.y*vec.y+vec.z*vec.z);
+}
 
 
 }//namespace physics
