@@ -46,23 +46,41 @@ void Overlay::initialize(){
 }
 char Overlay::W(){
     Vector3f n;
-    Vector3f center = Vector3f(0,5,0);
+    Vector3f wallCenter = Vector3f(0,5,0);
+    float height = (float)util::randomRange(6,12);
     float wall[] ={
-         0.4f+_tx , 10.0+_ty , 0.4f+_tz     ,-0.4f+_tx , 10.0+_ty , 0.4f+_tz    ,-0.4f+_tx , 10.0+_ty ,-0.4f+_tz    , 0.4f+_tx , 10.0+_ty ,-0.4f+_tz,  //0123top
-         0.4f+_tx , 10.0f+_ty , 0.4f+_tz     ,-0.4f+_tx , 10.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    , 0.4f+_tx , 0.2f+_ty , 0.4f+_tz , //0145north
-         0.4f+_tx , 10.0f+_ty , 0.4f+_tz     , 0.4f+_tx , 10.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty , 0.4f+_tz,  //0365east
-         0.4f+_tx , 10.0f+_ty ,-0.4f+_tz     ,-0.4f+_tx , 10.0f+_ty ,-0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //3276south
-        -0.4f+_tx , 10.0f+_ty ,-0.4f+_tz     ,-0.4f+_tx , 10.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //2147west
+         0.4f+_tx , height +_ty , 0.4f+_tz     ,-0.4f+_tx , height +_ty , 0.4f+_tz    ,-0.4f+_tx , height +_ty ,-0.4f+_tz    , 0.4f+_tx , height +_ty ,-0.4f+_tz,  //0123top
+         0.4f+_tx , height +_ty , 0.4f+_tz     ,-0.4f+_tx , height +_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    , 0.4f+_tx , 0.2f+_ty , 0.4f+_tz , //0145north
+         0.4f+_tx , height +_ty , 0.4f+_tz     , 0.4f+_tx , height +_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty , 0.4f+_tz,  //0365east
+         0.4f+_tx , height +_ty ,-0.4f+_tz     ,-0.4f+_tx , height +_ty ,-0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //3276south
+        -0.4f+_tx , height +_ty ,-0.4f+_tz     ,-0.4f+_tx , height +_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //2147west
          0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz  //5476bot
     };
     for (int c = 0; c< 72; c+=3){
-        n=Vector3f(wall[c],wall[c+1],wall[c+2])-center;
+        n=Vector3f(wall[c],wall[c+1],wall[c+2])-wallCenter;
         n.normalize();
         _staticNormals.push_back(n.x);      _staticNormals.push_back(n.y);      _staticNormals.push_back(n.z);
     }
     _staticVertices.insert( _staticVertices.end() , wall , wall + sizeof(wall)/sizeof(GLfloat));
     _staticIndex.insert(_staticIndex.end(),wall_index, wall_index+sizeof(wall_index)/sizeof(GLuint));
     _staticColors.insert(_staticColors.end(), wall_colors, wall_colors + sizeof(wall_colors)/sizeof(GLfloat));
+
+    float treeTop[] ={
+         height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz     ,-height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz    ,-height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz    , height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz,  //0123top
+         height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz     ,-height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz    ,-height/2.0f + _tx , height +_ty , height/2.0f + _tz    , height/2.0f + _tx , height +_ty , height/2.0f + _tz , //height/2.05 n orth
+         height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz     , height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz    , height/2.0f + _tx , height +_ty ,-height/2.0f + _tz    , height/2.0f + _tx , height +_ty , height/2.0f + _tz,  //0365east
+         height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz     ,-height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz    ,-height/2.0f + _tx , height +_ty ,-height/2.0f + _tz    , height/2.0f + _tx , height +_ty ,-height/2.0f + _tz,  //3276south
+        -height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz     ,-height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz    ,-height/2.0f + _tx , height +_ty , height/2.0f + _tz    ,-height/2.0f + _tx , height +_ty ,-height/2.0f + _tz,  //height/2.07 w est
+         height/2.0f + _tx , height +_ty , height/2.0f + _tz     ,-height/2.0f + _tx , height +_ty , height/2.0f + _tz    ,-height/2.0f + _tx , height +_ty ,-height/2.0f + _tz    , height/2.0f + _tx , height +_ty ,-height/2.0f + _tz  //5476bot
+    };
+    for (int c = 0; c< 72; c+=3){
+        n=Vector3f(treeTop[c],treeTop[c+1],treeTop[c+2])-wallCenter;
+        n.normalize();
+        _staticNormals.push_back(n.x);      _staticNormals.push_back(n.y);      _staticNormals.push_back(n.z);
+    }
+    _staticVertices.insert( _staticVertices.end() , treeTop , treeTop + sizeof(treeTop)/sizeof(GLfloat));
+    _staticIndex.insert(_staticIndex.end(),treeTop_index, treeTop_index+sizeof(treeTop_index)/sizeof(GLuint));
+    _staticColors.insert(_staticColors.end(), treeTop_colors, treeTop_colors + sizeof(treeTop_colors)/sizeof(GLfloat));
     _numOfWalls++;
     return 'W';
 }
