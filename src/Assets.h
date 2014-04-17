@@ -125,7 +125,10 @@ const GLfloat tile_colors[] = {
 const GLshort tile_tex_coords[] = {
         0,0,    1,0,    1,1,    0,1
     };
-
+const GLuint wall_index[]={
+  0,1,2,3,  0,1,4,5,  0,3,6,5,
+  3,2,7,6,  2,1,4,7,  5,4,7,6
+};
 const GLfloat wall_normals[] = {
         0,1,0,  0,1,0,  0,1,0, 0,1,0,//top
         0,0,1,  0,0,1,  0,0,1,  0,0,1,//north^

@@ -62,7 +62,6 @@ void GameLogic::start()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
-	// glEnable(GL_COLOR_MATERIAL);
 	glClearColor(0,.5,.5,1);
 
 	glMatrixMode(GL_PROJECTION);
@@ -119,8 +118,9 @@ void GameLogic::show()
 	_player->getCamera()->control();
     _player->getCamera()->update();
 
- _renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
 	_renderer->drawStatic();
+ _renderer->drawDynamic();
+
 
  std::clog << "GameLogic::show()\n";
 }

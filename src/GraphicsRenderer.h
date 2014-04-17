@@ -40,7 +40,7 @@ private:
 	static Renderer * _instance;
 	static bool _instanceFlag;
 	static bool _firstDraw;
-    std::vector<Graphics*> _drawObjects;    //Register graphics objects i.e. Enemy
+ std::vector<Graphics*> _drawObjects;    //Register graphics objects i.e. Enemy
 	bool _textureFlag;
 	Renderer();
  GLuint loadBMP();

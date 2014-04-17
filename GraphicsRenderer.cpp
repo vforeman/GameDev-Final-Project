@@ -21,21 +21,23 @@ void Renderer::drawStatic()
 
   //glDisable(GL_DEPTH_TEST);
   glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_COLOR_MATERIAL);
 
+  // glDisable(GL_LIGHTING);
 
   //loaded with cube data right now
   //Enable vertex arrays we want to draw with
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
-  // glEnableClientState(GL_INDEX_ARRAY);
+  glEnableClientState(GL_INDEX_ARRAY);
 
   if(_firstDraw){
     _firstDraw=true;
     //Connect the arrays themselves
     glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
-    // glIndexPointer(GL_INT,0,&_lvl._staticIndex[0]);
+    glIndexPointer(GL_INT,0,&_lvl._staticIndex[0]);
     glNormalPointer(GL_FLOAT, 0, &_lvl._staticNormals[0]);
     glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
   }
@@ -45,16 +47,19 @@ void Renderer::drawStatic()
   //TODO::I dont think I should be loading the vertex data every call
   //Disable vertex arrays that are no longer in use
   glDisableClientState(GL_VERTEX_ARRAY);
-  // glDisableClientState(GL_INDEX_ARRAY);
+  glDisableClientState(GL_INDEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-
-
+  // glEnable(GL_LIGHTING);
+  glDisable(GL_COLOR_MATERIAL);
   // drawHud();
 
 }
 void Renderer::drawDynamic()
 { glColor3f(1,0,0);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_SRC_ALPHA);
+  glEnable(GL_COLOR_MATERIAL);
     for(unsigned int i = 0; i < _drawObjects.size(); ++i)
     {
         try
@@ -63,8 +68,28 @@ void Renderer::drawDynamic()
 
 	            glMatrixMode(GL_MODELVIEW);
                 glPushMatrix();
+                cout<<e->_verts.size();
+                cout<<e->_norms.size();
                 glTranslatef(e->_position.x, e->_position.y, e->_position.z);
-                e->drawSphere();
+                // e->drawSphere();
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glEnableClientState(GL_NORMAL_ARRAY);
+                // glEnableClientState(GL_INDEX_ARRAY);
+                    //Connect the arrays themselves
+                glVertexPointer(3, GL_FLOAT, 0, &e->_verts[0]);
+                // glIndexPointer(GL_INT,0,&_lvl._staticIndex[0]);
+                glNormalPointer(GL_FLOAT, 0, &e->_norms[0]);
+                // glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
+
+                //removed encapsulating stack moves, hopeful speedup
+                glDrawArrays(GL_TRIANGLE_STRIP , 0,e->_verts.size()/3);
+
+                //TODO::I dont think I should be loading the vertex data every call
+                //Disable vertex arrays that are no longer in use
+                glDisableClientState(GL_VERTEX_ARRAY);
+                // glDisableClientState(GL_INDEX_ARRAY);
+                glDisableClientState(GL_NORMAL_ARRAY);
+                // glDisableClientState(GL_COLOR_ARRAY);
                 glPopMatrix();
 
         }

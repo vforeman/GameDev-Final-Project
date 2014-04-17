@@ -6,6 +6,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "Vmath.h"
+#include <cmath>
+using namespace std;
 
 const float RESOL = 0.125f;
 
@@ -30,7 +32,9 @@ class Graphics
         Graphics();
         virtual void initialize(std::string);
         void drawSphere();
+								static void createCircle(std::vector<float>& verts,std::vector<float>& norms);
         std::vector<float> _verts;
+        std::vector<float> _norms;
     protected:
         bool _initialized;
 };

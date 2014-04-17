@@ -5,7 +5,7 @@ namespace physics{
 Enemy::Enemy() : _health(100),  _alive(true), _point(0),
                  _alert(false), _ALERT_RADIUS(20.0f)
 {
-    initialize("Circle");    
+    initialize("Circle");
     createSimplePatrol();
 }
 
@@ -14,12 +14,13 @@ Enemy::Enemy(Vector3f pos) : _health(100), _alive(true), _point(0),
 {
     _position = pos;
     initialize("Circle");
+    Graphics::createCircle(_verts,_norms);
     createSimplePatrol();
 }
 
 void Enemy::attack(Vector3f target)
 {
-    
+
 }
 
 void Enemy::createSimplePatrol()
@@ -27,7 +28,7 @@ void Enemy::createSimplePatrol()
     unsigned int range = util::xorshift()%512;
     unsigned int rangeZ = util::xorshift()%512;
     Vector3f pos = _position;
-    
+
     /*
     for(unsigned int i = 0; i < range; ++i)
     {
@@ -48,7 +49,7 @@ void Enemy::createSimplePatrol()
     {
         pos.z -= 0.5f;
         _patrolPath.push_back(pos);
-    }  
+    }
     */
     pos.x += 10.0f;
     _patrolPath.push_back(pos);
@@ -81,7 +82,7 @@ void Enemy::patrol(Vector3f target)
             Vector3f trans = _patrolPath[_point] - _position;
             trans.normalize();
             _position = _position + trans*0.125f;
-        } 
+        }
         else
         {
             ++_point;

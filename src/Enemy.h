@@ -26,13 +26,15 @@ public:
     void attack(Vector3f);
     void die();
     void patrol(Vector3f);
+    std::vector<float> _verts;
+    std::vector<float> _norms;
 protected:
     bool _alive;
     bool _alert;
     unsigned int _point;    //Point on patrol path, treated as iterator
     std::vector< Vector3f > _patrolPath;
     void createSimplePatrol();
-    void createStrongPatrol();  
+    void createStrongPatrol();
     void target();
     Weapon _weapon;
 };
