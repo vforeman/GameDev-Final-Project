@@ -4,7 +4,8 @@
 #ifndef WINDOWCONTROLLER_H
 #define WINDOWCONTROLLER_H
 #include <SDL/SDL.h>
-#include <stdio.h>
+/*#include <stdio.h>
+#include "SDL_mixer.h"*/
 namespace window{
 
  /// Opens, Maintains, and Shutsdown a SINGLE instance

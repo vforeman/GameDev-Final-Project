@@ -36,16 +36,7 @@ protected:
 
 
 
-/***********************************
-*					BULLET SPECIFICATION
-*************************************/
-class Bullet : public PhysicsEntity
-{
-public:
- Bullet();
- Bullet(Vector3f);
- std::string _type;
-};
+
 
 
 /***********************************
@@ -69,7 +60,7 @@ public:
 	~PhysicsEngine();
 	static bool spheresphere(Vector3<float>& c1,float _radius1,Vector3<float>& c2,float _radius2);
 	static float pointdistacesquare(Vector3<float> p1,Vector3<float> p2);
-	
+
 private:
 	static PhysicsEngine * _instance;
 	static bool _instanceFlag;

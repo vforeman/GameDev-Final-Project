@@ -91,7 +91,7 @@ char Overlay::F(){
     _staticVertices.insert( _staticVertices.end() , tile , tile + sizeof(tile)/sizeof(GLfloat));
     _staticIndex.insert(_staticIndex.end(),tile_index, tile_index+sizeof(tile_index)/sizeof(GLuint));
     _staticNormals.insert(_staticNormals.end(),tile_normals,tile_normals + sizeof(tile_normals)/sizeof(GLfloat));
-    (util::randomRange(1,100)%100 == 90)
+    (util::randomRange(1,100)%100 == 45)
         ? D()
         : G();
     ++_numOfFloors;
