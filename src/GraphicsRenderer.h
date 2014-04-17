@@ -25,7 +25,6 @@ namespace graphics{
 
 
 
-
 class Renderer
 {
 public:

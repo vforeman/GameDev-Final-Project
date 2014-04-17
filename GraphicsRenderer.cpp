@@ -20,8 +20,8 @@ void Renderer::drawStatic()
 {std::clog << "Renderer::drawStatic()\n";
 
   //glDisable(GL_DEPTH_TEST);
-  //glEnable(GL_BLEND);
-  //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
   //loaded with cube data right now
@@ -29,11 +29,13 @@ void Renderer::drawStatic()
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
+  // glEnableClientState(GL_INDEX_ARRAY);
 
   if(_firstDraw){
     _firstDraw=true;
     //Connect the arrays themselves
     glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
+    // glIndexPointer(GL_INT,0,&_lvl._staticIndex[0]);
     glNormalPointer(GL_FLOAT, 0, &_lvl._staticNormals[0]);
     glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
   }
@@ -43,16 +45,14 @@ void Renderer::drawStatic()
   //TODO::I dont think I should be loading the vertex data every call
   //Disable vertex arrays that are no longer in use
   glDisableClientState(GL_VERTEX_ARRAY);
+  // glDisableClientState(GL_INDEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-<<<<<<< HEAD
-//  drawHud();
-=======
+
 
   // drawHud();
->>>>>>> 777173b... enemy appears, glitches, and runs away in a straight line
-}
 
+}
 void Renderer::drawDynamic()
 { glColor3f(1,0,0);
     for(unsigned int i = 0; i < _drawObjects.size(); ++i)
@@ -60,13 +60,13 @@ void Renderer::drawDynamic()
         try
         {
             ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
-                
+
 	            glMatrixMode(GL_MODELVIEW);
                 glPushMatrix();
                 glTranslatef(e->_position.x, e->_position.y, e->_position.z);
                 e->drawSphere();
                 glPopMatrix();
-                
+
         }
         catch(exception e)
         {
@@ -129,7 +129,7 @@ void Renderer::drawHud(){
 
   int playerbullets = 10;
   glMatrixMode(GL_PROJECTION);
-  
+
   glPushMatrix();
   glLoadIdentity();
   glOrtho(0.0, 640, 480, 0.0, -1.0, 10.0);
@@ -141,7 +141,7 @@ void Renderer::drawHud(){
   glDepthMask(GL_FALSE);
   glDisable(GL_DEPTH_TEST);
 
-  
+
   for(int k =0; k < playerbullets; ++k){
 
     glBegin(GL_QUADS);
@@ -153,7 +153,7 @@ void Renderer::drawHud(){
     glEnd();
 
   }
-  
+
 
   glMatrixMode(GL_PROJECTION);
   glPopMatrix();

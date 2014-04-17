@@ -8,6 +8,7 @@ vector<GLfloat> Overlay::_staticVertices;
 vector<GLfloat> Overlay::_staticNormals;
 vector<GLfloat> Overlay::_staticColors;
 vector<GLshort> Overlay::_staticTexCoords;
+vector<GLuint> Overlay::_staticIndex;
 
 Overlay::Overlay(){
     _numOfWalls = 0;
@@ -64,6 +65,7 @@ char Overlay::F(){
          0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz  //top
     };//didn't think the floor needed to be so 3D
     _staticVertices.insert( _staticVertices.end() , tile , tile + sizeof(tile)/sizeof(GLfloat));
+    _staticIndex.insert(_staticIndex.end(),tile_index, tile_index+sizeof(tile_index)/sizeof(GLuint));
     _staticNormals.insert(_staticNormals.end(),tile_normals,tile_normals + sizeof(tile_normals)/sizeof(GLfloat));
     _staticColors.insert(_staticColors.end(),tile_colors,tile_colors + sizeof(tile_colors)/sizeof(GLfloat));
     _staticTexCoords.insert(_staticTexCoords.end(), tile_tex_coords, tile_tex_coords + sizeof(tile_tex_coords)/sizeof(GLshort));

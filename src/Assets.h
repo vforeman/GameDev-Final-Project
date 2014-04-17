@@ -110,6 +110,9 @@ static const GLfloat normals[6][4][3] ={
  { { 0,-1, 0} , { 0,-1, 0} , { 0,-1, 0} , { 0,-1, 0} }//bottom
 
 };
+const GLuint tile_index[] = {
+  0,1,2,3
+};
 const GLfloat tile_normals[] = {
         1,1,1,  -1,1,1,  -1,1,-1, 1,1,-1
     };

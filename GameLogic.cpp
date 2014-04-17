@@ -31,30 +31,38 @@ void GameLogic::start()
 
 
     _iController = gamein::InputController::get();
-<<<<<<< HEAD
-    
-    _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.5f, 0.0f)));
-=======
 
-    _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.0f, 0.0f)));
->>>>>>> 777173b... enemy appears, glitches, and runs away in a straight line
+    _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.5f, 0.0f)));
+
     _renderer->registerGraphics(_enemies[0]);
 
-	glEnable(GL_DEPTH_TEST);
-    
+
 	glShadeModel(GL_SMOOTH);
     float light_position[] = {0.0f, 20.0f, 0.0f, 1.0f};
+    GLfloat ambient_intensity[]={0.2,0.2,0.2,1.0};
 
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+
 
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, YELLOW);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, BLACK);
+
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_intensity);
+    glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
     glLightfv(GL_LIGHT0, GL_SPECULAR, WHITE);
+
+	glFrontFace(GL_CCW);//counter-clockwise order of verts determines front face of polygon
+	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT, ambient_intensity);
+	// glMaterialf(GL_FRONT,GL_SHININESS,)
+
+
+
 	glClearDepth(100.0);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT_AND_BACK);
+	//Read that its good practice to put enable calls after setting attribues
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_DEPTH_TEST);
+	// glEnable(GL_COLOR_MATERIAL);
 	glClearColor(0,.5,.5,1);
 
 	glMatrixMode(GL_PROJECTION);
@@ -113,11 +121,7 @@ void GameLogic::show()
 
  _renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
 	_renderer->drawStatic();
-<<<<<<< HEAD
-    _renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
-=======
 
->>>>>>> 777173b... enemy appears, glitches, and runs away in a straight line
  std::clog << "GameLogic::show()\n";
 }
 

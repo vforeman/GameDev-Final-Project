@@ -25,6 +25,7 @@ class Overlay
 		static vector<GLfloat> _staticNormals;
 		static vector<GLfloat> _staticColors;
 		static vector<GLshort> _staticTexCoords;
+		static vector<GLuint> _staticIndex;
 
 	private:
 		static vector<vector<char>> _overlay;
