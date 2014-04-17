@@ -31,24 +31,30 @@ void Renderer::drawStatic()
   glEnableClientState(GL_COLOR_ARRAY);
 
   if(_firstDraw){
-    _firstDraw=false;
+    _firstDraw=true;
     //Connect the arrays themselves
     glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
     glNormalPointer(GL_FLOAT, 0, &_lvl._staticNormals[0]);
     glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
   }
   //removed encapsulating stack moves, hopeful speedup
-  glDrawArrays(GL_QUADS, 0,_lvl._staticVertices.size()/3);
+  glDrawArrays(GL_QUADS , 0,_lvl._staticVertices.size()/3);
+
   //TODO::I dont think I should be loading the vertex data every call
   //Disable vertex arrays that are no longer in use
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
+<<<<<<< HEAD
 //  drawHud();
+=======
+
+  // drawHud();
+>>>>>>> 777173b... enemy appears, glitches, and runs away in a straight line
 }
 
 void Renderer::drawDynamic()
-{
+{ glColor3f(1,0,0);
     for(unsigned int i = 0; i < _drawObjects.size(); ++i)
     {
         try

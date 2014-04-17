@@ -19,24 +19,32 @@ GameLogic::~GameLogic()
 
 void GameLogic::start()
 {
+
+
 	std::clog << "GameLogic::GameLogic()\n";
 	_renderer = graphics::Renderer::get();
 	_pEngine = physics::PhysicsEngine::get();
 	_wController = window::Window::get();
 	_wController->open();
-	
+
     _player = new Player(Vector3f(0.0f, 0.8f, 0.0f));
 
-    
+
     _iController = gamein::InputController::get();
+<<<<<<< HEAD
     
     _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.5f, 0.0f)));
+=======
+
+    _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.0f, 0.0f)));
+>>>>>>> 777173b... enemy appears, glitches, and runs away in a straight line
     _renderer->registerGraphics(_enemies[0]);
 
 	glEnable(GL_DEPTH_TEST);
     
 	glShadeModel(GL_SMOOTH);
     float light_position[] = {0.0f, 20.0f, 0.0f, 1.0f};
+
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 
@@ -45,8 +53,9 @@ void GameLogic::start()
     glLightfv(GL_LIGHT0, GL_AMBIENT, BLACK);
     glLightfv(GL_LIGHT0, GL_SPECULAR, WHITE);
 	glClearDepth(100.0);
-
-	glClearColor(1.0,1.0,1.0,1.0);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT_AND_BACK);
+	glClearColor(0,.5,.5,1);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -75,7 +84,7 @@ void GameLogic::run()
 	{
 		start = SDL_GetTicks();
 		running = _iController->HandleInput(_player->getCamera(),running);
-	    
+
         //handle logic and rendering below
 	    std::clog << "GameLogic::start()->update();\n";
 	    update();
@@ -102,8 +111,13 @@ void GameLogic::show()
 	_player->getCamera()->control();
     _player->getCamera()->update();
 
+ _renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
 	_renderer->drawStatic();
+<<<<<<< HEAD
     _renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
+=======
+
+>>>>>>> 777173b... enemy appears, glitches, and runs away in a straight line
  std::clog << "GameLogic::show()\n";
 }
 

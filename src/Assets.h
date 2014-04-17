@@ -111,7 +111,7 @@ static const GLfloat normals[6][4][3] ={
 
 };
 const GLfloat tile_normals[] = {
-        0,1,0,  0,1,0,  0,1,0, 0,1,0
+        1,1,1,  -1,1,1,  -1,1,-1, 1,1,-1
     };
 const GLfloat tile_colors[] = {
         0.54, 0.0, 0.1,0.3,//Burgandy

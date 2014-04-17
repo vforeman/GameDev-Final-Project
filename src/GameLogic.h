@@ -11,6 +11,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Weapon.h"
+#include "Graphics.h"
 
 namespace logic{
 /***********************************
