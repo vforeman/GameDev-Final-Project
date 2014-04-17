@@ -31,28 +31,6 @@ void Enemy::createSimplePatrol()
     float floating = (float)(util::randomRange(0,50)%50)/100.0;
     floating *= _position.y<0,5 ? 1 : -1;
 
-    /*
-    for(unsigned int i = 0; i < range; ++i)
-    {
-        pos.x += 0.5f;
-        _patrolPath.push_back(pos);
-    }
-    for(unsigned int i = 0; i < rangeZ; ++i)
-    {
-        pos.z += 0.5f;
-        _patrolPath.push_back(pos);
-    }
-    for(unsigned int i = 0; i < range; ++i)
-    {
-        pos.x -= 0.5f;
-        _patrolPath.push_back(pos);
-    }
-    for(unsigned int i = 0; i < rangeZ; ++i)
-    {
-        pos.z -= 0.5f;
-        _patrolPath.push_back(pos);
-    }
-    */
     pos.x += rangeX;
     _patrolPath.push_back(pos);
 
@@ -95,6 +73,17 @@ void Enemy::patrol(Vector3f target)
                 _point = 0;
         }
     }
+}
+
+void Enemy::createStrongPatrol()
+{
+    Vector3f pos = _position;
+    Node* path = AIManager::getInstance().astar(pos, Vector3f(0.0f, 0.0f, 0.0f));
+    path->traverse(_patrolPath);
+    path = AIManager::getInstance().astar(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(10.0f, 0.0f, 10.0f));
+    path->traverse(_patrolPath);
+    path = AIManager::getInstance().astar(Vector3f(10.0f, 0.0f, 10.0f), Vector3f(pos));
+    path->traverse(_patrolPath);
 }
 
 void Enemy::target()

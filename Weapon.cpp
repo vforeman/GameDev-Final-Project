@@ -29,6 +29,11 @@ Weapon::Weapon(unsigned int clipSize) : _MAX_CLIP_SIZE(clipSize), _clip(0), _rel
     _magazine = new Bullet*[_MAX_CLIP_SIZE];
 }
 
+unsigned int Weapon::getClip()
+{
+    return _clip;    
+}
+
 void Weapon::fire(Vector3f pos, Vector3f target)
 {
     Bullet* b = new Bullet(pos);    //Create a bullet object
@@ -48,8 +53,12 @@ void Weapon::iterate()
         _magazine[i]->update();
 }
 
-void reload()
+void Weapon::reload()
 {
+}
 
+Bullet* Weapon::getBullet(unsigned int index)
+{
+    return _magazine[index];
 }
 }// namespace physics

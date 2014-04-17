@@ -12,6 +12,7 @@
 //#include "LevelFactory.h"
 #include "Geometry.h"
 #include "Vmath.h"
+#include "Graphics.h"
 #include <string>
 #include <vector>
 namespace physics{
@@ -35,12 +36,6 @@ protected:
     PhysicsEntity();
     PhysicsEntity(Vector3f);    //Initialize position
 };
-
-
-
-
-
-
 
 /***********************************
 *					STATIC ENTITY SPECIFICATION

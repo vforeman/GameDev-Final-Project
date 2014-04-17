@@ -26,8 +26,8 @@ void GameLogic::start()
 	_pEngine = physics::PhysicsEngine::get();
 	_wController = window::Window::get();
 	_wController->open();
- _player = new Player(Vector3f(0, 0.8f, 0));
-
+    _player = new Player(Vector3f(0, 0.8f, 0));
+    _weapon = new physics::Weapon();
 	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p){
 		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
 		int zmax = ((int)Overlay::OVERLAY_HEIGHT)/2;
@@ -82,9 +82,12 @@ void GameLogic::start()
 
 void GameLogic::update()
 {
-	// Handles Check for Collision and other functions that need to be updated
+	
+    // Handles Check for Collision and other functions that need to be updated
     for(unsigned int i = 0; i < _enemies.size(); ++i)
         _enemies[i]->patrol(_player->getCamera()->getLocation());
+    
+        
 };
 
 
@@ -98,7 +101,7 @@ void GameLogic::run()
 	while(running)
 	{
 		start = SDL_GetTicks();
-		running = _iController->HandleInput(_player->getCamera(),running);
+		running = _iController->HandleInput(_player->getCamera(), _weapon, running);
 
         //handle logic and rendering below
 	    std::clog << "GameLogic::start()->update();\n";
@@ -129,7 +132,6 @@ void GameLogic::show()
 	_renderer->drawStatic();
  _renderer->drawDynamic();
  _renderer->drawHud();		///MUST BE DRAWN LAST BECAUSE I CLEAR THE DEPTH BUFFER
-
 
  std::clog << "GameLogic::show()\n";
 }

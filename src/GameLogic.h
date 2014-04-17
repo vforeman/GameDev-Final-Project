@@ -34,6 +34,7 @@ public:
     std::vector<physics::Enemy*> _enemies;
 	Camera * _cam;
     Player * _player;
+    physics::Weapon * _weapon;
 	gamein::InputController * _iController;
 	graphics::Renderer * _renderer;
 	static GameLogic * get();
