@@ -8,7 +8,17 @@
 #include "PhysicsEngine.h"
 #include <string>
 namespace physics{
-
+/***********************************
+*					BULLET SPECIFICATION
+*************************************/
+class Bullet : public PhysicsEntity, virtual public Graphics
+{
+public:
+ Bullet();
+ Bullet(Vector3f);
+ bool active = false;
+ std::string _type;
+};
 
 
 class Weapon

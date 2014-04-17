@@ -34,22 +34,6 @@ protected:
     PhysicsEntity(Vector3f);    //Initialize position
 };
 
-
-
-
-/***********************************
-*					BULLET SPECIFICATION
-*************************************/
-class Bullet : public PhysicsEntity, virtual public Graphics
-{
-public:
- Bullet();
- Bullet(Vector3f);
- bool active = false;   //If bullet is active draw to the screen 
- std::string _type;
-};
-
-
 /***********************************
 *					STATIC ENTITY SPECIFICATION
 *************************************/
@@ -71,7 +55,7 @@ public:
 	~PhysicsEngine();
 	static bool spheresphere(Vector3<float>& c1,float _radius1,Vector3<float>& c2,float _radius2);
 	static float pointdistacesquare(Vector3<float> p1,Vector3<float> p2);
-	
+
 private:
 	static PhysicsEngine * _instance;
 	static bool _instanceFlag;
