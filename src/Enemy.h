@@ -6,11 +6,13 @@
 
 #include <vector>
 #include "PhysicsEngine.h"
+#include <iostream>
 #include "AIManager.h"
 #include "Vmath.h"
 #include "Util.h"
 #include "Graphics.h"
 #include "Weapon.h"
+#include <cmath>
 
 namespace physics{
 /***********************************

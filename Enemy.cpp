@@ -28,6 +28,8 @@ void Enemy::createSimplePatrol()
     unsigned int range = util::xorshift()%512;
     unsigned int rangeZ = util::xorshift()%512;
     Vector3f pos = _position;
+    float floating = (float)(util::randomRange(0,50)%50)/100.0;
+    floating *= _position.y<0,5 ? 1 : -1;
 
     /*
     for(unsigned int i = 0; i < range; ++i)
@@ -53,6 +55,7 @@ void Enemy::createSimplePatrol()
     */
     pos.x += 10.0f;
     _patrolPath.push_back(pos);
+
     pos.z += 10.0f;
     _patrolPath.push_back(pos);
     pos.x -= 10.0f;
@@ -68,6 +71,7 @@ void Enemy::die()
 
 void Enemy::patrol(Vector3f target)
 {
+
     if(physics::PhysicsEngine::spheresphere(_position, _ALERT_RADIUS, target, 0.5f) )
     {
         //Fire at player
