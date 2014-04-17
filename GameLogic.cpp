@@ -69,9 +69,11 @@ void GameLogic::update()
 		//std::cout<<"for loop!!!!!"<<std::endl;
 	if(physics::PhysicsEngine::spheresphere(cameraPos,2.0,enempos[i],2.0))
 		{
-		std::cout<<"collision \n collision \n collision "<<std::endl;
+		//std::cout<<"collision \n collision \n collision "<<std::endl;
+		 std::clog << "collision \n collision \n collision\n";
 		//_cam->setLocation(Vec tor3<float>(cameraPos));
 		}  
+		
 	}
 	
 };	
@@ -92,7 +94,7 @@ void GameLogic::run()
 
 
 	    std::clog << "GameLogic::start()->update();\n";
-	    update();
+	   update();
 	    show();
 
         // glDepthFunc(GL_LESS);//Would this help?
@@ -142,7 +144,7 @@ GameLogic * GameLogic::get()
 void GameLogic::ranjaytest(std::vector<Vector3<float> >& e)
 {
 	Vector3f test = Vector3f(10.0f, 0.0f, 0.0f);
-	for (int i = 0; i <= 20; i++)
+	/*for (int i = 0; i <= 20; i++)
 	{
 		test.z = test.z + i;
 		e.push_back(test );
@@ -177,8 +179,34 @@ void GameLogic::ranjaytest(std::vector<Vector3<float> >& e)
 		test.x = test.x + i;
 		e.push_back(test );
 	}
+	*/
+	
+	test = Vector3f(10.0f, 0.0f, -10.0f);
+	for (int i = 0; i <= 20; i++)
+	{
+		test.z = test.z + i;
+		e.push_back(test );
+	}
+	test = Vector3f(10.0f, 0.0f, 10.0f);
+	for (int i = 0; i <= 20; i++)
+	{
+		test.x = test.x - i;
+		e.push_back(test );
+	}	
 
+	test = Vector3f(-10.0f, 0.0f, 10.0f);
+	for (int i = 0; i <= 20; i++)
+	{
+		test.z = test.z - i;
+		e.push_back(test );
+	}
 
+	test = Vector3f(10.0f, 0.0f, 10.0f);
+	for (int i = 0; i <= 20; i++)
+	{
+		test.x = test.x + i;
+		e.push_back(test );
+	}			
 	
 	
 };
