@@ -9,6 +9,8 @@
 #include "PhysicsEngine.h"
 #include "Camera.h"
 #include "Enemy.h"
+#include "Player.h"
+#include "Weapon.h"
 
 namespace logic{
 /***********************************
@@ -27,6 +29,7 @@ public:
 	window::Window * _wController;
     std::vector<physics::Enemy*> _enemies;
 	Camera * _cam;
+    Player * _player;
 	gamein::InputController * _iController;
 	graphics::Renderer * _renderer;
 	static GameLogic * get();

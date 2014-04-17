@@ -29,22 +29,22 @@ void Enemy::createSimplePatrol()
     Vector3f pos = _position;
     for(unsigned int i = 0; i < range; ++i)
     {
-        pos.x += 0.25f;
+        pos.x += 0.5f;
         _patrolPath.push_back(pos);
     }
     for(unsigned int i = 0; i < rangeZ; ++i)
     {
-        pos.z += 0.25f;
+        pos.z += 0.5f;
         _patrolPath.push_back(pos);
     }
     for(unsigned int i = 0; i < range; ++i)
     {
-        pos.x -= 0.25f;
+        pos.x -= 0.5f;
         _patrolPath.push_back(pos);
     }
     for(unsigned int i = 0; i < rangeZ; ++i)
     {
-        pos.z -= 0.25f;
+        pos.z -= 0.5f;
         _patrolPath.push_back(pos);
     }  
 
@@ -55,21 +55,29 @@ void Enemy::die()
     _alive = false;
 }
 
-void Enemy::patrol()
+void Enemy::patrol(Vector3f target)
 {
-    if(!(_position.x - _patrolPath[_point].x < 0.25f && _position.x - _patrolPath[_point].x > -0.25f &&
-         _position.y - _patrolPath[_point].y < 0.25f && _position.y - _patrolPath[_point].y > - 0.25f &&
-         _position.z - _patrolPath[_point].z < 0.25f && _position.z - _patrolPath[_point].z > -0.25f  ))
+    if(physics::PhysicsEngines::spheresphere(position,alertradius,targetposition,secondradius) )
     {
-        _position = _patrolPath[_point] - _position;
-        _position.normalize();
-        _position = _position * 0.25f;
-    } 
+        //Fire at player
+        printf("MUST DESTROY!!!\n");
+    }
     else
     {
-        ++_point;
-        if(_point >= _patrolPath.size())
-            _point = 0;
+        if(!(_position.x - _patrolPath[_point].x < 0.25f && _position.x - _patrolPath[_point].x > -0.25f &&
+            _position.y - _patrolPath[_point].y < 0.25f && _position.y - _patrolPath[_point].y > - 0.25f &&
+            _position.z - _patrolPath[_point].z < 0.25f && _position.z - _patrolPath[_point].z > -0.25f  ))
+        {
+            Vector3f trans = _patrolPath[_point] - _position;
+            //trans.normalize();
+            _position = _position + trans;
+        } 
+        else
+        {
+            ++_point;
+            if(_point >= _patrolPath.size())
+                _point = 0;
+        }
     }
 }
 

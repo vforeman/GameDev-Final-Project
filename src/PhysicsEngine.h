@@ -47,14 +47,6 @@ public:
  std::string _type;
 };
 
-/***********************************
-*					PLAYER SPECIFICATION
-*************************************/
-class Player : PhysicsEntity
-{
-
-};
-
 
 /***********************************
 *					STATIC ENTITY SPECIFICATION

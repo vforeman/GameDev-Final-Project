@@ -25,9 +25,11 @@ void GameLogic::start()
 	_pEngine = physics::PhysicsEngine::get();
 	_wController = window::Window::get();
 	_wController->open();
-	_cam = new Camera();
-	_cam->setLocation(Vector3f(0,0.8,0));
-	_iController = gamein::InputController::get();
+	
+    _player = new Player(Vector3f(0.0f, 0.8f, 0.0f));
+
+    
+    _iController = gamein::InputController::get();
     
     _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.0f, 0.0f)));
     _renderer->registerGraphics(_enemies[0]);
@@ -54,7 +56,8 @@ void GameLogic::start()
 void GameLogic::update()
 {
 	// Handles Check for Collision and other functions that need to be updated
-    _enemies[0]->patrol();
+    _enemies[0]->patrol(_player->getCamera()->getLocation());
+    printf("(%.2f, %.2f)\n", _enemies[0]->_position.x, _enemies[0]->_position.z);
 };
 
 
@@ -68,7 +71,7 @@ void GameLogic::run()
 	while(running)
 	{
 		start = SDL_GetTicks();
-		running = _iController->HandleInput(_cam,running);
+		running = _iController->HandleInput(_player->getCamera(),running);
 	    
         //handle logic and rendering below
 	    std::clog << "GameLogic::start()->update();\n";
@@ -92,9 +95,9 @@ void GameLogic::show()
 {std::clog << "GameLogic::show()\n";
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	_cam->control();
-	_cam->update();
-	// glTranslatef(0.0,0.0,0.0);
+	_player->getCamera()->control();
+    _player->getCamera()->update();
+
 	_renderer->drawStatic();
     //_renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
  std::clog << "GameLogic::show()\n";
