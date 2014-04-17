@@ -3,9 +3,11 @@
 
 #include <vector>
 #include <string>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include "Vmath.h"
 
-const float RESOL = 0.25f;
+const float RESOL = 0.125f;
 
 //GRAPHIC COLORS
 //Rainbow
@@ -27,6 +29,7 @@ class Graphics
     public:
         Graphics();
         virtual void initialize(std::string);
+        void drawSphere();
         std::vector<float> _verts;
     protected:
         bool _initialized;

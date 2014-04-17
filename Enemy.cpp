@@ -27,6 +27,8 @@ void Enemy::createSimplePatrol()
     unsigned int range = util::xorshift()%512;
     unsigned int rangeZ = util::xorshift()%512;
     Vector3f pos = _position;
+    
+    /*
     for(unsigned int i = 0; i < range; ++i)
     {
         pos.x += 0.5f;
@@ -47,7 +49,15 @@ void Enemy::createSimplePatrol()
         pos.z -= 0.5f;
         _patrolPath.push_back(pos);
     }  
-
+    */
+    pos.x += 10.0f;
+    _patrolPath.push_back(pos);
+    pos.z += 10.0f;
+    _patrolPath.push_back(pos);
+    pos.x -= 10.0f;
+    _patrolPath.push_back(pos);
+    pos.z -= 10.0f;
+    _patrolPath.push_back(pos);
 }
 
 void Enemy::die()
@@ -69,8 +79,8 @@ void Enemy::patrol(Vector3f target)
             _position.z - _patrolPath[_point].z < 0.25f && _position.z - _patrolPath[_point].z > -0.25f  ))
         {
             Vector3f trans = _patrolPath[_point] - _position;
-            //trans.normalize();
-            _position = _position + trans;
+            trans.normalize();
+            _position = _position + trans*0.125f;
         } 
         else
         {

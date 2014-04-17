@@ -17,7 +17,6 @@ GameLogic::~GameLogic()
 }
 
 
-
 void GameLogic::start()
 {
 	std::clog << "GameLogic::GameLogic()\n";
@@ -31,16 +30,20 @@ void GameLogic::start()
     
     _iController = gamein::InputController::get();
     
-    _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.0f, 0.0f)));
+    _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.5f, 0.0f)));
     _renderer->registerGraphics(_enemies[0]);
 
 	glEnable(GL_DEPTH_TEST);
-	// glEnable(GL_LIGHTING);
-	// glEnable(GL_LIGHT0);
-	// glEnable(GL_LIGHT1);
+    
 	glShadeModel(GL_SMOOTH);
-	// glEnable(GL_CULL_FACE);
-	// glCullFace(GL_FRONT);
+    float light_position[] = {0.0f, 20.0f, 0.0f, 1.0f};
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, YELLOW);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, BLACK);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, WHITE);
 	glClearDepth(100.0);
 
 	glClearColor(1.0,1.0,1.0,1.0);
@@ -58,7 +61,6 @@ void GameLogic::update()
 {
 	// Handles Check for Collision and other functions that need to be updated
     _enemies[0]->patrol(_player->getCamera()->getLocation());
-    printf("(%.2f, %.2f)\n", _enemies[0]->_position.x, _enemies[0]->_position.z);
 };
 
 
@@ -101,7 +103,7 @@ void GameLogic::show()
     _player->getCamera()->update();
 
 	_renderer->drawStatic();
-    //_renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
+    _renderer->drawDynamic();   //CAUSES A GRAPHICS GLITCH UNCOMMENT AND SEE
  std::clog << "GameLogic::show()\n";
 }
 
@@ -120,3 +122,4 @@ GameLogic * GameLogic::get()
 }
 
 }// namesapce logic
+

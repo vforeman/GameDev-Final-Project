@@ -19,9 +19,9 @@ Renderer::~Renderer()
 void Renderer::drawStatic()
 {std::clog << "Renderer::drawStatic()\n";
 
-  glDisable(GL_DEPTH_TEST);
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  //glDisable(GL_DEPTH_TEST);
+  //glEnable(GL_BLEND);
+  //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
   //loaded with cube data right now
@@ -40,16 +40,11 @@ void Renderer::drawStatic()
   //removed encapsulating stack moves, hopeful speedup
   glDrawArrays(GL_QUADS, 0,_lvl._staticVertices.size()/3);
   //TODO::I dont think I should be loading the vertex data every call
-  //REPLY(REM):: You should load the vertex data for static every time
-  //             Because the screen is cleared each frame; so, the walls must be redrawn.
-  //             Therefore, the GraphicsRenderer needs to have the draw arrays again.
-  //             The benefit of sending the data in a vertex array outweights any performance issues (MY OPINION)
   //Disable vertex arrays that are no longer in use
   glDisableClientState(GL_VERTEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
-
-  drawHud();
+//  drawHud();
 }
 
 void Renderer::drawDynamic()
@@ -59,13 +54,13 @@ void Renderer::drawDynamic()
         try
         {
             ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
-            glPushMatrix();
+                
+	            glMatrixMode(GL_MODELVIEW);
+                glPushMatrix();
                 glTranslatef(e->_position.x, e->_position.y, e->_position.z);
-                glEnableClientState(GL_VERTEX_ARRAY);
-                glVertexPointer(3, GL_FLOAT, 0, &e->_verts[0]);
-                glDrawArrays(GL_TRIANGLES, 0, e->_verts.size()/3);
-                glDisableClientState(GL_VERTEX_ARRAY);
-            glPopMatrix();
+                e->drawSphere();
+                glPopMatrix();
+                
         }
         catch(exception e)
         {
@@ -128,6 +123,7 @@ void Renderer::drawHud(){
 
   int playerbullets = 10;
   glMatrixMode(GL_PROJECTION);
+  
   glPushMatrix();
   glLoadIdentity();
   glOrtho(0.0, 640, 480, 0.0, -1.0, 10.0);
@@ -139,6 +135,7 @@ void Renderer::drawHud(){
   glDepthMask(GL_FALSE);
   glDisable(GL_DEPTH_TEST);
 
+  
   for(int k =0; k < playerbullets; ++k){
 
     glBegin(GL_QUADS);
@@ -150,13 +147,34 @@ void Renderer::drawHud(){
     glEnd();
 
   }
-
+  
 
   glMatrixMode(GL_PROJECTION);
   glPopMatrix();
   glMatrixMode(GL_MODELVIEW);
   glDepthMask(GL_TRUE);
   glEnable(GL_DEPTH_TEST);
+
+/*
+  glDisable(GL_DEPTH_TEST);
+  glDisable(GL_LIGHTING);
+  glPushMatrix();
+  glMatrixMode(GL_PROJECTION);
+  glPushMatrix();
+  glLoadIdentity();
+  glOrtho(0.0f, 1280, 960, 0.0f, 0.0f, 1.0f);
+  glBegin(GL_LINES);
+    glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex2f(640, 470);
+        glVertex2f(640, 490);
+        glVertex2f(630, 480);
+        glVertex2f(650, 480);
+    glEnd();
+    glPopMatrix();
+    glPopMatrix();
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+*/
 }
 
 
