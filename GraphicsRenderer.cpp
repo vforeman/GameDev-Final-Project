@@ -20,8 +20,8 @@ void Renderer::drawStatic()
 {std::clog << "Renderer::drawStatic()\n";
 
   //glDisable(GL_DEPTH_TEST);
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_ONE_MINUS_SRC_ALPHA);
+  // glEnable(GL_BLEND);
+  // glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_COLOR_MATERIAL);
 
   // glDisable(GL_LIGHTING);
@@ -68,8 +68,6 @@ void Renderer::drawDynamic()
 
 	            glMatrixMode(GL_MODELVIEW);
                 glPushMatrix();
-                cout<<e->_verts.size();
-                cout<<e->_norms.size();
                 glTranslatef(e->_position.x, e->_position.y, e->_position.z);
                 // e->drawSphere();
                 glEnableClientState(GL_VERTEX_ARRAY);
@@ -98,6 +96,7 @@ void Renderer::drawDynamic()
             printf("Exception: %s\n", e.what());
         }
     }
+    glDisable(GL_BLEND);
 }
 
 void Renderer::registerGraphics(Graphics* g)
