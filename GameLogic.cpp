@@ -120,6 +120,7 @@ void GameLogic::show()
 
 	_renderer->drawStatic();
  _renderer->drawDynamic();
+ _renderer->drawHud();		///MUST BE DRAWN LAST BECAUSE I CLEAR THE DEPTH BUFFER
 
 
  std::clog << "GameLogic::show()\n";

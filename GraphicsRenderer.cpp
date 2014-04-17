@@ -52,7 +52,6 @@ void Renderer::drawStatic()
   glDisableClientState(GL_COLOR_ARRAY);
   // glEnable(GL_LIGHTING);
   glDisable(GL_COLOR_MATERIAL);
-  // drawHud();
 
 }
 void Renderer::drawDynamic()
@@ -153,18 +152,7 @@ GLuint Renderer::loadBMP(){
 void Renderer::drawHud(){
 
   int playerbullets = 10;
-  glMatrixMode(GL_PROJECTION);
-
-  glPushMatrix();
-  glLoadIdentity();
-  glOrtho(0.0, 640, 480, 0.0, -1.0, 10.0);
-  glMatrixMode(GL_MODELVIEW);
-
-  glLoadIdentity();
-  glDisable(GL_CULL_FACE);
-  glClear(GL_DEPTH_BUFFER_BIT);
-  glDepthMask(GL_FALSE);
-  glDisable(GL_DEPTH_TEST);
+  inHudMode(640,480);
 
 
   for(int k =0; k < playerbullets; ++k){
@@ -180,35 +168,36 @@ void Renderer::drawHud(){
   }
 
 
+
+  outHudMode();
+}
+
+void inHudMode(int screen_width, int screen_height)
+{
+  glPushAttrib(GL_ENABLE_BIT|GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_LIGHTING_BIT|GL_POLYGON_BIT|GL_VIEWPORT_BIT|GL_TRANSFORM_BIT);
+  glMatrixMode(GL_PROJECTION);
+
+  glPushMatrix();
+  glLoadIdentity();
+  glOrtho(0.0, screen_width, screen_height, 0.0, -1.0, 10.0);
+  glMatrixMode(GL_MODELVIEW);
+
+  glLoadIdentity();
+  glDisable(GL_CULL_FACE);
+  glClear(GL_DEPTH_BUFFER_BIT);
+  glDepthMask(GL_FALSE);
+  glDisable(GL_DEPTH_TEST);
+}
+void outHudMode()
+{
   glMatrixMode(GL_PROJECTION);
   glPopMatrix();
   glMatrixMode(GL_MODELVIEW);
   glDepthMask(GL_TRUE);
   glEnable(GL_DEPTH_TEST);
-
-/*
-  glDisable(GL_DEPTH_TEST);
-  glDisable(GL_LIGHTING);
-  glPushMatrix();
-  glMatrixMode(GL_PROJECTION);
-  glPushMatrix();
-  glLoadIdentity();
-  glOrtho(0.0f, 1280, 960, 0.0f, 0.0f, 1.0f);
-  glBegin(GL_LINES);
-    glColor3f(1.0f, 0.0f, 0.0f);
-        glVertex2f(640, 470);
-        glVertex2f(640, 490);
-        glVertex2f(630, 480);
-        glVertex2f(650, 480);
-    glEnd();
-    glPopMatrix();
-    glPopMatrix();
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
-*/
+  glPopAttrib();
+      SDL_GL_SwapBuffers();
 }
-
-
 
 Renderer * Renderer::get()
 {

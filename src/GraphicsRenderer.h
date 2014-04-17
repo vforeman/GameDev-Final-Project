@@ -23,8 +23,8 @@ using namespace geo;
 using namespace util;
 namespace graphics{
 
-
-
+void inHudMode(int screen_width, int screen_height);
+void outHudMode();
 class Renderer
 {
 public:
