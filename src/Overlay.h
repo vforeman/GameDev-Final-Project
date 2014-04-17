@@ -29,6 +29,7 @@ class Overlay
 		static unsigned int OVERLAY_HEIGHT;
 		static unsigned int OVERLAY_WIDTH;
 	private:
+		vector<GLfloat>::iterator _floatIterator;
 		static vector<vector<char>> _overlay;
 		int _numOfWalls;
 		int _numOfFloors;
@@ -44,6 +45,8 @@ class Overlay
 		void initializeTestLevel();
 		char W();//add wall to static data
 		char F();//add tile to static data
+		void G();//grass tile
+		void D();//dirt tile
 
 };
 

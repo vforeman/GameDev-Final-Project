@@ -116,12 +116,18 @@ const GLuint tile_index[] = {
 const GLfloat tile_normals[] = {
         1,1,1,  -1,1,1,  -1,1,-1, 1,1,-1
     };
-const GLfloat tile_colors[] = {
-        0.54, 0.0, 0.1,0.3,//Burgandy
-        0.54, 0.0, 0.1,0.3,//Burgandy
-        0.54, 0.0, 0.1,0.3,//Burgandy
-        0.54, 0.0, 0.1,0.3,//Burgandy
-  };
+const GLfloat tile_grass[] = {
+        0.54, 0.0, 0.1,0.3,//yellow
+        0.54, 0.0, 0.1,0.3,//yellow
+        0.54, 0.0, 0.1,0.3,//yellow
+        0.54, 0.0, 0.1,0.3//yellow
+};
+const GLfloat tile_dirt[] = {
+        0.604, 0.804, 0.195, 0.8,//puff cream
+        0.604, 0.804, 0.195, 0.8,//puff cream
+        0.604, 0.804, 0.195, 0.8,//puff cream
+        0.604, 0.804, 0.195, 0.8//puff cream
+};
 const GLshort tile_tex_coords[] = {
         0,0,    1,0,    1,1,    0,1
     };

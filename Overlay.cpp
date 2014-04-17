@@ -91,10 +91,27 @@ char Overlay::F(){
     _staticVertices.insert( _staticVertices.end() , tile , tile + sizeof(tile)/sizeof(GLfloat));
     _staticIndex.insert(_staticIndex.end(),tile_index, tile_index+sizeof(tile_index)/sizeof(GLuint));
     _staticNormals.insert(_staticNormals.end(),tile_normals,tile_normals + sizeof(tile_normals)/sizeof(GLfloat));
-    _staticColors.insert(_staticColors.end(),tile_colors,tile_colors + sizeof(tile_colors)/sizeof(GLfloat));
-
+    (util::randomRange(1,100)%100 == 90)
+        ? D()
+        : G();
     ++_numOfFloors;
     return 'F';
+}
+void Overlay::G()
+{
+    _staticColors.insert(_staticColors.end(),tile_grass,tile_grass + sizeof(tile_grass)/sizeof(GLfloat));
+}
+void Overlay::D()
+{
+    _staticColors.insert(_staticColors.end(),tile_dirt,tile_dirt + sizeof(tile_dirt)/sizeof(GLfloat));
+/*    if(_staticColors.size() > 2)
+    {
+        if(util::coinToss())
+        {
+            _staticColors.erase(_staticColors.end()-1);
+            _staticColors.insert(_staticColors.end(),tile_dirt,tile_dirt + sizeof(tile_dirt)/sizeof(GLfloat));
+        }
+    }*/
 }
 bool Overlay::isObstacle(Vector3f pos)
 {
