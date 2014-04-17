@@ -58,6 +58,7 @@ void Renderer::drawStatic()
 void Renderer::drawDynamic()
 { glColor3f(1,0,0);
   glEnable(GL_BLEND);
+  //we should toggle this whenever the sphere gets hit
   glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_SRC_ALPHA);
   glEnable(GL_COLOR_MATERIAL);
     for(unsigned int i = 0; i < _drawObjects.size(); ++i)
