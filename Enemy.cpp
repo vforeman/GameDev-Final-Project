@@ -84,9 +84,9 @@ void Enemy::patrol(Vector3f target)
             _position.y - _patrolPath[_point].y < 0.25f && _position.y - _patrolPath[_point].y > - 0.25f &&
             _position.z - _patrolPath[_point].z < 0.25f && _position.z - _patrolPath[_point].z > -0.25f  ))
         {
-            Vector3f trans = _patrolPath[_point] - _position;
-            trans.normalize();
-            _position = _position + trans*0.125f;
+            _velocity = _patrolPath[_point] - _position;//_velocity is a physics entity attribute
+            _velocity.normalize();
+            _position = _position + _velocity*0.125f;
         }
         else
         {

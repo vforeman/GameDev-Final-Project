@@ -25,7 +25,10 @@ class PhysicsEntity
 public:
     float _radius;
     Vector3f _position;
+    Vector3f _lastPosition;
+    Vector3f _trail;
     Vector3f _velocity;
+
     Vector3f _force;
     void update();
 protected:
