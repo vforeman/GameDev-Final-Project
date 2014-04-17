@@ -26,15 +26,21 @@ void GameLogic::start()
 	_pEngine = physics::PhysicsEngine::get();
 	_wController = window::Window::get();
 	_wController->open();
+ _player = new Player(Vector3f(0, 0.8f, 0));
 
-    _player = new Player(Vector3f(0.0f, 0.8f, 0.0f));
+	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p){
+		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
+		int zmax = ((int)Overlay::OVERLAY_HEIGHT)/2;
+		float x = (float)util::randomRange(-xmax,xmax);
+		float z = (float)util::randomRange(-zmax,zmax);
+		std::cout<<x<<','<<z<<'\n';
+  _enemies.push_back(new ::physics::Enemy(Vector3f(x, 0.5f, z)));
+  _renderer->registerGraphics(_enemies.back());
+	}
 
 
     _iController = gamein::InputController::get();
 
-    _enemies.push_back(new ::physics::Enemy(Vector3f(0.0f, 0.5f, 0.0f)));
-
-    _renderer->registerGraphics(_enemies[0]);
 
 
 	glShadeModel(GL_SMOOTH);

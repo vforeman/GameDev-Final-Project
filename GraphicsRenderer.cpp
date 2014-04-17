@@ -62,6 +62,7 @@ void Renderer::drawDynamic()
   glEnable(GL_COLOR_MATERIAL);
     for(unsigned int i = 0; i < _drawObjects.size(); ++i)
     {
+        cout<<_drawObjects.size()<<endl;
         try
         {
             ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
@@ -196,7 +197,6 @@ void outHudMode()
   glDepthMask(GL_TRUE);
   glEnable(GL_DEPTH_TEST);
   glPopAttrib();
-      SDL_GL_SwapBuffers();
 }
 
 Renderer * Renderer::get()

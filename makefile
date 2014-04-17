@@ -15,7 +15,7 @@ Main.o: Main.cpp WindowController.o PhysicsEngine.o Enemy.o Weapon.o GraphicsRen
 WindowController.o: WindowController.cpp PhysicsEngine.h InputController.h Util.h GraphicsRenderer.h
 GraphicsRenderer.o: GraphicsRenderer.cpp Vmath.h Assets.h Geometry.h Overlay.h Util.h Graphics.h Enemy.h
 Geometry.o: Geometry.cpp Vmath.h
-GameLogic.o: GameLogic.cpp InputController.h WindowController.h Camera.h GraphicsRenderer.h Enemy.h Player.h Weapon.h
+GameLogic.o: GameLogic.cpp InputController.h WindowController.h Camera.h GraphicsRenderer.h Enemy.h Player.h Weapon.h Util.h Overlay.h
 Camera.o: Camera.cpp Vmath.h
 InputController.o:	InputController.cpp	Vmath.h	Camera.h Weapon.h
 Weapon.o: Weapon.cpp	Vmath.h	PhysicsEngine.h

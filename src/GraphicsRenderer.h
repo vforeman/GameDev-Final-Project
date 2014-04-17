@@ -35,8 +35,9 @@ public:
  void drawHud();
     void registerGraphics(Graphics*);
     void emptyObjects();
-private:
 	Overlay _lvl;
+
+private:
 	static Renderer * _instance;
 	static bool _instanceFlag;
 	static bool _firstDraw;

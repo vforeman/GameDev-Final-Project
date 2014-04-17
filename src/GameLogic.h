@@ -12,7 +12,9 @@
 #include "Player.h"
 #include "Weapon.h"
 #include "Graphics.h"
-
+#include "Util.h"
+#include "Overlay.h"
+using namespace util;
 namespace logic{
 /***********************************
 *						GAME LOGIC SPECIFICATION
@@ -25,6 +27,7 @@ private:
 	static GameLogic * _instance;
 	static bool _instanceFlag;
 	GameLogic();
+	const int NUMBER_OF_ENEMIES = 5;
 public:
 	physics::PhysicsEngine * _pEngine;
 	window::Window * _wController;
