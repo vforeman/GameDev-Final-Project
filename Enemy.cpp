@@ -25,8 +25,8 @@ void Enemy::attack(Vector3f target)
 
 void Enemy::createSimplePatrol()
 {
-    unsigned int range = util::xorshift()%512;
-    unsigned int rangeZ = util::xorshift()%512;
+    unsigned int rangeX = util::xorshift()%42;
+    unsigned int rangeZ = util::xorshift()%42;
     Vector3f pos = _position;
 
     /*
@@ -51,13 +51,13 @@ void Enemy::createSimplePatrol()
         _patrolPath.push_back(pos);
     }
     */
-    pos.x += 10.0f;
+    pos.x += rangeX;
     _patrolPath.push_back(pos);
-    pos.z += 10.0f;
+    pos.z += rangeX;
     _patrolPath.push_back(pos);
-    pos.x -= 10.0f;
+    pos.x -= rangeX;
     _patrolPath.push_back(pos);
-    pos.z -= 10.0f;
+    pos.z -= rangeZ;
     _patrolPath.push_back(pos);
 }
 

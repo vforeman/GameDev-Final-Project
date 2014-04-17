@@ -53,6 +53,7 @@ void GameLogic::start()
     glLightfv(GL_LIGHT0, GL_DIFFUSE, YELLOW);
 
 
+
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_intensity);
     glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
     glLightfv(GL_LIGHT0, GL_SPECULAR, WHITE);
@@ -82,7 +83,8 @@ void GameLogic::start()
 void GameLogic::update()
 {
 	// Handles Check for Collision and other functions that need to be updated
-    _enemies[0]->patrol(_player->getCamera()->getLocation());
+    for(unsigned int i = 0; i < _enemies.size(); ++i)
+        _enemies[i]->patrol(_player->getCamera()->getLocation());
 };
 
 
