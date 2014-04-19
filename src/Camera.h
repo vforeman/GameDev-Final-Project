@@ -6,6 +6,7 @@
 #include <GL/glu.h>
 #include <cmath>
 #include <iostream>
+#include "Overlay.h"
 #include "Vmath.h"
 
 class Camera

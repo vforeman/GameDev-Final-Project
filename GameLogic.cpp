@@ -12,16 +12,14 @@ GameLogic::GameLogic()
 
 GameLogic::~GameLogic()
 {
-	std::clog << "GameLogic::~GameLogic()\n";
 	_instanceFlag = false;
 }
 
 
 void GameLogic::start()
 {
-
-
-	std::clog << "GameLogic::GameLogic()\n";
+     SoundManager::getInstance().start("./Assets/Columbia.ogg");
+    
 	_renderer = graphics::Renderer::get();
 	_pEngine = physics::PhysicsEngine::get();
 	_wController = window::Window::get();
@@ -33,9 +31,8 @@ void GameLogic::start()
 		int zmax = ((int)Overlay::OVERLAY_HEIGHT)/2;
 		float x = (float)util::randomRange(-xmax,xmax);
 		float z = (float)util::randomRange(-zmax,zmax);
-		std::cout<<x<<','<<z<<'\n';
-  _enemies.push_back(new ::physics::Enemy(Vector3f(x, 0.5f, z)));
-  _renderer->registerGraphics(_enemies.back());
+        _enemies.push_back(new ::physics::Enemy(Vector3f(x, 0.5f, z)));
+        _renderer->registerGraphics(_enemies.back());
 	}
 
 
@@ -44,7 +41,7 @@ void GameLogic::start()
 
 
 	glShadeModel(GL_SMOOTH);
-    float light_position[] = {0.0f, 20.0f, 0.0f, 1.0f};
+    float light_position[] = {0.0f, 40.0f, 0.0f, 1.0f};
     GLfloat ambient_intensity[]={0.2,0.2,0.2,1.0};
 
 
@@ -77,7 +74,6 @@ void GameLogic::start()
 
 	glMatrixMode(GL_MODELVIEW);
 
- std::clog << "GameLogic::GameLogic()\n";
 }
 
 void GameLogic::update()
@@ -86,14 +82,11 @@ void GameLogic::update()
     // Handles Check for Collision and other functions that need to be updated
     for(unsigned int i = 0; i < _enemies.size(); ++i)
         _enemies[i]->patrol(_player->getCamera()->getLocation());
-    
-        
 };
 
 
 void GameLogic::run()
 {
-	std::clog << "GameLogic::start()\n";
 	float angle =0.0;
 	const int FPS = 30;
 	Uint32 start;
@@ -104,7 +97,6 @@ void GameLogic::run()
 		running = _iController->HandleInput(_player->getCamera(), _weapon, running);
 
         //handle logic and rendering below
-	    std::clog << "GameLogic::start()->update();\n";
 	    update();
 	    show();
 
@@ -118,12 +110,18 @@ void GameLogic::run()
 	    if(1000/FPS > SDL_GetTicks() - start)
 		    SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
 	}
-	std::clog << "GameLogic::start()\n";
+
+    //Close Sound System on Exit
+    SoundManager::getInstance().stop();
+    usleep(250);
+    SoundManager::getInstance().close();
+    usleep(250);
+    alutExit();
 }
 
 
 void GameLogic::show()
-{std::clog << "GameLogic::show()\n";
+{
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	_player->getCamera()->control();
@@ -133,7 +131,6 @@ void GameLogic::show()
  _renderer->drawDynamic();
  _renderer->drawHud();		///MUST BE DRAWN LAST BECAUSE I CLEAR THE DEPTH BUFFER
 
- std::clog << "GameLogic::show()\n";
 }
 
 GameLogic * GameLogic::get()

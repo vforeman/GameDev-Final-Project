@@ -60,6 +60,7 @@ bool InputController::HandleInput(Camera * cam, physics::Weapon* wep, bool runni
 						case SDLK_p:
 							cam-> mouseOut();
 							SDL_ShowCursor(SDL_ENABLE);
+                            _mouseHidden = false;
 							break;
 						default: break;
 					}

@@ -115,15 +115,18 @@ void Overlay::D()
 }
 bool Overlay::isObstacle(Vector3f pos)
 {
-	return _overlay[(int)pos.x][(int)pos.z] == 'W';
+    //return _overlay[(int)pos.x][(int)pos.z] == 'W';
+    return false;
 }
 bool Overlay::isObstacle(int x, int z)
 {
-    return _overlay[x][z] == 'W';
+    //return _overlay[x][z] == 'W';
+    return false;
 }
 bool Overlay::isObstacle(int x, int y, int z)
 {
-    return Overlay::isObstacle(x, z);
+    //return Overlay::isObstacle(x, z);
+    return false;
 }
 
 

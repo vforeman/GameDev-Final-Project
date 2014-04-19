@@ -41,10 +41,10 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
     //If adjacent position is not obstacle and not on closed
     //add adjacent positions to list
     Node* temp = new Node;
-    if(!Overlay::isObstacle(current->_x+10, current->_y, current->_z))
+    if(!Overlay::isObstacle(current->_x+STEP, current->_y, current->_z))
     {
         bool valid = true;
-        temp->_x = current->_x+10;
+        temp->_x = current->_x+STEP;
         temp->_z = current->_z; 
         for(unsigned int i = 0; i < closed.size() && valid; ++i)
         {
@@ -54,7 +54,7 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
 
         if(valid)
         {
-            temp->_g = current->_g+10;
+            temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
@@ -63,10 +63,10 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
         }
         
     }
-    if(!Overlay::isObstacle(current->_x-10, current->_y, current->_z))
+    if(!Overlay::isObstacle(current->_x-STEP, current->_y, current->_z))
     {
         bool valid = true;
-        temp->_x = current->_x-10;
+        temp->_x = current->_x-STEP;
         temp->_z = current->_z; 
         for(unsigned int i = 0; i < closed.size() && valid; ++i)
         {
@@ -76,7 +76,7 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
         }
         if(valid)
         {
-            temp->_g = current->_g+10;
+            temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
@@ -84,11 +84,11 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
             std::push_heap(list.begin(), list.end());
         }
     }
-    if(!Overlay::isObstacle(current->_x, current->_y, current->_z+10))
+    if(!Overlay::isObstacle(current->_x, current->_y, current->_z+STEP))
     {
         bool valid = true;
         temp->_x = current->_x;
-        temp->_z = current->_z+10; 
+        temp->_z = current->_z+STEP; 
         for(unsigned int i = 0; i < closed.size() && valid; ++i)
         {
             if(temp->isSamePosition(closed[i]))
@@ -97,7 +97,7 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
 
         if(valid)
         {
-            temp->_g = current->_g+10;
+            temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
@@ -105,11 +105,11 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
             std::push_heap(list.begin(), list.end());
         }
     }
-    if(!Overlay::isObstacle(current->_x, current->_y, current->_z-10))
+    if(!Overlay::isObstacle(current->_x, current->_y, current->_z-STEP))
     {
         bool valid = true;
         temp->_x = current->_x;
-        temp->_z = current->_z-10; 
+        temp->_z = current->_z-STEP; 
         for(unsigned int i = 0; i < closed.size() && valid; ++i)
         {
             if(temp->isSamePosition(closed[i]))
@@ -118,7 +118,7 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
 
         if(valid)
         {
-            temp->_g = current->_g+10;
+            temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
@@ -126,11 +126,11 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
             std::push_heap(list.begin(), list.end());
         }
     }
-    if(!Overlay::isObstacle(current->_x+10, current->_y, current->_z+10))
+    if(!Overlay::isObstacle(current->_x+STEP, current->_y, current->_z+STEP))
     {
         bool valid = true;
-        temp->_x = current->_x+10;
-        temp->_z = current->_z+10; 
+        temp->_x = current->_x+STEP;
+        temp->_z = current->_z+STEP; 
         for(unsigned int i = 0; i < closed.size() && valid; ++i)
         {
             if(temp->isSamePosition(closed[i]))
@@ -139,7 +139,7 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
 
         if(valid)
         {
-            temp->_g = current->_g+10;
+            temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
@@ -147,11 +147,11 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
             std::push_heap(list.begin(), list.end());
         }
     }
-    if(!Overlay::isObstacle(current->_x+10, current->_y, current->_z-10))
+    if(!Overlay::isObstacle(current->_x+STEP, current->_y, current->_z-STEP))
     {
         bool valid = true;
-        temp->_x = current->_x+10;
-        temp->_z = current->_z-10; 
+        temp->_x = current->_x+STEP;
+        temp->_z = current->_z-STEP; 
         for(unsigned int i = 0; i < closed.size() && valid; ++i)
         {
             if(temp->isSamePosition(closed[i]))
@@ -160,7 +160,7 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
 
         if(valid)
         {
-            temp->_g = current->_g+10;
+            temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
@@ -168,11 +168,11 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
             std::push_heap(list.begin(), list.end());
         }
     }
-    if(!Overlay::isObstacle(current->_x-10, current->_y, current->_z-10))
+    if(!Overlay::isObstacle(current->_x-STEP, current->_y, current->_z-STEP))
     {
         bool valid = true;
-        temp->_x = current->_x-10;
-        temp->_z = current->_z-10; 
+        temp->_x = current->_x-STEP;
+        temp->_z = current->_z-STEP; 
         for(unsigned int i = 0; i < closed.size() && valid; ++i)
         {
             if(temp->isSamePosition(closed[i]))
@@ -181,7 +181,7 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
 
         if(valid)
         {
-            temp->_g = current->_g+10;
+            temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
@@ -189,11 +189,11 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
             std::push_heap(list.begin(), list.end());
         }
     }
-    if(!Overlay::isObstacle(current->_x-10, current->_y, current->_z+10))
+    if(!Overlay::isObstacle(current->_x-STEP, current->_y, current->_z+STEP))
     {
         bool valid = true;
-        temp->_x = current->_x-10;
-        temp->_z = current->_z+10; 
+        temp->_x = current->_x-STEP;
+        temp->_z = current->_z+STEP; 
         for(unsigned int i = 0; i < closed.size() && valid; ++i)
         {
             if(temp->isSamePosition(closed[i]))
@@ -201,7 +201,7 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
         }
         if(valid)
         {
-            temp->_g = current->_g+10;
+            temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
@@ -218,7 +218,7 @@ float calculateHn(Vector3f curr, Vector3f goal)
 
 
     //return D * (dx * dx + dy * dy);
-    return dx * dx + dy * dy;
+    return 100* dx * dx + dy * dy;
 }
 
 bool isGoal(Node* current, Node* goal)

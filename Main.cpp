@@ -14,9 +14,9 @@ using namespace physics;
 using namespace graphics;
 using namespace std;
 using namespace logic;
-int main()
+int main(int argc, char *argv[])
 {
-
+    alutInit(&argc, argv);
 	GameLogic* gameObject = GameLogic::get();
 	gameObject->start();
     gameObject->run();

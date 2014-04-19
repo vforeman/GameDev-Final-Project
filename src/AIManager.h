@@ -6,6 +6,9 @@
 #include <vector>
 #include <algorithm>
 
+const unsigned int STEP = 1;
+const unsigned int GSCORE = 10;
+
 class AIManager
 {
     public:

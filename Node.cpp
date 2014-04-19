@@ -72,7 +72,7 @@ Node& Node::operator= (const Node& that)
 bool Node::isSamePosition(const Node& that)
 {
 
-    if(std::abs(that._x - this->_x) <= 15 && std::abs(that._z - this->_z) <= 15)
+    if(std::abs(that._x - this->_x) <= 3 && std::abs(that._z - this->_z) <= 3)
         return true;
     else
         return false;
@@ -80,7 +80,7 @@ bool Node::isSamePosition(const Node& that)
 
 bool Node::isSamePosition(const Node* that)
 {
-    if(std::abs(that->_x - this->_x) < 10 && std::abs(that->_z - this->_z) < 10)
+    if(std::abs(that->_x - this->_x) <= 3 && std::abs(that->_z - this->_z) <= 3)
         return true;
     else
         return false;
@@ -89,7 +89,7 @@ bool Node::isSamePosition(const Node* that)
 
 bool Node::isSamePosition(int x, int y, int z)
 {
-    if(std::abs(x - this->_x) < 10 && std::abs(z - this->_z) < 10)
+    if(std::abs(x - this->_x) <= 3 && std::abs(z - this->_z) <= 3)
         return true;
     else 
         return false;
@@ -109,7 +109,7 @@ void Node::setParent(Node* that)
 void Node::traverse(std::vector < Vector3f >& path)
 {
     Node *temp = new Node();
-    *temp = *this;
+    temp = this;
     if(path.empty())
     {
         while(temp != NULL)
@@ -131,6 +131,7 @@ void Node::traverse(std::vector < Vector3f >& path)
             temp = temp->_parent;
         }
         path.insert(path.end(), extendedPath.begin(), extendedPath.end()); 
+        extendedPath.clear();
     }
 }
 

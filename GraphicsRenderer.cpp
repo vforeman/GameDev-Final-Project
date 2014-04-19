@@ -19,7 +19,7 @@ void Renderer::buildHudList(){
 }
 
 void Renderer::drawStatic()
-{std::clog << "Renderer::drawStatic()\n";
+{
 
   //glDisable(GL_DEPTH_TEST);
   glEnable(GL_BLEND);

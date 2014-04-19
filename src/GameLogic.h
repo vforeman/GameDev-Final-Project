@@ -14,6 +14,8 @@
 #include "Graphics.h"
 #include "Util.h"
 #include "Overlay.h"
+#include "SoundManager.h"
+
 using namespace util;
 namespace logic{
 /***********************************

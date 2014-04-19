@@ -89,10 +89,6 @@ bool PhysicsEngine::spheresphere(Vector3<float>& c1,float _radius1,Vector3<float
 	float dist=pointdistacesquare(temp,c2);
 	if(std::abs(dist)<=(_radius1+_radius2)*(_radius1+_radius2))
 	{
-		//float a=sqrt(dist)-(_radius1+_radius2);
-		//Vector3<float> vec(c2-c1);
-		//vec.normalize();
-		//c1=c1+vec*a;
 		return 1;
 	}
 	return 0;
