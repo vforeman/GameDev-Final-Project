@@ -27,8 +27,10 @@ void Enemy::attack(Vector3f target)
 
 void Enemy::createSimplePatrol()
 {
-    unsigned int rangeX = util::xorshift()%42;
-    unsigned int rangeZ = util::xorshift()%42;
+    std::default_random_engine generator;
+    std::uniform_int_distribution<unsigned int> distribution(1, 42);
+    unsigned int rangeX = distribution(generator);
+    unsigned int rangeZ = distribution(generator);
     Vector3f pos = _position;
     float floating = (float)(util::randomRange(0,50)%50)/100.0;
     floating *= _position.y<0,5 ? 1 : -1;
@@ -53,13 +55,15 @@ void Enemy::die()
 void Enemy::patrol(Vector3f target)
 {
 
-    //if(physics::PhysicsEngine::spheresphere(_position, _ALERT_RADIUS, target, 0.5f) )
-    //{
-    //    //Fire at player
-    //    printf("MUST DESTROY!!!\n");
-    //}
-    //else
-    //{
+    if(physics::PhysicsEngine::spheresphere(_position, _ALERT_RADIUS, target, 0.5f) )
+    {
+        //Fire at player
+        _radius = 2.0f;
+        _weapon.fire(_position, target);
+    }
+    else
+    {
+        _radius = 0.5f;
         if(!_patrolPath.empty())
         {
             if(!(_position.x - _patrolPath[_point].x < 0.25f && _position.x - _patrolPath[_point].x > -0.25f &&
@@ -77,7 +81,7 @@ void Enemy::patrol(Vector3f target)
                     _point = 0;
             }
         }
-    //}
+    }
 }
 
 void Enemy::createStrongPatrol()
@@ -87,11 +91,13 @@ void Enemy::createStrongPatrol()
     if(path != NULL)
     {
         path->traverse(_patrolPath);
-        //path = AIManager::getInstance().astar(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(10.0f, 0.0f, 10.0f));
-        //path->traverse(_patrolPath);
-        //path = AIManager::getInstance().astar(Vector3f(10.0f, 0.0f, 10.0f), Vector3f(pos));
-        //path->traverse(_patrolPath);
     }
+    path = AIManager::getInstance().astar(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(10.0f, 0.0f, 0.0f));
+    if(path != NULL)
+    {
+        path->traverse(_patrolPath);
+    }
+    //_patrolPath.insert(_patrolPath.begin(), _patrolPath.crbegin(), _patrolPath.crend());
 }
 
 void Enemy::target()

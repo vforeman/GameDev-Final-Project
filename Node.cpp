@@ -1,18 +1,18 @@
 #include "src/Node.h"
 
 Node::Node() : _x(0),    _y(0),    _z(0),
-               _f(0.0f), _g(0.0f), _h(0.0f), _parent(NULL)
+               _f(0.0f), _g(0.0f), _h(0.0f), _parent(NULL), _child(NULL)
 {
 }
 
 Node::Node(int x, int y, int z) : _x(x),        _y(y),      _z(z),
-                                  _f(0.0f),     _g(0.0f),   _h(0.0f),   _parent(NULL)
+                                  _f(0.0f),     _g(0.0f),   _h(0.0f),   _parent(NULL), _child(NULL)
 {
 }
 
 Node::Node(Vector3f v3f) : _x(int(v3f.x)),      _y(int(v3f.y)),        _z(int(v3f.z)),
                            _f(0.0f),             _g(0.0f),              _h(0.0f),
-                           _parent(NULL)
+                           _parent(NULL),       _child(NULL)
 {
 }
 
@@ -101,15 +101,19 @@ void Node::calculateFn()
 }
 
 void Node::setParent(Node* that)
-{
+{   
     this->_parent = new Node();
+    that->_child = new Node();
     this->_parent = that;
+    that->_child = this;
 }
 
 void Node::traverse(std::vector < Vector3f >& path)
 {
-    Node *temp = new Node();
-    temp = this;
+    Node *temp = this;
+    while(temp != NULL && temp->_child != NULL )
+        temp = temp->_child;
+    
     if(path.empty())
     {
         while(temp != NULL)
@@ -130,6 +134,7 @@ void Node::traverse(std::vector < Vector3f >& path)
                                     float(temp->_z)));
             temp = temp->_parent;
         }
+        path.reserve(path.size() + extendedPath.size());
         path.insert(path.end(), extendedPath.begin(), extendedPath.end()); 
         extendedPath.clear();
     }

@@ -6,8 +6,8 @@
 #include <vector>
 #include <algorithm>
 
-const unsigned int STEP = 1;
-const unsigned int GSCORE = 10;
+const unsigned int STEP = 5;
+const unsigned int GSCORE = 20;
 
 class AIManager
 {

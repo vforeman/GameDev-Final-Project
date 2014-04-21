@@ -31,6 +31,7 @@ class Node
         Node& operator= (const Node&);
     private:
         Node* _parent;
+        Node* _child;
         float _f;       
 };
 
