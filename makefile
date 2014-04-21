@@ -18,7 +18,7 @@ Geometry.o: Geometry.cpp Vmath.h
 GameLogic.o: GameLogic.cpp InputController.h WindowController.h Camera.h GraphicsRenderer.h Enemy.h Player.h Weapon.h Util.h Overlay.h SoundManager.h
 Camera.o: Camera.cpp Vmath.h Overlay.h
 InputController.o:	InputController.cpp	Vmath.h	Camera.h Weapon.h
-Weapon.o: Weapon.cpp	Vmath.h	PhysicsEngine.h
+Weapon.o: Weapon.cpp	Vmath.h	PhysicsEngine.h Graphics.h
 Enemy.o: Enemy.cpp Vmath.h PhysicsEngine.h Util.h Graphics.h Weapon.h
 BSP.o: BSP.cpp Util.h
 Overlay.o:	Overlay.cpp Vmath.h levels.h Assets.h Util.h

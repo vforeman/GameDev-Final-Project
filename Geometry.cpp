@@ -43,7 +43,6 @@ void Sphere::genCircleVertices()
      }
 
    }
-   cout<<_verts.size();
 }
 
 

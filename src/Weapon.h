@@ -6,6 +6,7 @@
 
 #include "Vmath.h"
 #include "PhysicsEngine.h"
+#include "Graphics.h"
 #include <string>
 namespace physics{
 /***********************************
@@ -34,6 +35,7 @@ public:
 private:
  bool _reloading;
  unsigned int _clip;
+ unsigned int _coolDown;
  const int _MAX_CLIP_SIZE;
  Bullet** _magazine;
 };

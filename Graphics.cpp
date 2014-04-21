@@ -82,5 +82,4 @@ void Graphics::createCircle(std::vector<float>& verts,std::vector<float>& norms)
 
         }
     }
-    cout<<"done\n";
 }

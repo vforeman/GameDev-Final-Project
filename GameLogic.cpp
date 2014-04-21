@@ -18,7 +18,7 @@ GameLogic::~GameLogic()
 
 void GameLogic::start()
 {
-     SoundManager::getInstance().start("./Assets/Columbia.ogg");
+     SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
     
 	_renderer = graphics::Renderer::get();
 	_pEngine = physics::PhysicsEngine::get();
@@ -81,7 +81,9 @@ void GameLogic::update()
 	
     // Handles Check for Collision and other functions that need to be updated
     for(unsigned int i = 0; i < _enemies.size(); ++i)
+    {
         _enemies[i]->patrol(_player->getCamera()->getLocation());
+    }
 };
 
 

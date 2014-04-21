@@ -113,21 +113,69 @@ void Overlay::D()
         }
     }*/
 }
+
+Vector3f translate(Vector3f trans);
 bool Overlay::isObstacle(Vector3f pos)
 {
-    //return _overlay[(int)pos.x][(int)pos.z] == 'W';
-    return false;
+    Vector3f check = translate(pos);
+    if(check.x < 0 || check.z < 0 || check.x >= (float)Overlay::OVERLAY_WIDTH || check.z >= (float)Overlay::OVERLAY_HEIGHT)
+        return true;
+    return _overlay[(int)check.x][(int)check.z] == 'W';
 }
 bool Overlay::isObstacle(int x, int z)
 {
-    //return _overlay[x][z] == 'W';
-    return false;
+    Vector3f check = translate(Vector3f(float(x), 0.0f, float(z)));
+    if(check.x < 0 || check.z < 0 || check.x >= (float)Overlay::OVERLAY_WIDTH || check.z >= (float)Overlay::OVERLAY_HEIGHT)
+        return true;
+
+    return _overlay[check.x][check.z] == 'W';
+    
 }
 bool Overlay::isObstacle(int x, int y, int z)
 {
-    //return Overlay::isObstacle(x, z);
-    return false;
+    return Overlay::isObstacle(x, z);
 }
 
 
+/*TODO
+ * FIGURE OUT A TRANSLATION SYSTEM IF RANJAY OR VICTOR DOESN'T DO IT FIRST
+ *
+ *
+ * */
+Vector3f adjust(Vector3f);    //Adjust for Overlay geometry
+Vector3f translate(Vector3f trans)
+{
+    Vector3f val = adjust(trans);
 
+    return val;
+}
+
+Vector3f adjust(Vector3f val)
+{
+    float adjX = (float)Overlay::OVERLAY_WIDTH/2;
+    float adjZ = (float)Overlay::OVERLAY_HEIGHT/2;
+    
+    if((val.x == 0.0f || val.x == -0.0f) && (val.z == 0.0f || val.z == -0.0f))
+        return Vector3f(49.0f, 0.0f, 49.0f);
+    if(val.x >= 0 && val.z >= 0)    //1st
+        return Vector3f(val.x, 0.0f, val.z);
+    if(val.x <=0 && val.z >= 0)    //2nd
+        return Vector3f(std::fabs(adjX+val.x), 0.0f, val.z);
+    if (val.x <= 0 && val.z <= 0)  //3rd
+        return Vector3f(std::fabs(adjX+val.x), 0.0f, std::fabs(adjZ+val.z)); 
+    if (val.x >= 0 && val.z <= 0)  //4th
+        return Vector3f(val.x, 0.0f, std::fabs(adjZ+val.z));
+
+    return val=Vector3f(1000.0f, 0.0f, 1000.0f);
+}
+
+/*
+    if(val.x >= 0 && val.z >= 0)    //1st
+        return Vector3f(adjX+val.x, 0.0f, adjZ+val.z); 
+    if(val.x <=0 && val.z >= 0)    //2nd
+        return Vector3f(std::fabs(adjX-val.x), 0.0f, adjZ+val.z);
+    if (val.x <= 0 && val.z <= 0)  //3rd
+        return Vector3f(std::fabs(adjX-val.x), 0.0f, std::fabs(adjZ-val.z));
+    if (val.x >= 0 && val.z <= 0)  //4th
+        return Vector3f(adjX+val.x, 0.0f, std::fabs(adjZ-val.z));
+*/

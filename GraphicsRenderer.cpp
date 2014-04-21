@@ -66,7 +66,6 @@ void Renderer::drawDynamic()
   glEnable(GL_COLOR_MATERIAL);
     for(unsigned int i = 0; i < _drawObjects.size(); ++i)
     {
-        cout<<_drawObjects.size()<<endl;
         try
         {
             ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
@@ -74,6 +73,7 @@ void Renderer::drawDynamic()
 	            glMatrixMode(GL_MODELVIEW);
                 glPushMatrix();
                 glTranslatef(e->_position.x, e->_position.y, e->_position.z);
+                glScalef(e->_radius, e->_radius, e->_radius);
                 // e->drawSphere();
                 glEnableClientState(GL_VERTEX_ARRAY);
                 glEnableClientState(GL_NORMAL_ARRAY);
