@@ -19,7 +19,7 @@ GameLogic::~GameLogic()
 void GameLogic::start()
 {
      SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
-    
+     
 	_renderer = graphics::Renderer::get();
 	_pEngine = physics::PhysicsEngine::get();
 	_wController = window::Window::get();
@@ -81,18 +81,19 @@ void GameLogic::update()
     if(_fireSignal)
         _weapon->fire(_player->getCamera()->getLocation(), _player->getCamera()->getVector());
     // Handles Check for Collision and other functions that need to be updated
-	_weapon->iterate();
     for(unsigned int i = 0; i < _enemies.size(); ++i)
     {
         _enemies[i]->patrol(_player->getCamera()->getLocation());
     }
-    for(unsigned int i = 0; i < _weapon->getClip(); ++i)
+    /*for(unsigned int i = 0; i < _weapon->getClip(); ++i)
     {
-        if(_weapon->getBullet(i)->active)
+        if(_weapon->getBullet(i)->_active)
+        {
             printf("DEBUG\n");
             //_weapon->getBullet(i)->update();
-
-    }
+        }
+    }*/
+	//_weapon->iterate();
     Vector3f test = _player->getCamera()->getLocation();
     //printf("(%.2f, %.2f, %.2f)\n", test.x, test.y, test.z);
 };
