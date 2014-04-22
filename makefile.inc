@@ -1,5 +1,5 @@
 CXXFLAGS =  -g -std=c++11 $(OPTFLAGS)
-DEBUG = -Wall -Wextra-Werror
+DEBUG = -g -Wall -Wextra-Werror
 CXX = g++
 VPATH = $(CURDIR)/src/
 LIBS = -lGLU -lGL -lSDL -lalut -lopenal -lvorbis -lvorbisfile -lpthread -I$(VPATH)
