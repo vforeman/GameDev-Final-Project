@@ -1,7 +1,7 @@
 #include "src/Overlay.h"
 
-unsigned int Overlay::OVERLAY_HEIGHT = 100;
-unsigned int Overlay::OVERLAY_WIDTH = 100;
+unsigned int Overlay::OVERLAY_HEIGHT = 500;
+unsigned int Overlay::OVERLAY_WIDTH = 500;
 
 vector<vector<char>> Overlay::_overlay (Overlay::OVERLAY_HEIGHT);
 vector<GLfloat> Overlay::_staticVertices;

@@ -78,8 +78,8 @@ void GameLogic::start()
 
 void GameLogic::update()
 {
-    //if(_fireSignal)
-    //    _weapon->fire(_player->getCamera()->getLocation(), Vector3f(0.0f, 0.0f, 0.0f));
+    if(_fireSignal)
+        _weapon->fire(_player->getCamera()->getLocation(), _player->getCamera()->getVector());
     // Handles Check for Collision and other functions that need to be updated
 	_weapon->iterate();
     for(unsigned int i = 0; i < _enemies.size(); ++i)
@@ -89,8 +89,12 @@ void GameLogic::update()
     for(unsigned int i = 0; i < _weapon->getClip(); ++i)
     {
         if(_weapon->getBullet(i)->active)
-            _weapon->getBullet(i)->update();
+            printf("DEBUG\n");
+            //_weapon->getBullet(i)->update();
+
     }
+    Vector3f test = _player->getCamera()->getLocation();
+    //printf("(%.2f, %.2f, %.2f)\n", test.x, test.y, test.z);
 };
 
 
@@ -143,7 +147,7 @@ void GameLogic::show()
     float radius;
     for(unsigned int i = 0; i < _weapon->getClip(); ++i)
     {
-        if(_weapon->getBullet(i)->active)
+        /*if(_weapon->getBullet(i)->active)
         {
             pos = _weapon->getBullet(i)->_position;
             radius = _weapon->getBullet(i)->_radius;
@@ -152,7 +156,7 @@ void GameLogic::show()
                 glScalef(radius, radius, radius);
                 _weapon->getBullet(i)->drawSphere();
             glPopMatrix();
-        }
+        }*/
     }
 
     // Handles Check for Collision and other functions that need to be updated

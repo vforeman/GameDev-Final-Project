@@ -40,6 +40,8 @@ unsigned int Weapon::getClip()
 
 void Weapon::fire(Vector3f pos, Vector3f target)
 {
+    //printf("Position: (%.2f, %.2f, %.2f)\n", pos.x, pos.y, pos.z);
+    //printf("  Target: (%.2f, %.2f, %.2f)\n", target.x, target.y, target.z);
     --_coolDown;
     if(_coolDown < 5)
     {
@@ -64,13 +66,15 @@ void Weapon::iterate()
     if(_coolDown == 5)
     {
         for(unsigned int i = 0; i < _clip ; ++i)
-            _magazine[i]->update();
+            printf("WEAPON: ITERATE\n");
+            //_magazine[i]->update();
     }
     else
     {
         --_coolDown;
         for(unsigned int i = 0; i < _clip; ++i)
-            _magazine[i]->update();
+            printf("WEAPON: ITERATE2\n");
+            //_magazine[i]->update();
     }
 }
 

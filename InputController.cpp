@@ -77,7 +77,7 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
                     {
                         //wep->fire(cam->getLocation(), Vector3f(0.0f, 0.0f, 0.0f));
                         fireSignal = true;
-                        printf("Fire\n");
+                        //printf("Fire\n");
                     }
 					break;
 				default: break;

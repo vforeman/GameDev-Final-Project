@@ -20,6 +20,7 @@ void PhysicsEntity::update()
 {
     //x  = x0 + velocity * time
 	    _position = _position+ _velocity * 0.125f;
+        printf("PHYSICSENGINE: PE(%.2f, %.2f, %.2f)\n", _position.x, _position.y, _position.z);
 
 }
 
