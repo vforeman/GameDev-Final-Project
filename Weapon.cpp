@@ -4,14 +4,14 @@
 
 namespace physics{
 /*--------->BULLET IMPLEMENTATION<-----------*/
-Bullet::Bullet() : active(false)
+Bullet::Bullet() : _active(false)
 {
     _type = "";
     initialize("Circle");
     _radius= 0.25f;
 }
 
-Bullet::Bullet(Vector3f pos) : active(false)
+Bullet::Bullet(Vector3f pos) : _active(false)
 {
     _type = "";
     _position = pos;
@@ -55,7 +55,7 @@ void Weapon::fire(Vector3f pos, Vector3f target)
             _clip = 0;
             reload();
         }
-        b->active = true;
+        b->_active = true;
         _magazine[_clip] = b;           //Place the bullet in _magazine i.e. fire away
                                     //Call weapon iterate to update bullet positions
     }
@@ -63,25 +63,31 @@ void Weapon::fire(Vector3f pos, Vector3f target)
 
 void Weapon::iterate()
 {
-    if(_coolDown == 5)
+    if(_coolDown <= 5)
     {
         for(unsigned int i = 0; i < _clip ; ++i)
-            printf("WEAPON: ITERATE\n");
-            //_magazine[i]->update();
+        {
+            //printf("WEAPON: ITERATE\n");
+            if(_magazine[i] != NULL && _magazine[i]->_active)
+                _magazine[i]->update();
+        }
     }
     else
     {
         --_coolDown;
         for(unsigned int i = 0; i < _clip; ++i)
-            printf("WEAPON: ITERATE2\n");
-            //_magazine[i]->update();
+        {
+            //printf("WEAPON: ITERATE2\n");
+            if(_magazine[i] != NULL && _magazine[i]->_active)
+                _magazine[i]->update();
+        }
     }
 }
 
 void Weapon::reload()
 {
     for(unsigned int i = 0; i < _MAX_CLIP_SIZE; ++i)
-        _magazine[i]->active = false;
+        _magazine[i]->_active = false;
 }
 
 Bullet* Weapon::getBullet(unsigned int index)

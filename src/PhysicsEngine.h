@@ -31,7 +31,7 @@ public:
     Vector3f _velocity;
 
     Vector3f _force;
-    void update();
+    virtual void update();
 protected:
     PhysicsEntity();
     PhysicsEntity(Vector3f);    //Initialize position

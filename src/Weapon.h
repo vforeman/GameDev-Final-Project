@@ -17,7 +17,7 @@ class Bullet : public PhysicsEntity, virtual public Graphics
 public:
  Bullet();
  Bullet(Vector3f);
- bool active;
+ bool _active;
  std::string _type;
 };
 
