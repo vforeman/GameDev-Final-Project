@@ -59,7 +59,7 @@ void Enemy::patrol(Vector3f target)
     {
         //Fire at player
         _radius = 2.0f;
-        _weapon.fire(_position, target);
+        //_weapon.fire(_position, target);
     }
     else
     {

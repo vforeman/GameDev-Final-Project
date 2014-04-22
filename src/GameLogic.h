@@ -28,6 +28,7 @@ private:
 	void show();
 	static GameLogic * _instance;
 	static bool _instanceFlag;
+    bool _fireSignal;
 	GameLogic();
 	const int NUMBER_OF_ENEMIES = 5;
 public:

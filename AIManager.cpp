@@ -49,48 +49,84 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
 //        bool valid = true;
         temp->_x = current->_x+STEP;
         temp->_z = current->_z; 
+        for(unsigned int i = 0; i < closelist.size() && valid; ++i)
+        {
+            if(temp->isSamePosition(closelist[i]))
+                valid = false;
+        }
+        
+        if(valid)
+        {
             temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goalvf);
             temp->calculateFn();
             temp->setParent(current);
             openlist.push_back(temp);
             std::push_heap(openlist.begin(), openlist.end());
+        }
     }
     if(!Overlay::isObstacle(current->_x-STEP, current->_y, current->_z))
     {
 //        bool valid = true;
         temp->_x = current->_x-STEP;
         temp->_z = current->_z; 
+        for(unsigned int i = 0; i < closelist.size() && valid; ++i)
+        {
+            if(temp->isSamePosition(closelist[i]))
+                valid = false;
+        }
+        if(valid)
+        {
             temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goalvf);
             temp->calculateFn();
             temp->setParent(current);
             openlist.push_back(temp);
             std::push_heap(openlist.begin(), openlist.end());
+        }
+        valid = true;
     }
     if(!Overlay::isObstacle(current->_x, current->_y, current->_z+STEP))
     {
 //        bool valid = true;
         temp->_x = current->_x;
         temp->_z = current->_z+STEP; 
+        for(unsigned int i = 0; i < closelist.size() && valid; ++i)
+        {
+            if(temp->isSamePosition(closelist[i]))
+                valid = false;
+        }
+        if(valid)
+        {
             temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goalvf);
             temp->calculateFn();
             temp->setParent(current);
             openlist.push_back(temp);
             std::push_heap(openlist.begin(), openlist.end());
+        }
+        valid = true;
     }
     if(!Overlay::isObstacle(current->_x, current->_y, current->_z-STEP))
     {
 //        bool valid = true;
         temp->_x = current->_x;
         temp->_z = current->_z-STEP; 
+        for(unsigned int i = 0; i < closelist.size() && valid; ++i)
+        {
+            if(temp->isSamePosition(closelist[i]))
+                valid = false;
+        }
+        if(valid)
+        {
             temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goalvf);
             temp->calculateFn();
             temp->setParent(current);
             openlist.push_back(temp);
             std::push_heap(openlist.begin(), openlist.end());
+        }
+        valid = true;
     }
         if(firstGo && !openlist.empty())
         {
@@ -110,53 +146,86 @@ void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>&
     //add adjacent positions to list
     Node* temp = new Node;
     bool valid = true;
+    std::vector<int> closelist;
     if(!Overlay::isObstacle(current->_x+STEP, current->_y, current->_z))
     {
-//        bool valid = true;
         temp->_x = current->_x+STEP;
         temp->_z = current->_z; 
+
+        
+        if(valid)
+        {
             temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
             list.push_back(temp);
             std::push_heap(list.begin(), list.end());
+        }
+        valid = true;
     }
     if(!Overlay::isObstacle(current->_x-STEP, current->_y, current->_z))
     {
-//        bool valid = true;
         temp->_x = current->_x-STEP;
         temp->_z = current->_z; 
+        for(unsigned int i = 0; i < closelist.size() && valid; ++i)
+        {
+            if(temp->isSamePosition(closed[i]))
+                valid = false;
+        }
+        
+        if(valid)
+        {
             temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
             list.push_back(temp);
             std::push_heap(list.begin(), list.end());
+        }
+        valid = true;
     }
     if(!Overlay::isObstacle(current->_x, current->_y, current->_z+STEP))
     {
-//        bool valid = true;
         temp->_x = current->_x;
         temp->_z = current->_z+STEP; 
+        for(unsigned int i = 0; i < closelist.size() && valid; ++i)
+        {
+            if(temp->isSamePosition(closed[i]))
+                valid = false;
+        }
+        
+        if(valid)
+        {
             temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
             list.push_back(temp);
             std::push_heap(list.begin(), list.end());
+        }
+        valid = true;
     }
     if(!Overlay::isObstacle(current->_x, current->_y, current->_z-STEP))
     {
-//        bool valid = true;
         temp->_x = current->_x;
         temp->_z = current->_z-STEP; 
+        for(unsigned int i = 0; i < closelist.size() && valid; ++i)
+        {
+            if(temp->isSamePosition(closed[i]))
+                valid = false;
+        }
+
+        if(valid)
+        {
             temp->_g = current->_g+GSCORE;
             temp->_h = calculateHn(Vector3f(float(temp->_x), float(temp->_y), float(temp->_z)), goal);
             temp->calculateFn();
             temp->setParent(current);
             list.push_back(temp);
             std::push_heap(list.begin(), list.end());
+        }
+        valid = true;
     }
 }
 

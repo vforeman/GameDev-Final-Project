@@ -78,11 +78,18 @@ void GameLogic::start()
 
 void GameLogic::update()
 {
-	
+    //if(_fireSignal)
+    //    _weapon->fire(_player->getCamera()->getLocation(), Vector3f(0.0f, 0.0f, 0.0f));
     // Handles Check for Collision and other functions that need to be updated
+	_weapon->iterate();
     for(unsigned int i = 0; i < _enemies.size(); ++i)
     {
         _enemies[i]->patrol(_player->getCamera()->getLocation());
+    }
+    for(unsigned int i = 0; i < _weapon->getClip(); ++i)
+    {
+        if(_weapon->getBullet(i)->active)
+            _weapon->getBullet(i)->update();
     }
 };
 
@@ -93,10 +100,11 @@ void GameLogic::run()
 	const int FPS = 30;
 	Uint32 start;
 	bool running = true;
+    _fireSignal = false;
 	while(running)
 	{
 		start = SDL_GetTicks();
-		running = _iController->HandleInput(_player->getCamera(), _weapon, running);
+		running = _iController->HandleInput(_player->getCamera(), _fireSignal, running);
 
         //handle logic and rendering below
 	    update();
@@ -111,6 +119,8 @@ void GameLogic::run()
         // handle framemanagement
 	    if(1000/FPS > SDL_GetTicks() - start)
 		    SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
+
+        _fireSignal = false;
 	}
 
     //Close Sound System on Exit
@@ -129,6 +139,23 @@ void GameLogic::show()
 	_player->getCamera()->control();
     _player->getCamera()->update();
 
+    Vector3f pos;
+    float radius;
+    for(unsigned int i = 0; i < _weapon->getClip(); ++i)
+    {
+        if(_weapon->getBullet(i)->active)
+        {
+            pos = _weapon->getBullet(i)->_position;
+            radius = _weapon->getBullet(i)->_radius;
+            glPushMatrix();
+                glTranslatef(pos.x, pos.y, pos.z);
+                glScalef(radius, radius, radius);
+                _weapon->getBullet(i)->drawSphere();
+            glPopMatrix();
+        }
+    }
+
+    // Handles Check for Collision and other functions that need to be updated
 	_renderer->drawStatic();
  _renderer->drawDynamic();
  _renderer->drawHud();		///MUST BE DRAWN LAST BECAUSE I CLEAR THE DEPTH BUFFER

@@ -68,8 +68,7 @@ void Renderer::drawDynamic()
     {
         try
         {
-            ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
-
+                ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
 	            glMatrixMode(GL_MODELVIEW);
                 glPushMatrix();
                 glTranslatef(e->_position.x, e->_position.y, e->_position.z);
@@ -94,7 +93,6 @@ void Renderer::drawDynamic()
                 glDisableClientState(GL_NORMAL_ARRAY);
                 // glDisableClientState(GL_COLOR_ARRAY);
                 glPopMatrix();
-
         }
         catch(exception e)
         {
@@ -102,6 +100,11 @@ void Renderer::drawDynamic()
         }
     }
     glDisable(GL_BLEND);
+}
+
+void Renderer::popBackGraphics()
+{
+    _drawObjects.pop_back();
 }
 
 void Renderer::registerGraphics(Graphics* g)

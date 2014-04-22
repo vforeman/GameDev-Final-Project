@@ -33,6 +33,7 @@ public:
 	void drawStatic();
 	void drawDynamic();
  void drawHud();
+    void popBackGraphics();
     void registerGraphics(Graphics*);
     void emptyObjects();
 	Overlay _lvl;
