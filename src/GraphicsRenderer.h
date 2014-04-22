@@ -23,9 +23,8 @@ using namespace geo;
 using namespace util;
 namespace graphics{
 
-
-
-
+void inHudMode(int screen_width, int screen_height);
+void outHudMode();
 class Renderer
 {
 public:
@@ -36,12 +35,13 @@ public:
  void drawHud();
     void registerGraphics(Graphics*);
     void emptyObjects();
-private:
 	Overlay _lvl;
+
+private:
 	static Renderer * _instance;
 	static bool _instanceFlag;
 	static bool _firstDraw;
-    std::vector<Graphics*> _drawObjects;    //Register graphics objects i.e. Enemy
+ std::vector<Graphics*> _drawObjects;    //Register graphics objects i.e. Enemy
 	bool _textureFlag;
 	Renderer();
  GLuint loadBMP();

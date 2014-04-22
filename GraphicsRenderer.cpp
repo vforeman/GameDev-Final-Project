@@ -19,59 +19,85 @@ Renderer::~Renderer()
 void Renderer::drawStatic()
 {std::clog << "Renderer::drawStatic()\n";
 
-  glDisable(GL_DEPTH_TEST);
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  //glDisable(GL_DEPTH_TEST);
+  // glEnable(GL_BLEND);
+  // glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_COLOR_MATERIAL);
 
+  // glDisable(GL_LIGHTING);
 
   //loaded with cube data right now
   //Enable vertex arrays we want to draw with
   glEnableClientState(GL_VERTEX_ARRAY);
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_COLOR_ARRAY);
+  glEnableClientState(GL_INDEX_ARRAY);
 
   if(_firstDraw){
-    _firstDraw=false;
+    _firstDraw=true;
     //Connect the arrays themselves
     glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
+    glIndexPointer(GL_INT,0,&_lvl._staticIndex[0]);
     glNormalPointer(GL_FLOAT, 0, &_lvl._staticNormals[0]);
     glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
   }
   //removed encapsulating stack moves, hopeful speedup
-  glDrawArrays(GL_QUADS, 0,_lvl._staticVertices.size()/3);
+  glDrawArrays(GL_QUADS , 0,_lvl._staticVertices.size()/3);
+
   //TODO::I dont think I should be loading the vertex data every call
-  //REPLY(REM):: You should load the vertex data for static every time
-  //             Because the screen is cleared each frame; so, the walls must be redrawn.
-  //             Therefore, the GraphicsRenderer needs to have the draw arrays again.
-  //             The benefit of sending the data in a vertex array outweights any performance issues (MY OPINION)
   //Disable vertex arrays that are no longer in use
   glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_INDEX_ARRAY);
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
+  // glEnable(GL_LIGHTING);
+  glDisable(GL_COLOR_MATERIAL);
 
-  drawHud();
 }
-
 void Renderer::drawDynamic()
-{
+{ glColor3f(1,0,0);
+  glEnable(GL_BLEND);
+  //we should toggle this whenever the sphere gets hit
+  glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_SRC_ALPHA);
+  glEnable(GL_COLOR_MATERIAL);
     for(unsigned int i = 0; i < _drawObjects.size(); ++i)
     {
+        cout<<_drawObjects.size()<<endl;
         try
         {
             ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
-            glPushMatrix();
+
+	            glMatrixMode(GL_MODELVIEW);
+                glPushMatrix();
                 glTranslatef(e->_position.x, e->_position.y, e->_position.z);
+                // e->drawSphere();
                 glEnableClientState(GL_VERTEX_ARRAY);
+                glEnableClientState(GL_NORMAL_ARRAY);
+                // glEnableClientState(GL_INDEX_ARRAY);
+                    //Connect the arrays themselves
                 glVertexPointer(3, GL_FLOAT, 0, &e->_verts[0]);
-                glDrawArrays(GL_TRIANGLES, 0, e->_verts.size()/3);
+                // glIndexPointer(GL_INT,0,&_lvl._staticIndex[0]);
+                glNormalPointer(GL_FLOAT, 0, &e->_norms[0]);
+                // glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
+
+                //removed encapsulating stack moves, hopeful speedup
+                glDrawArrays(GL_TRIANGLE_STRIP , 0,e->_verts.size()/3);
+
+                //TODO::I dont think I should be loading the vertex data every call
+                //Disable vertex arrays that are no longer in use
                 glDisableClientState(GL_VERTEX_ARRAY);
-            glPopMatrix();
+                // glDisableClientState(GL_INDEX_ARRAY);
+                glDisableClientState(GL_NORMAL_ARRAY);
+                // glDisableClientState(GL_COLOR_ARRAY);
+                glPopMatrix();
+
         }
         catch(exception e)
         {
             printf("Exception: %s\n", e.what());
         }
     }
+    glDisable(GL_BLEND);
 }
 
 void Renderer::registerGraphics(Graphics* g)
@@ -127,17 +153,8 @@ GLuint Renderer::loadBMP(){
 void Renderer::drawHud(){
 
   int playerbullets = 10;
-  glMatrixMode(GL_PROJECTION);
-  glPushMatrix();
-  glLoadIdentity();
-  glOrtho(0.0, 640, 480, 0.0, -1.0, 10.0);
-  glMatrixMode(GL_MODELVIEW);
+  inHudMode(640,480);
 
-  glLoadIdentity();
-  glDisable(GL_CULL_FACE);
-  glClear(GL_DEPTH_BUFFER_BIT);
-  glDepthMask(GL_FALSE);
-  glDisable(GL_DEPTH_TEST);
 
   for(int k =0; k < playerbullets; ++k){
 
@@ -152,14 +169,35 @@ void Renderer::drawHud(){
   }
 
 
+
+  outHudMode();
+}
+
+void inHudMode(int screen_width, int screen_height)
+{
+  glPushAttrib(GL_ENABLE_BIT|GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_LIGHTING_BIT|GL_POLYGON_BIT|GL_VIEWPORT_BIT|GL_TRANSFORM_BIT);
+  glMatrixMode(GL_PROJECTION);
+
+  glPushMatrix();
+  glLoadIdentity();
+  glOrtho(0.0, screen_width, screen_height, 0.0, -1.0, 10.0);
+  glMatrixMode(GL_MODELVIEW);
+
+  glLoadIdentity();
+  glDisable(GL_CULL_FACE);
+  glClear(GL_DEPTH_BUFFER_BIT);
+  glDepthMask(GL_FALSE);
+  glDisable(GL_DEPTH_TEST);
+}
+void outHudMode()
+{
   glMatrixMode(GL_PROJECTION);
   glPopMatrix();
   glMatrixMode(GL_MODELVIEW);
   glDepthMask(GL_TRUE);
   glEnable(GL_DEPTH_TEST);
+  glPopAttrib();
 }
-
-
 
 Renderer * Renderer::get()
 {

@@ -50,6 +50,7 @@ inline int randomRange(int a, int z){
 	return (rand()%(high-low)) + low;
 
 }
+
 /**
  * @brief [brief description]
  * @details [returns a char pointer to a random sequence of charaters of {length}

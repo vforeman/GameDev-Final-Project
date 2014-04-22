@@ -68,6 +68,7 @@ bool InputController::HandleInput(Camera * cam,bool running)
 				case SDL_MOUSEBUTTONDOWN:
 					cam->mouseIn();
 					SDL_ShowCursor(SDL_DISABLE);
+                    _mouseHidden = true;
 					break;
 				default: break;
 			}

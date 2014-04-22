@@ -25,14 +25,14 @@ class Overlay
 		static vector<GLfloat> _staticNormals;
 		static vector<GLfloat> _staticColors;
 		static vector<GLshort> _staticTexCoords;
-
+		static vector<GLuint> _staticIndex;
+		static unsigned int OVERLAY_HEIGHT;
+		static unsigned int OVERLAY_WIDTH;
 	private:
 		static vector<vector<char>> _overlay;
 		int _numOfWalls;
 		int _numOfFloors;
 		GLfloat _tx,_ty,_tz;//translation coordinates
-		static unsigned int OVERLAY_HEIGHT;
-		static unsigned int OVERLAY_WIDTH;
 		static void constructQuadrant();
 
 		/**

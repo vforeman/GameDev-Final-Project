@@ -8,6 +8,7 @@ vector<GLfloat> Overlay::_staticVertices;
 vector<GLfloat> Overlay::_staticNormals;
 vector<GLfloat> Overlay::_staticColors;
 vector<GLshort> Overlay::_staticTexCoords;
+vector<GLuint> Overlay::_staticIndex;
 
 Overlay::Overlay(){
     _numOfWalls = 0;
@@ -44,18 +45,42 @@ void Overlay::initialize(){
     }
 }
 char Overlay::W(){
-    GLfloat wall[] ={
-         0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //top
-         0.4f+_tx , 10.0f+_ty , 0.4f+_tz     ,-0.4f+_tx , 10.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    , 0.4f+_tx , 0.0f+_ty , 0.4f+_tz , //north
-         0.4f+_tx , 10.0f+_ty , 0.4f+_tz     , 0.4f+_tx , 10.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty , 0.4f+_tz,  //east
-         0.4f+_tx , 10.0f+_ty ,-0.4f+_tz     ,-0.4f+_tx , 10.0f+_ty ,-0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //south
-        -0.4f+_tx , 10.0f+_ty ,-0.4f+_tz     ,-0.4f+_tx , 10.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //west
-         0.4f+_tx , 0.0f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.0f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.0f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.0f+_ty ,-0.4f+_tz,  //bot
+    Vector3f n;
+    Vector3f wallCenter = Vector3f(0,5,0);
+    float height = (float)util::randomRange(6,12);
+    float wall[] ={
+         0.4f+_tx , height +_ty , 0.4f+_tz     ,-0.4f+_tx , height +_ty , 0.4f+_tz    ,-0.4f+_tx , height +_ty ,-0.4f+_tz    , 0.4f+_tx , height +_ty ,-0.4f+_tz,  //0123top
+         0.4f+_tx , height +_ty , 0.4f+_tz     ,-0.4f+_tx , height +_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    , 0.4f+_tx , 0.2f+_ty , 0.4f+_tz , //0145north
+         0.4f+_tx , height +_ty , 0.4f+_tz     , 0.4f+_tx , height +_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty , 0.4f+_tz,  //0365east
+         0.4f+_tx , height +_ty ,-0.4f+_tz     ,-0.4f+_tx , height +_ty ,-0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //3276south
+        -0.4f+_tx , height +_ty ,-0.4f+_tz     ,-0.4f+_tx , height +_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz,  //2147west
+         0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz  //5476bot
     };
+    for (int c = 0; c< 72; c+=3){
+        n=Vector3f(wall[c],wall[c+1],wall[c+2])-wallCenter;
+        n.normalize();
+        _staticNormals.push_back(n.x);      _staticNormals.push_back(n.y);      _staticNormals.push_back(n.z);
+    }
     _staticVertices.insert( _staticVertices.end() , wall , wall + sizeof(wall)/sizeof(GLfloat));
-    _staticNormals.insert(_staticNormals.end(),wall_normals, wall_normals + sizeof(wall_normals)/sizeof(GLfloat));
+    _staticIndex.insert(_staticIndex.end(),wall_index, wall_index+sizeof(wall_index)/sizeof(GLuint));
     _staticColors.insert(_staticColors.end(), wall_colors, wall_colors + sizeof(wall_colors)/sizeof(GLfloat));
-    _staticTexCoords.insert(_staticTexCoords.end(), wall_tex_coords, wall_tex_coords + sizeof(wall_tex_coords)/sizeof(GLshort));
+
+    float treeTop[] ={
+         height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz     ,-height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz    ,-height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz    , height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz,  //0123top
+         height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz     ,-height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz    ,-height/2.0f + _tx , height +_ty , height/2.0f + _tz    , height/2.0f + _tx , height +_ty , height/2.0f + _tz , //height/2.05 n orth
+         height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz     , height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz    , height/2.0f + _tx , height +_ty ,-height/2.0f + _tz    , height/2.0f + _tx , height +_ty , height/2.0f + _tz,  //0365east
+         height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz     ,-height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz    ,-height/2.0f + _tx , height +_ty ,-height/2.0f + _tz    , height/2.0f + _tx , height +_ty ,-height/2.0f + _tz,  //3276south
+        -height/2.0f + _tx , height+1.0f +_ty ,-height/2.0f + _tz     ,-height/2.0f + _tx , height+1.0f +_ty , height/2.0f + _tz    ,-height/2.0f + _tx , height +_ty , height/2.0f + _tz    ,-height/2.0f + _tx , height +_ty ,-height/2.0f + _tz,  //height/2.07 w est
+         height/2.0f + _tx , height +_ty , height/2.0f + _tz     ,-height/2.0f + _tx , height +_ty , height/2.0f + _tz    ,-height/2.0f + _tx , height +_ty ,-height/2.0f + _tz    , height/2.0f + _tx , height +_ty ,-height/2.0f + _tz  //5476bot
+    };
+    for (int c = 0; c< 72; c+=3){
+        n=Vector3f(treeTop[c],treeTop[c+1],treeTop[c+2])-wallCenter;
+        n.normalize();
+        _staticNormals.push_back(n.x);      _staticNormals.push_back(n.y);      _staticNormals.push_back(n.z);
+    }
+    _staticVertices.insert( _staticVertices.end() , treeTop , treeTop + sizeof(treeTop)/sizeof(GLfloat));
+    _staticIndex.insert(_staticIndex.end(),treeTop_index, treeTop_index+sizeof(treeTop_index)/sizeof(GLuint));
+    _staticColors.insert(_staticColors.end(), treeTop_colors, treeTop_colors + sizeof(treeTop_colors)/sizeof(GLfloat));
     _numOfWalls++;
     return 'W';
 }
@@ -64,9 +89,9 @@ char Overlay::F(){
          0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz  //top
     };//didn't think the floor needed to be so 3D
     _staticVertices.insert( _staticVertices.end() , tile , tile + sizeof(tile)/sizeof(GLfloat));
+    _staticIndex.insert(_staticIndex.end(),tile_index, tile_index+sizeof(tile_index)/sizeof(GLuint));
     _staticNormals.insert(_staticNormals.end(),tile_normals,tile_normals + sizeof(tile_normals)/sizeof(GLfloat));
     _staticColors.insert(_staticColors.end(),tile_colors,tile_colors + sizeof(tile_colors)/sizeof(GLfloat));
-    _staticTexCoords.insert(_staticTexCoords.end(), tile_tex_coords, tile_tex_coords + sizeof(tile_tex_coords)/sizeof(GLshort));
 
     ++_numOfFloors;
     return 'F';

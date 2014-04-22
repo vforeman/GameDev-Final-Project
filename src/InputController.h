@@ -5,6 +5,7 @@
 #include <GL/glu.h>
 #include "Vmath.h"
 #include "Camera.h"
+#include "Weapon.h"
 
 namespace gamein{
 
@@ -16,6 +17,7 @@ public:
 	bool HandleInput(Camera * ,bool);
 
 private:
+    bool _mouseHidden = false;
 	static InputController * _instance;
 	static bool _instanceFlag;
 	InputController();
