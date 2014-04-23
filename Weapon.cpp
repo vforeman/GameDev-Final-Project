@@ -20,17 +20,27 @@ Bullet::Bullet(Vector3f pos) : _active(false)
 }
 
 /*--------->WEAPON IMPLEMENTATION<-----------*/
-Weapon::Weapon() : _MAX_CLIP_SIZE(8), _coolDown(200)
+Weapon::Weapon() : _coolDown(4)
 {
     _reloading = false;
     _clip = 0;
-    _magazine = new Bullet*[_MAX_CLIP_SIZE];
+    _maxClipSize = 8;
+    _magazine = new Bullet*[_maxClipSize];
+    for(unsigned int i = 0; i < _maxClipSize; ++i)
+    {
+        _magazine[i] = new Bullet();
+    }
 }
 
 //Overloaded constructor to give weapons more ammo
-Weapon::Weapon(unsigned int clipSize) : _MAX_CLIP_SIZE(clipSize), _clip(0), _reloading(false), _coolDown(100)
+Weapon::Weapon(unsigned int clipSize) : _clip(0), _reloading(false), _coolDown(4)
 {
-    _magazine = new Bullet*[_MAX_CLIP_SIZE];
+    _maxClipSize = clipSize;
+    _magazine = new Bullet*[_maxClipSize];
+    for(unsigned int i = 0; i < _maxClipSize; ++i)
+    {
+        _magazine[i] = new Bullet();
+    }
 }
 
 unsigned int Weapon::getClip()
@@ -40,17 +50,17 @@ unsigned int Weapon::getClip()
 
 void Weapon::fire(Vector3f pos, Vector3f target)
 {
-    //printf("Position: (%.2f, %.2f, %.2f)\n", pos.x, pos.y, pos.z);
-    //printf("  Target: (%.2f, %.2f, %.2f)\n", target.x, target.y, target.z);
-    --_coolDown;
     if(_coolDown < 5)
     {
-        _coolDown = 200;
+        _coolDown = 10;
         Bullet* b = new Bullet(pos);    //Create a bullet object
-        b->_velocity=(target - pos)*0.03125f;    //Fire it at the target from position
+        // b->_velocity=(target - pos)*0.03125f;    //Fire it at the target from position
+        b->_velocity=(target-pos);    //Fire it at the target from position
+        b->_velocity.normalize();
+        //b->_velocity = b->_velocity;
 
         ++_clip;                        //If emptied clip reset to 0
-        if(_clip >= _MAX_CLIP_SIZE)
+        if(_clip >= _maxClipSize)
         {
             _clip = 0;
             reload();
@@ -63,30 +73,21 @@ void Weapon::fire(Vector3f pos, Vector3f target)
 
 void Weapon::iterate()
 {
-    if(_coolDown <= 5)
-    {
-        for(unsigned int i = 0; i < _clip ; ++i)
-        {
-            //printf("WEAPON: ITERATE\n");
-            if(_magazine[i] != NULL && _magazine[i]->_active)
-                _magazine[i]->update();
-        }
-    }
-    else
+    if(_coolDown >= 5)
     {
         --_coolDown;
-        for(unsigned int i = 0; i < _clip; ++i)
+    }
+        
+        for(unsigned int i = 0; i < _clip ; ++i)
         {
-            //printf("WEAPON: ITERATE2\n");
             if(_magazine[i] != NULL && _magazine[i]->_active)
                 _magazine[i]->update();
         }
-    }
 }
 
 void Weapon::reload()
 {
-    for(unsigned int i = 0; i < _MAX_CLIP_SIZE; ++i)
+    for(unsigned int i = 0; i < _maxClipSize; ++i)
         _magazine[i]->_active = false;
 }
 
