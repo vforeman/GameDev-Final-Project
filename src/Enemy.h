@@ -18,13 +18,14 @@ namespace physics{
 /***********************************
 *                   ENEMY SPECIFICATION
 *************************************/
-class Enemy : public PhysicsEntity, virtual public Graphics
+class Enemy : virtual public PhysicsEntity, virtual public Graphics
 {
 public:
     Enemy();
     Enemy(Vector3f);
     int _health;
     const float _ALERT_RADIUS;
+    bool isLiving();
     void attack(Vector3f);
     void die();
     void patrol(Vector3f);

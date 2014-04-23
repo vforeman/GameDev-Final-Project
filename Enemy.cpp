@@ -5,8 +5,8 @@ namespace physics{
 Enemy::Enemy() : _health(100),  _alive(true), _point(0),
                  _alert(false), _ALERT_RADIUS(20.0f)
 {
-    initialize("Circle");
-//    createSimplePatrol();
+    _position = Vector3f(42.0f, 0.5f, 42.0f);   //Arbitrary position 
+    Graphics::createCircle(_verts, _norms);
     createStrongPatrol();
 }
 
@@ -14,10 +14,13 @@ Enemy::Enemy(Vector3f pos) : _health(100), _alive(true), _point(0),
                              _alert(false), _ALERT_RADIUS(20.0f)
 {
     _position = pos;
-    // initialize("Circle");
     Graphics::createCircle(_verts,_norms);
-//    createSimplePatrol();
     createStrongPatrol();
+}
+
+bool Enemy::isLiving()
+{
+    return _alive;
 }
 
 void Enemy::attack(Vector3f target)
@@ -59,7 +62,11 @@ void Enemy::patrol(Vector3f target)
     {
         //Fire at player
         _radius = 2.0f;
-        //_weapon.fire(_position, target);
+        _velocity = target - _position;
+        _velocity.normalize();
+        _velocity = _velocity * 3.0f;
+        _force = _velocity * 1.5f;
+        update();
     }
     else
     {
@@ -73,14 +80,12 @@ void Enemy::patrol(Vector3f target)
                 _velocity = _patrolPath[_point] - _position;//_velocity is a physics entity attribute
                 _velocity.normalize();
                 _position = _position + _velocity*0.125f;
-//                    printf("(%.2f, %.2f, %.2f)\n", _position.x, _position.y, _position.z);
             }
             else
             {
                 ++_point;
                 if(_point >= _patrolPath.size())
                     _point = 0;
-//                    printf("(%.2f, %.2f, %.2f)\n", _position.x, _position.y, _position.z);
             }
         }
     }
@@ -99,7 +104,6 @@ void Enemy::createStrongPatrol()
     {
         path->traverse(_patrolPath);
     }
-    //_patrolPath.insert(_patrolPath.begin(), _patrolPath.crbegin(), _patrolPath.crend());
 }
 
 void Enemy::target()
