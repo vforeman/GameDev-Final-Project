@@ -24,7 +24,7 @@ void GameLogic::start()
 	_pEngine = physics::PhysicsEngine::get();
 	_wController = window::Window::get();
 	_wController->open();
-    _player = new Player(Vector3f(0, 0.8f, 0));
+    _player = new Player(Vector3f(0, 0.8f, 0)); //This is Eye coordinate
     _weapon = new physics::Weapon();
 	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p){
 		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
@@ -78,22 +78,12 @@ void GameLogic::start()
 
 void GameLogic::update()
 {
-    if(_fireSignal)
-        _weapon->fire(_player->getCamera()->getLocation(), _player->getCamera()->getVector());
     // Handles Check for Collision and other functions that need to be updated
     for(unsigned int i = 0; i < _enemies.size(); ++i)
     {
         _enemies[i]->patrol(_player->getCamera()->getLocation());
     }
-    /*for(unsigned int i = 0; i < _weapon->getClip(); ++i)
-    {
-        if(_weapon->getBullet(i)->_active)
-        {
-            printf("DEBUG\n");
-            //_weapon->getBullet(i)->update();
-        }
-    }*/
-	//_weapon->iterate();
+	_weapon->iterate();
     Vector3f test = _player->getCamera()->getLocation();
     //printf("(%.2f, %.2f, %.2f)\n", test.x, test.y, test.z);
 };
@@ -143,12 +133,14 @@ void GameLogic::show()
 	glLoadIdentity();
 	_player->getCamera()->control();
     _player->getCamera()->update();
+    if(_fireSignal)
+        _weapon->fire(_player->getCamera()->getLocation(), _player->getCamera()->getVector());
 
     Vector3f pos;
     float radius;
     for(unsigned int i = 0; i < _weapon->getClip(); ++i)
     {
-        /*if(_weapon->getBullet(i)->active)
+        if(_weapon->getBullet(i)->_active)
         {
             pos = _weapon->getBullet(i)->_position;
             radius = _weapon->getBullet(i)->_radius;
@@ -157,7 +149,7 @@ void GameLogic::show()
                 glScalef(radius, radius, radius);
                 _weapon->getBullet(i)->drawSphere();
             glPopMatrix();
-        }*/
+        }
     }
 
     // Handles Check for Collision and other functions that need to be updated
