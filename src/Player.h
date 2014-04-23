@@ -9,12 +9,13 @@
 *******************************************************/
 
 
-class Player : public physics::PhysicsEntity
+class Player : virtual public physics::PhysicsEntity
 {
     public:
         Player();
         Player(Vector3f);
         Camera* getCamera();
+        bool isAlive();
         void decreaseHealth();
         void decreaseHealth(int);
         void increaseHealth();

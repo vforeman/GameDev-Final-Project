@@ -16,6 +16,14 @@ Camera* Player::getCamera()
     return _camera;
 }
 
+bool Player::isAlive()
+{
+    if(_health <= 0) 
+        return false;
+
+    return true;
+}
+
 void Player::decreaseHealth()
 {
    _health -= 5;
