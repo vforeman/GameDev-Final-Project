@@ -150,10 +150,16 @@ void Camera::mouseOut()
 //returns where the player is looking
 Vector3<float> Camera::getVector()
 {
-//	std::cout << camYaw << " " << camPitch << std::endl;
 	// change spherical coordinates to cartesian
-	return (Vector3f(-cos(camPitch*M_PI/180.0)*sin(camYaw*M_PI/180.0),sin(camPitch*M_PI/180.0),-cos(camPitch*M_PI/180.0)*cos(camYaw*M_PI/180.0)));
-}
+	//return (Vector3f(-cos(camPitch*M_PI/180.0)*sin(camYaw*M_PI/180.0),sin(camPitch*M_PI/180.0),-cos(camPitch*M_PI/180.0)*cos(camYaw*M_PI/180.0)));
+    //pitch = latitude = phi, yaw = longitude = theta
+    //tutorial.math.lamar.edu/Classes/CalcIII/SphericalCoords.aspx
+    float pitch = (camPitch);   //forward pitch
+    float yaw = (camYaw+90.0f);       //forward yaw
+    
+    //Closer Translation of spherical to rectangular coordinates
+    return Vector3f(sin(pitch)*cos(yaw), sin(pitch)*sin(yaw), cos(pitch));
+}   
 
 bool Camera::IsMouseIn()
 {
