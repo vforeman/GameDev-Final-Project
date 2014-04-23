@@ -14,6 +14,8 @@
 #include "Graphics.h"
 #include "Util.h"
 #include "Overlay.h"
+//#include "SoundManager.h"
+
 using namespace util;
 namespace logic{
 /***********************************
@@ -34,14 +36,16 @@ public:
     std::vector<physics::Enemy*> _enemies;
 	Camera * _cam;
     Player * _player;
+    physics::Weapon * _weapon;
 	gamein::InputController * _iController;
 	graphics::Renderer * _renderer;
 	static GameLogic * get();
 	~GameLogic();
-	std::vector<Vector3<float> > enempos;
+	std::vector<Vector2<float> > enempos;
+	std::vector<Vector2<float> > lineEndpts;
     void run();
 	void start();
-	void ranjaytest(std::vector<Vector3<float> >& e);
+	void ranjaytest(std::vector<Vector2<float> >& e, std::vector<Vector2<float> >& le);
 
 };
 

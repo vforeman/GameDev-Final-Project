@@ -3,7 +3,7 @@ namespace graphics{
 bool Renderer::_firstDraw = true;
 bool Renderer::_instanceFlag = false;
 Renderer * Renderer::_instance = NULL;
-
+GLuint Renderer::h_bullets;
 Renderer::Renderer()
 :_textureFlag(false)
 {
@@ -14,15 +14,19 @@ Renderer::~Renderer()
 {
 	_instanceFlag = false;
 }
+void Renderer::buildHudList(){
 
+}
 
 void Renderer::drawStatic()
-{std::clog << "Renderer::drawStatic()\n";
+{
 
   //glDisable(GL_DEPTH_TEST);
-  // glEnable(GL_BLEND);
-  // glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_COLOR_MATERIAL);
+  glDepthFunc(GL_LEQUAL);
+  // glPolygonOffset()
 
   // glDisable(GL_LIGHTING);
 
@@ -62,7 +66,6 @@ void Renderer::drawDynamic()
   glEnable(GL_COLOR_MATERIAL);
     for(unsigned int i = 0; i < _drawObjects.size(); ++i)
     {
-        cout<<_drawObjects.size()<<endl;
         try
         {
             ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
@@ -70,6 +73,7 @@ void Renderer::drawDynamic()
 	            glMatrixMode(GL_MODELVIEW);
                 glPushMatrix();
                 glTranslatef(e->_position.x, e->_position.y, e->_position.z);
+                glScalef(e->_radius, e->_radius, e->_radius);
                 // e->drawSphere();
                 glEnableClientState(GL_VERTEX_ARRAY);
                 glEnableClientState(GL_NORMAL_ARRAY);
@@ -149,21 +153,41 @@ GLuint Renderer::loadBMP(){
 
 
 }
-
 void Renderer::drawHud(){
-
+/*!!!!!!!!!!!!!!!!!!!!!
+THE ORIGIN (0,0) IS IN THE UPPER LEFT CORNER
+  OF THE SCREEN.
+  The positive x-axis is right,
+  The positive y-axis goes down.
+!!!!!!!!!!!!!!!!!!!!!!!!!!*/
   int playerbullets = 10;
   inHudMode(640,480);
-
+  glDisable(GL_LIGHTING);
+  glEnable(GL_COLOR_MATERIAL);
 
   for(int k =0; k < playerbullets; ++k){
+     glPushMatrix();
+    glTranslatef(0,3*k,0);
+    glBegin(GL_POLYGON);//bullet shell
 
-    glBegin(GL_QUADS);
-      glColor3f(1.0f, 0.0f, 0.0);
-      glVertex2f(10.0, 10*k+0.0);
-      glVertex2f(0.0, 10*k+0.0);
-      glVertex2f(10.0, 10*k+10.0);
-      glVertex2f(0.0, 10*k+10.0);
+
+
+      glColor4f(1.0f, 0.85f, 0.0, 1.0);
+      glVertex2i( 40, 0 );//topright
+      glVertex2i( 40,  25 );//bottomright
+      glVertex2i( 0, 25 );//bottom left
+      glVertex2i( 0, 0 );//TOPLEFT
+
+    glEnd();
+    glPopMatrix();
+    glBegin(GL_POLYGON); //bullet head
+      glColor4f(1.0f, 0.85f, 0.0, 1.0);
+      glVertex2i(10, 10*k+0);
+      glVertex2i(10, 10*k+10);
+      glVertex2i(0, 10*k+10);
+      glVertex2i(0, 10*k+0);//TOPLEFT
+
+
     glEnd();
 
   }

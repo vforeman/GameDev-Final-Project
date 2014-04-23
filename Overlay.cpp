@@ -1,7 +1,7 @@
 #include "src/Overlay.h"
 
-unsigned int Overlay::OVERLAY_HEIGHT = 50;
-unsigned int Overlay::OVERLAY_WIDTH = 50;
+unsigned int Overlay::OVERLAY_HEIGHT = 100;
+unsigned int Overlay::OVERLAY_WIDTH = 100;
 
 vector<vector<char>> Overlay::_overlay (Overlay::OVERLAY_HEIGHT);
 vector<GLfloat> Overlay::_staticVertices;
@@ -38,6 +38,7 @@ void Overlay::initialize(){
             //shame lonely pillar
             c =  (randomRange(1,100)%100 == 90) ? W() : F();
             connected = c;
+		std::cout<<c<<_tx<<','<<_tz<<std::endl;
             ++_tx;
         }
         _tx = -((float)Overlay::OVERLAY_HEIGHT)/2;
@@ -91,18 +92,45 @@ char Overlay::F(){
     _staticVertices.insert( _staticVertices.end() , tile , tile + sizeof(tile)/sizeof(GLfloat));
     _staticIndex.insert(_staticIndex.end(),tile_index, tile_index+sizeof(tile_index)/sizeof(GLuint));
     _staticNormals.insert(_staticNormals.end(),tile_normals,tile_normals + sizeof(tile_normals)/sizeof(GLfloat));
-    _staticColors.insert(_staticColors.end(),tile_colors,tile_colors + sizeof(tile_colors)/sizeof(GLfloat));
-
+    (util::randomRange(1,100)%100 == 45)
+        ? D()
+        : G();
     ++_numOfFloors;
     return 'F';
 }
+void Overlay::G()
+{
+    _staticColors.insert(_staticColors.end(),tile_grass,tile_grass + sizeof(tile_grass)/sizeof(GLfloat));
+}
+void Overlay::D()
+{
+    _staticColors.insert(_staticColors.end(),tile_dirt,tile_dirt + sizeof(tile_dirt)/sizeof(GLfloat));
+/*    if(_staticColors.size() > 2)
+    {
+        if(util::coinToss())
+        {
+            _staticColors.erase(_staticColors.end()-1);
+            _staticColors.insert(_staticColors.end(),tile_dirt,tile_dirt + sizeof(tile_dirt)/sizeof(GLfloat));
+        }
+    }*/
+}
+
+Vector3f translate(Vector3f trans);
 bool Overlay::isObstacle(Vector3f pos)
 {
-	return _overlay[(int)pos.x][(int)pos.z] == 'W';
+    Vector3f check = translate(pos);
+    if(check.x < 0 || check.z < 0 || check.x >= (float)Overlay::OVERLAY_WIDTH || check.z >= (float)Overlay::OVERLAY_HEIGHT)
+        return true;
+    return _overlay[(int)check.x][(int)check.z] == 'W';
 }
 bool Overlay::isObstacle(int x, int z)
 {
-    return _overlay[x][z] == 'W';
+    Vector3f check = translate(Vector3f(float(x), 0.0f, float(z)));
+    if(check.x < 0 || check.z < 0 || check.x >= (float)Overlay::OVERLAY_WIDTH || check.z >= (float)Overlay::OVERLAY_HEIGHT)
+        return true;
+
+    return _overlay[check.x][check.z] == 'W';
+    
 }
 bool Overlay::isObstacle(int x, int y, int z)
 {
@@ -110,4 +138,45 @@ bool Overlay::isObstacle(int x, int y, int z)
 }
 
 
+/*TODO
+ * FIGURE OUT A TRANSLATION SYSTEM IF RANJAY OR VICTOR DOESN'T DO IT FIRST
+ *
+ *
+ * */
+Vector3f adjust(Vector3f);    //Adjust for Overlay geometry
+Vector3f translate(Vector3f trans)
+{
+    Vector3f val = adjust(trans);
 
+    return val;
+}
+
+Vector3f adjust(Vector3f val)
+{
+    float adjX = (float)Overlay::OVERLAY_WIDTH/2;
+    float adjZ = (float)Overlay::OVERLAY_HEIGHT/2;
+    
+    if((val.x == 0.0f || val.x == -0.0f) && (val.z == 0.0f || val.z == -0.0f))
+        return Vector3f(49.0f, 0.0f, 49.0f);
+    if(val.x >= 0 && val.z >= 0)    //1st
+        return Vector3f(val.x, 0.0f, val.z);
+    if(val.x <=0 && val.z >= 0)    //2nd
+        return Vector3f(std::fabs(adjX+val.x), 0.0f, val.z);
+    if (val.x <= 0 && val.z <= 0)  //3rd
+        return Vector3f(std::fabs(adjX+val.x), 0.0f, std::fabs(adjZ+val.z)); 
+    if (val.x >= 0 && val.z <= 0)  //4th
+        return Vector3f(val.x, 0.0f, std::fabs(adjZ+val.z));
+
+    return val=Vector3f(1000.0f, 0.0f, 1000.0f);
+}
+
+/*
+    if(val.x >= 0 && val.z >= 0)    //1st
+        return Vector3f(adjX+val.x, 0.0f, adjZ+val.z); 
+    if(val.x <=0 && val.z >= 0)    //2nd
+        return Vector3f(std::fabs(adjX-val.x), 0.0f, adjZ+val.z);
+    if (val.x <= 0 && val.z <= 0)  //3rd
+        return Vector3f(std::fabs(adjX-val.x), 0.0f, std::fabs(adjZ-val.z));
+    if (val.x >= 0 && val.z <= 0)  //4th
+        return Vector3f(adjX+val.x, 0.0f, std::fabs(adjZ-val.z));
+*/

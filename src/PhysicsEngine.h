@@ -12,6 +12,7 @@
 //#include "LevelFactory.h"
 #include "Geometry.h"
 #include "Vmath.h"
+#include "Graphics.h"
 #include <string>
 #include <vector>
 namespace physics{
@@ -25,28 +26,16 @@ class PhysicsEntity
 public:
     float _radius;
     Vector3f _position;
+    Vector3f _lastPosition;
+    Vector3f _trail;
     Vector3f _velocity;
+
     Vector3f _force;
     void update();
 protected:
     PhysicsEntity();
     PhysicsEntity(Vector3f);    //Initialize position
 };
-
-
-
-
-/***********************************
-*					BULLET SPECIFICATION
-*************************************/
-class Bullet : public PhysicsEntity
-{
-public:
- Bullet();
- Bullet(Vector3f);
- std::string _type;
-};
-
 
 /***********************************
 *					STATIC ENTITY SPECIFICATION
@@ -69,7 +58,9 @@ public:
 	~PhysicsEngine();
 	static bool spheresphere(Vector3<float>& c1,float _radius1,Vector3<float>& c2,float _radius2);
 	static float pointdistacesquare(Vector3<float> p1,Vector3<float> p2);
+	static bool intersection(Vector2<float>, Vector2<float>,Vector3<float> sphere,float radius);
 	
+
 private:
 	static PhysicsEngine * _instance;
 	static bool _instanceFlag;

@@ -10,21 +10,23 @@ Main: $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(addprefix build/,$(OBJECTS)) $(LIBS) -o Main
 
 # RULES
-PhysicsEngine.o: PhysicsEngine.cpp Vmath.h Geometry.h Graphics.h
+PhysicsEngine.o: PhysicsEngine.cpp Vmath.h Geometry.h Graphics.h 
 Main.o: Main.cpp WindowController.o PhysicsEngine.o Enemy.o Weapon.o GraphicsRenderer.o GameLogic.o BSP.o Overlay.o AIManager.o InputController.h WindowController.h Camera.h GraphicsRenderer.h WindowController.h
 WindowController.o: WindowController.cpp PhysicsEngine.h InputController.h Util.h GraphicsRenderer.h
 GraphicsRenderer.o: GraphicsRenderer.cpp Vmath.h Assets.h Geometry.h Overlay.h Util.h Graphics.h Enemy.h
 Geometry.o: Geometry.cpp Vmath.h
-GameLogic.o: GameLogic.cpp InputController.h WindowController.h Camera.h GraphicsRenderer.h Enemy.h Player.h Weapon.h Util.h Overlay.h
-Camera.o: Camera.cpp Vmath.h
+GameLogic.o: GameLogic.cpp InputController.h WindowController.h Camera.h GraphicsRenderer.h Enemy.h Player.h Weapon.h Util.h Overlay.h 
+Camera.o: Camera.cpp Vmath.h Overlay.h
 InputController.o:	InputController.cpp	Vmath.h	Camera.h Weapon.h
-Weapon.o: Weapon.cpp	Vmath.h	PhysicsEngine.h
+Weapon.o: Weapon.cpp	Vmath.h	PhysicsEngine.h Graphics.h
 Enemy.o: Enemy.cpp Vmath.h PhysicsEngine.h Util.h Graphics.h Weapon.h
 BSP.o: BSP.cpp Util.h
 Overlay.o:	Overlay.cpp Vmath.h levels.h Assets.h Util.h
 AIManager.o: AIManager.cpp Node.h
 Node.o: Node.cpp Vmath.h
 Graphics.o: Graphics.cpp
+OggStream.h: OggStream.cpp
+SoundManager.o: SoundManager.cpp OggStream.h
 
 # Syntax for adding new Rules:
 # [TARGET] : [DEPENDENCIES]

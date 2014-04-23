@@ -30,6 +30,7 @@ public:
     void patrol(Vector3f);
     std::vector<float> _verts;
     std::vector<float> _norms;
+    Weapon _weapon;
 protected:
     bool _alive;
     bool _alert;
@@ -38,7 +39,6 @@ protected:
     void createSimplePatrol();
     void createStrongPatrol();
     void target();
-    Weapon _weapon;
 };
 }//namespace physics
 #endif// ENEMY_H

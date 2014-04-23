@@ -55,8 +55,17 @@ void Camera::lockCamera()
 void Camera::moveCamera(const float &dir)
 {
 	float rad=(camYaw+dir)*M_PI/180.0;
-	loc.x-=sin(rad)*speed;
+	float x = loc.x;
+    float z = loc.z;
+
+    loc.x-=sin(rad)*speed;
 	loc.z-=cos(rad)*speed;
+
+    if(Overlay::isObstacle(loc.x, loc.z)) 
+    {
+        loc.x = x;
+        loc.z = z;
+    }
 }
 
 void Camera::moveCameraUp(const float& dir)

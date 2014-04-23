@@ -12,30 +12,27 @@ GameLogic::GameLogic()
 
 GameLogic::~GameLogic()
 {
-	std::clog << "GameLogic::~GameLogic()\n";
 	_instanceFlag = false;
 }
 
 
 void GameLogic::start()
 {
-
-
-	std::clog << "GameLogic::GameLogic()\n";
+     //SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
+    
 	_renderer = graphics::Renderer::get();
 	_pEngine = physics::PhysicsEngine::get();
 	_wController = window::Window::get();
 	_wController->open();
- _player = new Player(Vector3f(0, 0.8f, 0));
-
+    _player = new Player(Vector3f(0, 0.8f, 0));
+    _weapon = new physics::Weapon();
 	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p){
 		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
 		int zmax = ((int)Overlay::OVERLAY_HEIGHT)/2;
 		float x = (float)util::randomRange(-xmax,xmax);
 		float z = (float)util::randomRange(-zmax,zmax);
-		std::cout<<x<<','<<z<<'\n';
-  _enemies.push_back(new ::physics::Enemy(Vector3f(x, 0.5f, z)));
-  _renderer->registerGraphics(_enemies.back());
+        _enemies.push_back(new ::physics::Enemy(Vector3f(x, 0.5f, z)));
+        _renderer->registerGraphics(_enemies.back());
 	}
 
 
@@ -44,7 +41,7 @@ void GameLogic::start()
 
 
 	glShadeModel(GL_SMOOTH);
-    float light_position[] = {0.0f, 20.0f, 0.0f, 1.0f};
+    float light_position[] = {0.0f, 40.0f, 0.0f, 1.0f};
     GLfloat ambient_intensity[]={0.2,0.2,0.2,1.0};
 
 
@@ -77,43 +74,37 @@ void GameLogic::start()
 
 	glMatrixMode(GL_MODELVIEW);
 
- std::clog << "GameLogic::GameLogic()\n";
-	//test function
-	//ranjaytest(enempos);
-}
+	//populate test vectors line sphere collision test
+	ranjaytest(enempos,lineEndpts);
+
+}	
 
 void GameLogic::update()
 {
-	// Handles Check for Collision and other functions that need to be updated
-	 for(unsigned int i = 0; i < _enemies.size(); ++i)
-        _enemies[i]->patrol(_player->getCamera()->getLocation()); 
 
-    //_enemies[0]->patrol();
-	//Vector3<float> cameraPos = _cam->getLocation();
-	//Vector3<float> cameraPos(11.0,0.0,0.0);
-	//Vector3<float> enempos(10,0,0);
-	//std::cout<<"camera posit: "<<cameraPos<<std::endl;
 	
-	/*
-	for(int i = 0 ; i < enempos.size(); i++)
-	{
-		//std::cout<<"for loop!!!!!"<<std::endl;
-	if(physics::PhysicsEngine::spheresphere(cameraPos,2.0,enempos[i],2.0))
-		{
-		//std::cout<<"collision \n collision \n collision "<<std::endl;
-		 std::clog << "collision \n collision \n collision\n";
-		//_cam->setLocation(Vec tor3<float>(cameraPos));
-		}  
-		
-	}
-	 */
-};	
+    // Handles Check for Collision and other functions that need to be updated
+    for(unsigned int i = 0; i < _enemies.size(); ++i)
+    {
+        _enemies[i]->patrol(_player->getCamera()->getLocation());
+    }
+	//std::cout<<"Camera Position: "<<_player->getCamera()->getLocation()<<std::endl;
 
+	
+
+	for(int i = 0; i <= enempos.size() ; i++ )
+	{
+		if(physics::PhysicsEngine::intersection(enempos[i],lineEndpts[i],_player->getCamera()->getLocation(),3))
+			{
+				std::cout<<"collison with line"<<std::endl;
+			} 
+	}
+};
+ 
 
 
 void GameLogic::run()
 {
-	std::clog << "GameLogic::start()\n";
 	float angle =0.0;
 	const int FPS = 30;
 	Uint32 start;
@@ -121,11 +112,12 @@ void GameLogic::run()
 	while(running)
 	{
 		start = SDL_GetTicks();
-		running = _iController->HandleInput(_player->getCamera(),running);
+		running = _iController->HandleInput(_player->getCamera(), _weapon, running);
 
 
-	    std::clog << "GameLogic::start()->update();\n";
-	   update();
+        //handle logic and rendering below
+	    update();
+
 	    show();
 
         // glDepthFunc(GL_LESS);//Would this help?
@@ -138,26 +130,29 @@ void GameLogic::run()
 	    if(1000/FPS > SDL_GetTicks() - start)
 		    SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
 	}
-	std::clog << "GameLogic::start()\n";
 
+    //Close Sound System on Exit
+	/*
+    SoundManager::getInstance().stop();
+    usleep(250);
+    SoundManager::getInstance().close();
+    usleep(250);
+    alutExit();
+	*/
 }
 
 
 
 void GameLogic::show()
-{std::clog << "GameLogic::show()\n";
+{
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	_player->getCamera()->control();
     _player->getCamera()->update();
-
-
 	_renderer->drawStatic();
  _renderer->drawDynamic();
  _renderer->drawHud();		///MUST BE DRAWN LAST BECAUSE I CLEAR THE DEPTH BUFFER
 
-
- std::clog << "GameLogic::show()\n";
 }
 
 GameLogic * GameLogic::get()
@@ -175,46 +170,19 @@ GameLogic * GameLogic::get()
 }
 
 
-void GameLogic::ranjaytest(std::vector<Vector3<float> >& e)
+void GameLogic::ranjaytest(std::vector<Vector2<float> >& e, std::vector<Vector2<float> >& le)
 {
-	Vector3f test = Vector3f(10.0f, 0.0f, 0.0f);
-	/*for (int i = 0; i <= 20; i++)
-	{
-		test.z = test.z + i;
-		e.push_back(test );
-	}
-	test = Vector3f(10.0f, 0.0f, 0.0f);
-	for (int i = 0; i <= 20; i++)
-	{
-		test.z = test.z - i;
-		e.push_back(test );
-	}
-	test = Vector3f(-10.0f, 0.0f, 0.0f);
-	for (int i = 0; i <= 20; i++)
-	{
-		test.z = test.z + i;
-		e.push_back(test );
-	}
-	test = Vector3f(-10.0f, 0.0f, 0.0f);
-	for (int i = 0; i <= 20; i++)
-	{
-		test.z = test.z - i;
-		e.push_back(test );
-	}
-	test = Vector3f(10.0f, 0.0f, 10.0f);
-	for (int i = 0; i <= 20; i++)
-	{
-		test.x = test.x - i;
-		e.push_back(test );
-	}
-	test = Vector3f(-10.0f, 0.0f, -10.0f);
-	for (int i = 0; i <= 20; i++)
-	{
-		test.x = test.x + i;
-		e.push_back(test );
-	}
-	*/
+	Vector2<float> linestart(-46.9335, 1.4066);
+	Vector2<float> lineend(45.0435, -47.8461);
+	e.push_back(linestart);
+	le.push_back(lineend);
+
+	Vector2<float> line2start(3.1052, -49-8271);
+	Vector2<float> line2end(46.1233, -45.8321);
+	e.push_back(line2start);
+	le.push_back(line2end);
 	
+	/*
 	test = Vector3f(10.0f, 0.0f, -10.0f);
 	for (int i = 0; i <= 20; i++)
 	{
@@ -241,7 +209,7 @@ void GameLogic::ranjaytest(std::vector<Vector3<float> >& e)
 		test.x = test.x + i;
 		e.push_back(test );
 	}			
-	
+	*/
 	
 };
 

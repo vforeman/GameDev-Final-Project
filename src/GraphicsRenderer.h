@@ -44,8 +44,10 @@ private:
  std::vector<Graphics*> _drawObjects;    //Register graphics objects i.e. Enemy
 	bool _textureFlag;
 	Renderer();
+	static GLuint h_bullets;
  GLuint loadBMP();
  GLuint _texture;
+ void buildHudList();
 };
 
 }// namespace graphic

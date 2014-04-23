@@ -1,18 +1,18 @@
 #include "src/Node.h"
 
 Node::Node() : _x(0),    _y(0),    _z(0),
-               _f(0.0f), _g(0.0f), _h(0.0f), _parent(NULL)
+               _f(0.0f), _g(0.0f), _h(0.0f), _parent(NULL), _child(NULL)
 {
 }
 
 Node::Node(int x, int y, int z) : _x(x),        _y(y),      _z(z),
-                                  _f(0.0f),     _g(0.0f),   _h(0.0f),   _parent(NULL)
+                                  _f(0.0f),     _g(0.0f),   _h(0.0f),   _parent(NULL), _child(NULL)
 {
 }
 
 Node::Node(Vector3f v3f) : _x(int(v3f.x)),      _y(int(v3f.y)),        _z(int(v3f.z)),
                            _f(0.0f),             _g(0.0f),              _h(0.0f),
-                           _parent(NULL)
+                           _parent(NULL),       _child(NULL)
 {
 }
 
@@ -72,7 +72,7 @@ Node& Node::operator= (const Node& that)
 bool Node::isSamePosition(const Node& that)
 {
 
-    if(std::abs(that._x - this->_x) <= 15 && std::abs(that._z - this->_z) <= 15)
+    if(std::abs(that._x - this->_x) <= 3 && std::abs(that._z - this->_z) <= 3)
         return true;
     else
         return false;
@@ -80,7 +80,7 @@ bool Node::isSamePosition(const Node& that)
 
 bool Node::isSamePosition(const Node* that)
 {
-    if(std::abs(that->_x - this->_x) < 10 && std::abs(that->_z - this->_z) < 10)
+    if(std::abs(that->_x - this->_x) <= 3 && std::abs(that->_z - this->_z) <= 3)
         return true;
     else
         return false;
@@ -89,7 +89,7 @@ bool Node::isSamePosition(const Node* that)
 
 bool Node::isSamePosition(int x, int y, int z)
 {
-    if(std::abs(x - this->_x) < 10 && std::abs(z - this->_z) < 10)
+    if(std::abs(x - this->_x) <= 3 && std::abs(z - this->_z) <= 3)
         return true;
     else 
         return false;
@@ -101,22 +101,42 @@ void Node::calculateFn()
 }
 
 void Node::setParent(Node* that)
-{
+{   
     this->_parent = new Node();
+    that->_child = new Node();
     this->_parent = that;
+    that->_child = this;
 }
 
 void Node::traverse(std::vector < Vector3f >& path)
 {
-    Node *temp = new Node();
-    *temp = *this;
-
-    while(temp != NULL)
+    Node *temp = this;
+    while(temp != NULL && temp->_child != NULL )
+        temp = temp->_child;
+    
+    if(path.empty())
     {
-        path.push_back(Vector3f(float(temp->_x),
-                                float(temp->_y),
-                                float(temp->_z)));
-        temp = temp->_parent;
+        while(temp != NULL)
+        {
+            path.push_back(Vector3f(float(temp->_x),
+                                    float(temp->_y),
+                                    float(temp->_z)));
+            temp = temp->_parent;
+        }
+    }
+    else
+    {
+        std::vector < Vector3f > extendedPath;
+        while(temp != NULL)
+        {
+            extendedPath.push_back(Vector3f(float(temp->_x),
+                                    float(temp->_y),
+                                    float(temp->_z)));
+            temp = temp->_parent;
+        }
+        path.reserve(path.size() + extendedPath.size());
+        path.insert(path.end(), extendedPath.begin(), extendedPath.end()); 
+        extendedPath.clear();
     }
 }
 
