@@ -18,13 +18,14 @@ GameLogic::~GameLogic()
 
 void GameLogic::start()
 {
-     SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
+     //SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
      
 	_renderer = graphics::Renderer::get();
 	_pEngine = physics::PhysicsEngine::get();
 	_wController = window::Window::get();
 	_wController->open();
     _player = new Player(Vector3f(0, 0.8f, 0)); //This is Eye coordinate
+    _player->_radius = 0.5f;
     _weapon = new physics::Weapon();
 	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p){
 		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
@@ -38,7 +39,7 @@ void GameLogic::start()
 
     _iController = gamein::InputController::get();
 
-
+    _active = true; //Set game to active in start
 
 	glShadeModel(GL_SMOOTH);
     float light_position[] = {0.0f, 40.0f, 0.0f, 1.0f};
@@ -79,13 +80,39 @@ void GameLogic::start()
 void GameLogic::update()
 {
     // Handles Check for Collision and other functions that need to be updated
+    //_player->_position = _player->getCamera()->getLocation();
+	_weapon->iterate();
+    Vector3f pos = _player->getCamera()->getLocation();
     for(unsigned int i = 0; i < _enemies.size(); ++i)
     {
         _enemies[i]->patrol(_player->getCamera()->getLocation());
+        
+       if( ::physics::PhysicsEngine::spheresphere(pos, 0.5f, _enemies[i]->_position, _enemies[i]->_radius ))
+       {
+           //::physics::PhysicsEngine::resolveCollision(_player, _enemies[i]);
+           //_player->getCamera()->setLocation(_player->_position); 
+           //_player->getCamera()->control();
+           //_player->getCamera()->update();
+          
+          if(_player->isAlive()) 
+            _player->decreaseHealth();
+           else if(!_player->isAlive())
+               printf("GameLogic Update: PLAYER DEAD\n");
+       }
+       
+       for(unsigned int j = 0; j < _weapon->getClip(); ++j)
+       {
+            if(_weapon->getBullet(j)->_position.y <= -3.0f or _weapon->getBullet(j)->_position.y >= 30.0f)
+                _weapon->getBullet(j)->_active = false;
+
+            if( ::physics::PhysicsEngine::spheresphere(_weapon->getBullet(j)->_position, 0.5f, _enemies[i]->_position, _enemies[i]->_radius))
+            {
+                _weapon->getBullet(j)->_active = false;
+                _enemies[i]->die();
+            }
+       }
     }
-	_weapon->iterate();
-    Vector3f test = _player->getCamera()->getLocation();
-    //printf("(%.2f, %.2f, %.2f)\n", test.x, test.y, test.z);
+
 };
 
 
@@ -94,12 +121,12 @@ void GameLogic::run()
 	float angle =0.0;
 	const int FPS = 30;
 	Uint32 start;
-	bool running = true;
+    _running = true;
     _fireSignal = false;
-	while(running)
+	while(_running && _active)
 	{
 		start = SDL_GetTicks();
-		running = _iController->HandleInput(_player->getCamera(), _fireSignal, running);
+		_running = _iController->HandleInput(_player->getCamera(), _fireSignal, _running);
 
         //handle logic and rendering below
 	    update();
@@ -119,9 +146,9 @@ void GameLogic::run()
 	}
 
     //Close Sound System on Exit
-    SoundManager::getInstance().stop();
-    usleep(250);
-    SoundManager::getInstance().close();
+    //SoundManager::getInstance().stop();
+    //usleep(250);
+    //SoundManager::getInstance().close();
     usleep(250);
     alutExit();
 }
