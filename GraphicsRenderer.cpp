@@ -69,30 +69,34 @@ void Renderer::drawDynamic()
         try
         {
                 ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
-	            glMatrixMode(GL_MODELVIEW);
-                glPushMatrix();
-                glTranslatef(e->_position.x, e->_position.y, e->_position.z);
-                glScalef(e->_radius, e->_radius, e->_radius);
-                // e->drawSphere();
-                glEnableClientState(GL_VERTEX_ARRAY);
-                glEnableClientState(GL_NORMAL_ARRAY);
-                // glEnableClientState(GL_INDEX_ARRAY);
+	            if(e->isLiving())
+                {
+                    glMatrixMode(GL_MODELVIEW);
+                    glPushMatrix();
+                    glTranslatef(e->_position.x, e->_position.y, e->_position.z);
+                    glScalef(e->_radius, e->_radius, e->_radius);
+                    // e->drawSphere();
+                    glEnableClientState(GL_VERTEX_ARRAY);
+                    glEnableClientState(GL_NORMAL_ARRAY);
+                    // glEnableClientState(GL_INDEX_ARRAY);
                     //Connect the arrays themselves
-                glVertexPointer(3, GL_FLOAT, 0, &e->_verts[0]);
-                // glIndexPointer(GL_INT,0,&_lvl._staticIndex[0]);
-                glNormalPointer(GL_FLOAT, 0, &e->_norms[0]);
-                // glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
+                    glVertexPointer(3, GL_FLOAT, 0, &e->_verts[0]);
+                    // glIndexPointer(GL_INT,0,&_lvl._staticIndex[0]);
+                    glNormalPointer(GL_FLOAT, 0, &e->_norms[0]);
+                    // glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
 
-                //removed encapsulating stack moves, hopeful speedup
-                glDrawArrays(GL_TRIANGLE_STRIP , 0,e->_verts.size()/3);
+                    //removed encapsulating stack moves, hopeful speedup
+                    glDrawArrays(GL_TRIANGLE_STRIP , 0,e->_verts.size()/3);
 
-                //TODO::I dont think I should be loading the vertex data every call
-                //Disable vertex arrays that are no longer in use
-                glDisableClientState(GL_VERTEX_ARRAY);
-                // glDisableClientState(GL_INDEX_ARRAY);
-                glDisableClientState(GL_NORMAL_ARRAY);
-                // glDisableClientState(GL_COLOR_ARRAY);
-                glPopMatrix();
+                    //TODO::I dont think I should be loading the vertex data every call
+                    //Disable vertex arrays that are no longer in use
+                    glDisableClientState(GL_VERTEX_ARRAY);
+                    // glDisableClientState(GL_INDEX_ARRAY);
+                    glDisableClientState(GL_NORMAL_ARRAY);
+                    // glDisableClientState(GL_COLOR_ARRAY);
+                    glPopMatrix();
+
+                }
         }
         catch(exception e)
         {
