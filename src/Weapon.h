@@ -36,7 +36,7 @@ private:
  bool _reloading;
  unsigned int _clip;
  unsigned int _coolDown;
- const int _MAX_CLIP_SIZE;
+ unsigned int _maxClipSize;
  Bullet** _magazine;
 };
 }// namespace physics
