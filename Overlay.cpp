@@ -156,15 +156,15 @@ Vector3f adjust(Vector3f val)
     float adjZ = (float)Overlay::OVERLAY_HEIGHT/2;
     
     if((val.x == 0.0f || val.x == -0.0f) && (val.z == 0.0f || val.z == -0.0f))
-        return Vector3f(49.0f, 0.0f, 49.0f);
+        return Vector3f(adjX-1.0f, 0.0f, adjZ-1.0f);
     if(val.x >= 0 && val.z >= 0)    //1st
         return Vector3f(adjX+val.x, 0.0f, adjZ+val.z);
     if(val.x <=0 && val.z >= 0)    //2nd
-        return Vector3f(std::fabs(adjX+val.x), 0.0f, adjZ+val.z);
+        return Vector3f(adjX+val.x, 0.0f, adjZ+val.z);
     if (val.x <= 0 && val.z <= 0)  //3rd
-        return Vector3f(std::fabs(adjX+val.x), 0.0f, std::fabs(adjZ+val.z)); 
+        return Vector3f(adjX+val.x, 0.0f, adjZ+val.z); 
     if (val.x >= 0 && val.z <= 0)  //4th
-        return Vector3f(adjX+val.x, 0.0f, std::fabs(adjZ+val.z));
+        return Vector3f(adjX+val.x, 0.0f, adjZ+val.z);
 
     return val=Vector3f(1000.0f, 0.0f, 1000.0f);
 }

@@ -32,6 +32,8 @@ private:
 	GameLogic();
 	const int NUMBER_OF_ENEMIES = 5;
 public:
+    bool _active;           //If the player dies the game is not active
+    bool _running;
 	physics::PhysicsEngine * _pEngine;
 	window::Window * _wController;
     std::vector<physics::Enemy*> _enemies;
