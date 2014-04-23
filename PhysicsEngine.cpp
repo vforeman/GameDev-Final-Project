@@ -7,12 +7,14 @@ namespace physics{
 *************************************/
 
 PhysicsEntity::PhysicsEntity() : _position(Vector3f(0.0f, 0.0f, 0.0f)),
-                                 _velocity(Vector3f(0.0f, 0.0f, 0.0f))
+                                 _velocity(Vector3f(0.0f, 0.0f, 0.0f)),
+                                 _force(Vector3f(0.0f, 0.0f, 0.0f))
 {
 }
 
 PhysicsEntity::PhysicsEntity(Vector3f pos) : _position(pos),
-  _velocity(Vector3f(0.0f, 0.0f, 0.0f))
+                                             _velocity(Vector3f(0.0f, 0.0f, 0.0f)),
+                                             _force(Vector3f(0.0f, 0.0f, 0.0f))
 {
 }
 
@@ -20,8 +22,6 @@ void PhysicsEntity::update()
 {
     //x  = x0 + velocity * time
 	    _position = _position+ _velocity * 0.125f;
-        printf("PHYSICSENGINE: PE(%.2f, %.2f, %.2f)\n", _position.x, _position.y, _position.z);
-
 }
 
 
@@ -101,6 +101,16 @@ float PhysicsEngine::pointdistacesquare(Vector3<float> p1,Vector3<float> p2)
 	return (vec.x*vec.x+vec.y*vec.y+vec.z*vec.z);
 }
 
+void PhysicsEngine::resolveCollision(PhysicsEntity* a, PhysicsEntity* b)
+{
+    //Resolve Collision
+    //Seeking Knock back effect
+    //Assume B has triple the mass of a and it will be the enemy
+    a->_velocity =  (b->_velocity + b->_velocity)*2.0f;
+    b->_velocity = -(b->_velocity + b->_velocity)*3.0f;
+    a->update();
+    b->update();
+}
 
 }//namespace physics
 

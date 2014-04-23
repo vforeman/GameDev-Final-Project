@@ -58,7 +58,7 @@ public:
 	~PhysicsEngine();
 	static bool spheresphere(Vector3<float>& c1,float _radius1,Vector3<float>& c2,float _radius2);
 	static float pointdistacesquare(Vector3<float> p1,Vector3<float> p2);
-
+    static void resolveCollision(PhysicsEntity*, PhysicsEntity*); //Sphere-Sphere Collision Resolution
 private:
 	static PhysicsEngine * _instance;
 	static bool _instanceFlag;
