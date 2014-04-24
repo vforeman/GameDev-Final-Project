@@ -2,43 +2,37 @@
 
 namespace logic
 {
-GameLogic * GameLogic::_instance = NULL;
-bool GameLogic::_instanceFlag = false;
 
 GameLogic::GameLogic()
 {
     //SINGLETON CONSTRUCTORS & DESTRUCTORS ARE EMPTY
 }
 
-GameLogic::~GameLogic()
-{
-	_instanceFlag = false;
-}
-
-
 void GameLogic::start()
 {
      SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
      
-	_renderer = graphics::Renderer::get();
-	_pEngine = physics::PhysicsEngine::get();
-	_wController = window::Window::get();
-	_wController->open();
+	graphics::Renderer::get();
+	physics::PhysicsEngine::get();
+    gamein::InputController::get();
+	window::Window::get();
+	window::Window::get().open();
+
     _player = new Player(Vector3f(0, 0.8f, 0)); //This is Eye coordinate
     _player->_radius = 0.5f;
     _weapon = new physics::Weapon();
     AIManager::getInstance().setPlayer(Vector3f(0.0f, 0.0f, 0.0f));
-	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p){
+	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p)
+    {
 		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
 		int zmax = ((int)Overlay::OVERLAY_HEIGHT)/2;
 		float x = (float)util::randomRange(-xmax,xmax);
 		float z = (float)util::randomRange(-zmax,zmax);
         _enemies.push_back(new ::physics::Enemy(Vector3f(x, 0.5f, z)));
-        _renderer->registerGraphics(_enemies.back());
+        graphics::Renderer::get().registerGraphics(_enemies.back());
 	}
 
 
-    _iController = gamein::InputController::get();
 
     _active = true; //Set game to active in start
     _opposition = true;
@@ -101,11 +95,13 @@ void GameLogic::update()
           }
            else if(!_player->isAlive())
            {
-                   _iController->_playerDead = true;
-                   if(_iController->_respawn){
-                    restart();
-                    _iController->_playerDead = false;
-                    _iController->_respawn = false;
+                   gamein::InputController::_playerDead = true;;
+
+                   if(gamein::InputController::get()._respawn)
+                   {
+                       restart();
+                       gamein::InputController::_playerDead = false;
+                       gamein::InputController::_respawn = false;
                    }
 
            }
@@ -114,7 +110,7 @@ void GameLogic::update()
        
        for(unsigned int j = 0; j < _weapon->getClip(); ++j)
        {    //dont render bullets that hit the ground or go into the sky
-            if(_weapon->getBullet(j)->_position.y <= 0.0f or _weapon->getBullet(j)->_position.y >= 30.0f)
+            if(_weapon->getBullet(j)->_position.y <= 0.0f || _weapon->getBullet(j)->_position.y >= 30.0f)
                 _weapon->getBullet(j)->_active = false;
               //if an enemy is hit
             if( _weapon->getBullet(j)->_active && _enemies[i]->isLiving() &&::physics::PhysicsEngine::spheresphere(_weapon->getBullet(j)->_position, 0.5f, _enemies[i]->_position, _enemies[i]->_radius))
@@ -122,7 +118,6 @@ void GameLogic::update()
                 _weapon->getBullet(j)->_active = false;
                 //stop rendering the enemy
                 _enemies[i]->decreaseHealth(_difficulty);
-                //_enemies[i]->die();
             }
        }
 
@@ -148,7 +143,7 @@ void GameLogic::run()
 	while(_running && _active)
 	{
 		start = SDL_GetTicks();
-		_running = _iController->HandleInput(_player->getCamera(), _fireSignal, _running);
+        _running = gamein::InputController::get().HandleInput(_player->getCamera(), _fireSignal, _running);
 
         //handle logic and rendering below
 	    update();
@@ -167,7 +162,7 @@ void GameLogic::run()
         _fireSignal = false;
 	}
 
-    _renderer->emptyObjects();
+	graphics::Renderer::get().emptyObjects();
     _enemies.clear();
 }
 
@@ -181,8 +176,7 @@ void GameLogic::show()
     Vector3f position = _player->getCamera()->getLocation();
 
     if(_fireSignal)
-        _weapon->fire(position,
-                      _player->getCamera()->getForward()); 
+        _weapon->fire(position, _player->getCamera()->getForward()); 
 
     Vector3f pos;
     float radius;
@@ -201,6 +195,7 @@ void GameLogic::show()
             glPopMatrix();
         }
     }
+
     float wall = (float) Overlay::OVERLAY_HEIGHT/2;
 	//DRAW WALLS 
     glPushMatrix();
@@ -211,37 +206,42 @@ void GameLogic::show()
             glVertex3f( wall, -3.0f, -wall);
             glVertex3f( wall, 100.0f, -wall);
             glVertex3f(-wall, 100.0f, -wall);
+            glNormal3d(0, 0, 1);
 
             //East Wall
             glVertex3f(wall, -3.0f, wall);
             glVertex3f(wall, -3.0f, -wall);
             glVertex3f(wall, 100.0f, -wall);
             glVertex3f(wall, 100.0f, wall);
+            glNormal3d(0, 0, 1);
 
             //West Wall
             glVertex3f(-wall, -3.0f, -wall);
             glVertex3f(-wall, -3.0f, wall);
             glVertex3f(-wall, 100.0f, wall);
             glVertex3f(-wall, 100.0f, -wall);
+            glNormal3d(0, 0, 1);
 
             //South Wall
             glVertex3f(wall, -3.0f, wall);
             glVertex3f(-wall, -3.0f, wall);
             glVertex3f(-wall, 100.0f, wall);
             glVertex3f(wall, 100.0f, wall);
+            glNormal3d(0, 0, 1);
         glEnd();
     glPopMatrix();
     //END DRAW WALLS
-    _renderer->drawStatic();
-    _renderer->drawDynamic();
-    _renderer->drawHud();		///MUST BE DRAWN LAST BECAUSE I CLEAR THE DEPTH BUFFER
+	graphics::Renderer::get().drawStatic();
+	graphics::Renderer::get().drawDynamic();
+	graphics::Renderer::get().drawHud();        //DRAW LAST CLEAR DEPTH BUFFER
 
 }
 
 void GameLogic::spawnEnemies()
 {
-    _renderer->emptyObjects();
+    graphics::Renderer::get().emptyObjects();
     _enemies.clear();
+
     ++_difficulty;
 	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p)
     {
@@ -250,29 +250,22 @@ void GameLogic::spawnEnemies()
 		float x = (float)util::randomRange(-xmax,xmax);
 		float z = (float)util::randomRange(-zmax,zmax);
         _enemies.push_back(new ::physics::Enemy(Vector3f(x, 0.5f, z)));
-        _renderer->registerGraphics(_enemies.back());
+        graphics::Renderer::get().registerGraphics(_enemies.back());
 	}
 
 }   
 
-void GameLogic::restart(){
-  _player->restart();
-  spawnEnemies();
-  _iController->_playerDead = false;
+void GameLogic::restart()
+{
+    _player->restart();
+    spawnEnemies();
+    gamein::InputController::get()._playerDead = false;
 }
 
-GameLogic * GameLogic::get()
+GameLogic& GameLogic::get()
 {
- if(_instance == NULL)
- {
-  _instance = new GameLogic();
-  _instanceFlag = true;
-  return _instance;
- }
- else
- {
-  return _instance;
- }
+    static GameLogic instance;
+    return instance;
 }
 
 }// namesapce logic

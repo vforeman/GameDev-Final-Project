@@ -1,29 +1,14 @@
 #include "src/WindowController.h"
 namespace window{
 
-bool Window::_instanceFlag = false;
-Window * Window::_instance = NULL;
 SDL_Surface * Window::_screen = NULL;
 
 Window::Window(){}
 
-Window::~Window()
+Window& Window::get()
 {
- _instanceFlag = false;
-}
-
-Window * Window::get()
-{
- if(_instance == NULL)
- {
-  _instance = new Window();
-  _instanceFlag = true;
-  return _instance;
- }
- else
- {
-  return _instance;
- }
+    static Window instance;
+    return instance;
 }
 
 void Window::open()

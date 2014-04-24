@@ -54,29 +54,13 @@ StaticEntity::StaticEntity(float radius, Vector3f position, Vector3f force)
 /***********************************
 *						PHYSICS ENGINE IMPLEMENTATION
 *************************************/
-bool PhysicsEngine::_instanceFlag = false;
-PhysicsEngine * PhysicsEngine::_instance = NULL;
-
 
 PhysicsEngine::PhysicsEngine(){}
 
-PhysicsEngine::~PhysicsEngine()
+PhysicsEngine& PhysicsEngine::get()
 {
-	_instanceFlag = false;
-}
-
-PhysicsEngine * PhysicsEngine::get()
-{
-	if(_instance == NULL)
-	{
-		_instance = new PhysicsEngine();
-		_instanceFlag = true;
-		return _instance;
-	}
-	else
-	{
-		return _instance;
-	}
+    static PhysicsEngine instance;
+    return instance;
 }
 
 

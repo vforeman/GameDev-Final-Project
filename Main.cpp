@@ -17,10 +17,9 @@ using namespace logic;
 int main(int argc, char *argv[])
 {
     alutInit(&argc, argv);
-	GameLogic* gameObject = GameLogic::get();
-	
-    gameObject->start();
-    gameObject->run();
+
+    GameLogic::get().start();
+    GameLogic::get().run();
 
  
     SoundManager::getInstance().stop();

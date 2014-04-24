@@ -11,20 +11,19 @@ namespace window{
  /// Opens, Maintains, and Shutsdown a SINGLE instance
  class Window
  {
- public:
+    public:
  	//PUBLIC methods
-  static Window * get();
-  static SDL_Surface * _screen;
-  ~Window();
-  void open( void );
-  void close( void );
-  /*void resize( int, int );
-  void resize( char * );*/
+    static Window& get();
+    static SDL_Surface * _screen;
+    void open( void );
+    void close( void );
+    /*void resize( int, int );
+    void resize( char * );*/
 
- private:
-  static Window * _instance;
-  static bool _instanceFlag;
-  Window();
+    private:
+        Window();
+        Window(const Window&);
+        Window& operator=(const Window&);
  };
 
 

@@ -1,30 +1,15 @@
 #include "src/InputController.h"
 namespace gamein{
-bool InputController::_instanceFlag = false;
-InputController * InputController::_instance = NULL;
 bool InputController::_playerDead = false;
 bool InputController::_respawn = false;
 
 InputController::InputController(){}
 
-InputController::~InputController()
-{
-	_instanceFlag = false;
-}
 
-InputController * InputController::get()
+InputController& InputController::get()
 {
- if(NULL == _instance )
- {
-  _instance = new InputController();
-  _instanceFlag = true;
-
-  return _instance;
- }
- else
- {
-  return _instance;
- }
+    static InputController instance;
+    return instance;
 }
 
 bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)

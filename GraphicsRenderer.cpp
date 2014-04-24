@@ -1,23 +1,19 @@
 #include "src/GraphicsRenderer.h"
 namespace graphics{
 bool Renderer::_firstDraw = true;
-bool Renderer::_instanceFlag = false;
-Renderer * Renderer::_instance = NULL;
 GLuint Renderer::h_bullets;
+
 Renderer::Renderer()
-:_textureFlag(false)
+{
+}
+
+void Renderer::buildHudList()
 {
 
 }
 
-Renderer::~Renderer()
+void Renderer::playerDead(Vector3f p)
 {
-	_instanceFlag = false;
-}
-void Renderer::buildHudList(){
-
-}
-void Renderer::playerDead(Vector3f p){
   glBegin(GL_QUADS);
   glColor4f(1.0,0.0,0.0,0.4);
          glVertex3f(0.4f+p.x , 4.0f +p.y , 0.4f+p.z);   glVertex3f(-0.4f+p.x , 4.0f +p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 4.0f +p.y ,-0.4f+p.z);  glVertex3f(0.4f+p.x , 4.0f +p.y ,-0.4f+p.z); //0123top
@@ -47,7 +43,8 @@ void Renderer::drawStatic()
   glEnableClientState(GL_COLOR_ARRAY);
   glEnableClientState(GL_INDEX_ARRAY);
 
-  if(_firstDraw){
+  if(_firstDraw)
+  {
     _firstDraw=true;
     //Connect the arrays themselves
     glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
@@ -71,11 +68,12 @@ void Renderer::drawStatic()
 }
 
 void Renderer::drawDynamic()
-{ glColor3f(1,0,0);
-  glEnable(GL_BLEND);
-  //we should toggle this whenever the sphere gets hit
-  glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_SRC_ALPHA);
-  glEnable(GL_COLOR_MATERIAL);
+{ 
+    glColor3f(1,0,0);
+    glEnable(GL_BLEND);
+    //we should toggle this whenever the sphere gets hit
+    glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_SRC_ALPHA);
+    glEnable(GL_COLOR_MATERIAL);
     for(unsigned int i = 0; i < _drawObjects.size(); ++i)
     {
         try
@@ -172,7 +170,8 @@ GLuint Renderer::loadBMP(){
 
 
 }
-void Renderer::drawHud(){
+void Renderer::drawHud()
+{
 glPushMatrix();
   inHudMode(640,480);
   glDisable(GL_LIGHTING);
@@ -217,18 +216,10 @@ void outHudMode()
   glPopAttrib();
 }
 
-Renderer * Renderer::get()
+Renderer& Renderer::get()
 {
- if(_instance == NULL)
- {
-  _instance = new Renderer();
-  _instanceFlag = true;
-  return _instance;
- }
- else
- {
-  return _instance;
- }
+    static Renderer instance;
+    return instance;
 }
 
 
