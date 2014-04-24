@@ -104,7 +104,7 @@ void GameLogic::update()
           }
            else if(!_player->isAlive())
            {
-                   printf("GameLogic Update: PLAYER DEAD %d\n", _player->getHealth());
+                   //printf("GameLogic Update: PLAYER DEAD %d\n", _player->getHealth());
            }
        }
        

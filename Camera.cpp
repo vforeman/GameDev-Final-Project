@@ -59,12 +59,61 @@ void Camera::moveCamera(const float &dir)
 	float rad=(camYaw+dir)*M_PI/180.0;
 	float x = loc.x;
     float z = loc.z;
-    //float degrees2Radians = M_PI/180.0f;
-    float degrees2Radians = 1.0f;
-
+    float degrees2Radians = M_PI/180.0f;
+    //float degrees2Radians = 1.0f;
+    float yaw = camYaw + dir;
     loc.x-=sin(rad)*speed;
 	loc.z-=cos(rad)*speed;
-    
+  
+  /*  
+    //Recalculate forward vector based off new yaw and pitch
+    _forward.x =  sin(camYaw*degrees2Radians) * cos(camPitch*degrees2Radians);
+    _forward.y =  sin(camPitch * degrees2Radians);
+    _forward.z = -cos(camYaw * degrees2Radians) * cos(camPitch * degrees2Radians);
+    _forward.normalize();
+
+    //Recalculate up vector based off new yaw and pitch
+    _up.x = sin(camYaw * degrees2Radians) * cos((camPitch+90.0f) * degrees2Radians);
+    _up.y = sin((camPitch+90.0f) * degrees2Radians);
+    _up.z = -cos(camYaw*degrees2Radians) * cos((camPitch+90.0f)*degrees2Radians);
+    _up.normalize();
+
+    //Recalculate right vector based off new 
+    _right.x = sin((camYaw+90.0f) * degrees2Radians);
+    _right.y = 0.0f;
+    _right.z = -cos((camYaw+90.0f)*degrees2Radians);
+    _right.normalize();
+  */
+  
+    if(Overlay::isObstacle(loc.x, loc.z)) 
+    {
+        loc.x = x;
+        loc.z = z;
+    }
+}
+
+void Camera::moveCameraUp(const float& dir)
+{
+	float rad=(camPitch+dir)*M_PI/180.0;
+	loc.y+=sin(rad)*speed;
+}
+
+void Camera::control()
+{
+    float degrees2Radians = M_PI/180.0f;
+	if(mi)
+	{
+		// midX=320
+		//MidY=240
+		int MidX=640;
+		int MidY=480;
+		SDL_ShowCursor(SDL_DISABLE);
+		int tmpx,tmpy;
+		SDL_GetMouseState(&tmpx,&tmpy);
+		camYaw+=mousespeed*(MidX-tmpx);
+		camPitch+=mousespeed*(MidY-tmpy);
+
+
     //Recalculate forward vector based off new yaw and pitch
     _forward.x =  sin(camYaw*degrees2Radians) * cos(camPitch*degrees2Radians);
     _forward.y =  sin(camPitch * degrees2Radians);
@@ -83,32 +132,11 @@ void Camera::moveCamera(const float &dir)
     _right.z = -cos((camYaw+90.0f)*degrees2Radians);
     _right.normalize();
 
-    if(Overlay::isObstacle(loc.x, loc.z)) 
-    {
-        loc.x = x;
-        loc.z = z;
-    }
-}
 
-void Camera::moveCameraUp(const float& dir)
-{
-	float rad=(camPitch+dir)*M_PI/180.0;
-	loc.y+=sin(rad)*speed;
-}
 
-void Camera::control()
-{
-	if(mi)
-	{
-		// midX=320
-		//MidY=240
-		int MidX=640;
-		int MidY=480;
-		SDL_ShowCursor(SDL_DISABLE);
-		int tmpx,tmpy;
-		SDL_GetMouseState(&tmpx,&tmpy);
-		camYaw+=mousespeed*(MidX-tmpx);
-		camPitch+=mousespeed*(MidY-tmpy);
+
+
+
 		lockCamera();
 		SDL_WarpMouse(MidX,MidY);
 		Uint8* state=SDL_GetKeyState(NULL);
@@ -207,7 +235,7 @@ Vector3<float> Camera::getVector()
 
 Vector3f Camera::getEye()
 {
-    Vector3f z_axis = (loc);
+    Vector3f z_axis = (loc-Vector3f(0.0f, 0.8f, 0.0f));
     z_axis.normalize();
     Vector3f up = Vector3f(0.0f, 1.0f, 0.0f);
     Vector3f x_axis = up.crossProduct(z_axis);
@@ -221,6 +249,11 @@ Vector3f Camera::getEye()
 
 Vector3f Camera::getForward()
 {
+     Vector3f location = loc;
+     location.normalize();
+     printf("Location: %s\n", loc.toString().c_str());
+     printf("LocNorm: %s\n", location.toString().c_str());
+     printf("Forward: %s\n", _forward.toString().c_str());
      return _forward;
 }
 
