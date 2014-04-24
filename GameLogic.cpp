@@ -46,21 +46,15 @@ void GameLogic::start()
 	glShadeModel(GL_SMOOTH);
     float light_position[] = {0.0f, 40.0f, 0.0f, 1.0f};
     GLfloat ambient_intensity[]={0.2,0.2,0.2,1.0};
-
-
-
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, YELLOW);
-
-
-
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_intensity);
     glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
     glLightfv(GL_LIGHT0, GL_SPECULAR, WHITE);
-
 	glFrontFace(GL_CCW);//counter-clockwise order of verts determines front face of polygon
 	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT, ambient_intensity);
 	// glMaterialf(GL_FRONT,GL_SHININESS,)
+  
 
 
 

@@ -31,7 +31,7 @@ int Player::getHealth()
 
 void Player::decreaseHealth()
 {
-   _health -= 50;
+   _health -= 5;
 }
 
 void Player::decreaseHealth(int damage)
