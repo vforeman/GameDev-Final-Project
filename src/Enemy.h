@@ -23,10 +23,11 @@ class Enemy : virtual public PhysicsEntity, virtual public Graphics
 public:
     Enemy();
     Enemy(Vector3f);
-    int _health;
     const float _ALERT_RADIUS;
     bool isLiving();
     void attack(Vector3f);
+    void decreaseHealth();
+    void decreaseHealth(int);
     void die();
     void patrol(Vector3f);
     std::vector<float> _verts;
@@ -35,6 +36,7 @@ public:
 protected:
     bool _alive;
     bool _alert;
+    int _health;
     unsigned int _point;    //Point on patrol path, treated as iterator
     std::vector< Vector3f > _patrolPath;
     void createSimplePatrol();
