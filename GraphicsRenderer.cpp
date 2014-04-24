@@ -161,26 +161,22 @@ GLuint Renderer::loadBMP(){
 
 }
 void Renderer::drawHud(){
-/*!!!!!!!!!!!!!!!!!!!!!
-THE ORIGIN (0,0) IS IN THE UPPER LEFT CORNER
-  OF THE SCREEN.
-  The positive x-axis is right,
-  The positive y-axis goes down.
-!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+glPushMatrix();
   inHudMode(640,480);
   glDisable(GL_LIGHTING);
   glEnable(GL_COLOR_MATERIAL);
-     glPushMatrix();
+     
      glLineWidth(4);
-    glBegin(GL_LINE);//bullet shell
-      glColor4f(1.0f, 0.85f, 0.0, 0.3);
-      glVertex2i( 320, 230 );//topright
-      glVertex2i( 320,  250 );//bottomright
-      glVertex2i( 310, 240 );//bottom left
-      glVertex2i( 340, 240 );//TOPLEFT
+    glBegin(GL_LINES);//bullet shell
+      glColor4f(1.0f, 0.85f, 0.0, 0.6);
+      glVertex3f( 320, 230,0 );//top
+      glVertex3f( 320,  250,0 );//bottom
+      glVertex3f( 310, 240,0 );//left
+      glVertex3f( 330, 240,0 );//right
     glEnd();
-    glPopMatrix();
+    
   outHudMode();
+  glPopMatrix();
 }
 
 void inHudMode(int screen_width, int screen_height)
@@ -195,7 +191,6 @@ void inHudMode(int screen_width, int screen_height)
 
   glLoadIdentity();
   glDisable(GL_CULL_FACE);
-  glClear(GL_DEPTH_BUFFER_BIT);
   glDepthMask(GL_FALSE);
   glDisable(GL_DEPTH_TEST);
 }

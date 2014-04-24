@@ -184,6 +184,7 @@ void GameLogic::show()
             pos = _weapon->getBullet(i)->_position;
             radius = _weapon->getBullet(i)->_radius;
             glPushMatrix();
+              glLoadIdentity();
                 glTranslatef(pos.x, pos.y, pos.z);
                 glScalef(radius, radius, radius);
                 _weapon->getBullet(i)->drawSphere();

@@ -6,15 +6,13 @@ namespace physics{
 *						PHYSICS ENTITY IMPLEMENTATION
 *************************************/
 
-PhysicsEntity::PhysicsEntity() : _position(Vector3f(0.0f, 0.0f, 0.0f)),
-                                 _velocity(Vector3f(0.0f, 0.0f, 0.0f)),
-                                 _force(Vector3f(0.0f, 0.0f, 0.0f))
+PhysicsEntity::PhysicsEntity() 
+: _position(Vector3f(0.0f, 0.0f, 0.0f)),_velocity(Vector3f(0.0f, 0.0f, 0.0f)),_force(Vector3f(0.0f, 0.0f, 0.0f))
 {
 }
 
-PhysicsEntity::PhysicsEntity(Vector3f pos) : _position(pos),
-                                             _velocity(Vector3f(0.0f, 0.0f, 0.0f)),
-                                             _force(Vector3f(0.0f, 0.0f, 0.0f))
+PhysicsEntity::PhysicsEntity(Vector3f pos) 
+: _position(pos), _velocity(Vector3f(0.0f, 0.0f, 0.0f)),_force(Vector3f(0.0f, 0.0f, 0.0f))
 {
 }
 
