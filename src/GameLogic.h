@@ -26,10 +26,12 @@ class GameLogic
 private:
 	void update();
 	void show();
+    void spawnEnemies();
 	static GameLogic * _instance;
 	static bool _instanceFlag;
     bool _fireSignal;
 	GameLogic();
+    int difficulty = 0;
 	const int NUMBER_OF_ENEMIES = 5;
 public:
     bool _active;           //If the player dies the game is not active

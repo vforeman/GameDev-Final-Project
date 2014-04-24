@@ -27,6 +27,7 @@ void GameLogic::start()
     _player = new Player(Vector3f(0, 0.8f, 0)); //This is Eye coordinate
     _player->_radius = 0.5f;
     _weapon = new physics::Weapon();
+    AIManager::getInstance().setPlayer(Vector3f(0.0f, 0.0f, 0.0f));
 	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p){
 		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
 		int zmax = ((int)Overlay::OVERLAY_HEIGHT)/2;
@@ -84,6 +85,7 @@ void GameLogic::update()
     bool enemiesAlive = false;
 	_weapon->iterate();
     Vector3f pos = _player->getCamera()->getLocation();
+    AIManager::getInstance().setPlayer(pos);
     //  iterate through the list of enemies
     for(unsigned int i = 0; i < _enemies.size(); ++i)
     {   
@@ -111,10 +113,10 @@ void GameLogic::update()
        
        for(unsigned int j = 0; j < _weapon->getClip(); ++j)
        {    //dont render bullets that hit the ground or go into the sky
-            if(_weapon->getBullet(j)->_position.y <= -3.0f or _weapon->getBullet(j)->_position.y >= 30.0f)
+            if(_weapon->getBullet(j)->_position.y <= 0.0f or _weapon->getBullet(j)->_position.y >= 30.0f)
                 _weapon->getBullet(j)->_active = false;
               //if an enemy is hit
-            if( ::physics::PhysicsEngine::spheresphere(_weapon->getBullet(j)->_position, 0.5f, _enemies[i]->_position, _enemies[i]->_radius))
+            if( _weapon->getBullet(j)->_active && _enemies[i]->isLiving() &&::physics::PhysicsEngine::spheresphere(_weapon->getBullet(j)->_position, 0.5f, _enemies[i]->_position, _enemies[i]->_radius))
             {   //stop rendering the bullet
                 _weapon->getBullet(j)->_active = false;
                 //stop rendering the enemy
@@ -125,8 +127,12 @@ void GameLogic::update()
     }
 
     _opposition = enemiesAlive;
-    // if(!_opposition)
-    //      printf("All Enemies are Dead\n");
+    if(!_opposition)
+    {
+        printf("All enemies vanquished\n");
+        spawnEnemies();        
+    }
+    
 
 };
 
@@ -234,6 +240,23 @@ void GameLogic::show()
     _renderer->drawHud();		///MUST BE DRAWN LAST BECAUSE I CLEAR THE DEPTH BUFFER
 
 }
+
+void GameLogic::spawnEnemies()
+{
+    _renderer->emptyObjects();
+    _enemies.clear();
+    ++difficulty;
+	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p)
+    {
+		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
+		int zmax = ((int)Overlay::OVERLAY_HEIGHT)/2;
+		float x = (float)util::randomRange(-xmax,xmax);
+		float z = (float)util::randomRange(-zmax,zmax);
+        _enemies.push_back(new ::physics::Enemy(Vector3f(x, 0.5f, z)));
+        _renderer->registerGraphics(_enemies.back());
+	}
+
+}   
 
 GameLogic * GameLogic::get()
 {
