@@ -18,10 +18,17 @@ int main(int argc, char *argv[])
 {
     alutInit(&argc, argv);
 	GameLogic* gameObject = GameLogic::get();
-	gameObject->start();
+	
+    gameObject->start();
     gameObject->run();
 
- return 0;
+ 
+    SoundManager::getInstance().stop();
+    usleep(250);
+    SoundManager::getInstance().close();
+    usleep(250);
+    alutExit();
+    return 0;
 }
 
 

@@ -18,7 +18,7 @@ GameLogic::~GameLogic()
 
 void GameLogic::start()
 {
-     //SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
+     SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
      
 	_renderer = graphics::Renderer::get();
 	_pEngine = physics::PhysicsEngine::get();
@@ -103,7 +103,7 @@ void GameLogic::update()
           
           if(_player->isAlive()) 
           {
-            _player->decreaseHealth();
+            _player->decreaseHealth(_difficulty);
           }
            else if(!_player->isAlive())
            {
@@ -113,6 +113,7 @@ void GameLogic::update()
                     _iController->_playerDead = false;
                     _iController->_respawn = false;
                    }
+
            }
 
        }
@@ -126,7 +127,8 @@ void GameLogic::update()
             {   //stop rendering the bullet
                 _weapon->getBullet(j)->_active = false;
                 //stop rendering the enemy
-                _enemies[i]->die();
+                _enemies[i]->decreaseHealth(_difficulty);
+                //_enemies[i]->die();
             }
        }
 
@@ -137,8 +139,7 @@ void GameLogic::update()
     {
         printf("All enemies vanquished\n");
         spawnEnemies();        
-    }
-    
+    } 
 
 };
 
@@ -172,12 +173,8 @@ void GameLogic::run()
         _fireSignal = false;
 	}
 
-    //Close Sound System on Exit
-    //SoundManager::getInstance().stop();
-    //usleep(250);
-    //SoundManager::getInstance().close();
-    usleep(250);
-    alutExit();
+    _renderer->emptyObjects();
+    _enemies.clear();
 }
 
 
@@ -251,7 +248,7 @@ void GameLogic::spawnEnemies()
 {
     _renderer->emptyObjects();
     _enemies.clear();
-    ++difficulty;
+    ++_difficulty;
 	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p)
     {
 		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;

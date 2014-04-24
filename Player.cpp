@@ -1,11 +1,11 @@
 #include "src/Player.h"
 
-Player::Player() : _health(100)
+Player::Player() : _health(200)
 {
     _camera = new Camera();
 }
 
-Player::Player(Vector3f pos) : _health(100) 
+Player::Player(Vector3f pos) : _health(200) 
 {
     _position = pos;
     _camera = new Camera(pos);

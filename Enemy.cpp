@@ -2,7 +2,7 @@
 namespace physics{
 
 
-Enemy::Enemy() : _health(50),  _alive(true), _point(0),
+Enemy::Enemy() : _health(100),  _alive(true), _point(0),
                  _alert(false), _ALERT_RADIUS(20.0f)
 {
     _position = Vector3f(42.0f, 0.5f, 42.0f);   //Arbitrary position 
@@ -10,7 +10,7 @@ Enemy::Enemy() : _health(50),  _alive(true), _point(0),
     createStrongPatrol();
 }
 
-Enemy::Enemy(Vector3f pos) : _health(50), _alive(true), _point(0),
+Enemy::Enemy(Vector3f pos) : _health(100), _alive(true), _point(0),
                              _alert(false), _ALERT_RADIUS(20.0f)
 {
     _position = pos;
@@ -78,14 +78,8 @@ void Enemy::decreaseHealth(int damage)
         case 2:
             _health -= 25;
             break;
-        case 3:
-            _health -= 10;
-            break;
-        case 4:
-            _health -= 5;
-            break;
         default:
-            _health -= 1;
+            _health -= 10;
             break;
     }
 }
