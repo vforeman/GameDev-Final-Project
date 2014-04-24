@@ -195,7 +195,7 @@ void inHudMode(int screen_width, int screen_height)
 
   glLoadIdentity();
   glDisable(GL_CULL_FACE);
-  glClear(GL_DEPTH_BUFFER_BIT);
+  //glClear(GL_DEPTH_BUFFER_BIT);
   glDepthMask(GL_FALSE);
   glDisable(GL_DEPTH_TEST);
 }

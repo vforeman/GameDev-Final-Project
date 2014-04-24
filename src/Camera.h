@@ -11,8 +11,10 @@
 
 class Camera
 {
-
-	float camYaw;
+    Vector3f _up;
+    Vector3f _right;
+	Vector3f _forward;
+    float camYaw;
 	float camPitch;
 	float speed;
 	float mousespeed;
@@ -32,6 +34,10 @@ class Camera
 	void update();
 	Vector3f getVector();
 	Vector3f getLocation();
+    Vector3f getEye();
+    Vector3f getForward();
+    Vector3f getRight();
+    Vector3f getUp();
 	float getYaw();
 	float getPitch();
 	void setLocation(const Vector3<float>& newcoord);
