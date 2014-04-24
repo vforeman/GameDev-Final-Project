@@ -5,7 +5,7 @@ Player::Player() : _health(100)
     _camera = new Camera();
 }
 
-Player::Player(Vector3f pos) 
+Player::Player(Vector3f pos) : _health(100) 
 {
     _position = pos;
     _camera = new Camera(pos);
@@ -24,9 +24,14 @@ bool Player::isAlive()
     return true;
 }
 
+int Player::getHealth()
+{
+    return _health;
+}
+
 void Player::decreaseHealth()
 {
-   _health -= 5;
+   _health -= 1;
 }
 
 void Player::decreaseHealth(int damage)
@@ -42,4 +47,9 @@ void Player::increaseHealth()
 void Player::increaseHealth(int healthPak)
 {
     _health += healthPak;
+}
+
+void Player::setHealth(int health)
+{
+    _health = health;
 }
