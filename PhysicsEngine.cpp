@@ -19,7 +19,7 @@ PhysicsEntity::PhysicsEntity(Vector3f pos)
 void PhysicsEntity::update()
 {
     //x  = x0 + velocity * time
-	    _position = _position+ _velocity * 0.125f;
+	    _position = _position+ _velocity * 0.25f;
 }
 
 
