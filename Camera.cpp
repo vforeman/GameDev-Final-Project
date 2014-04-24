@@ -115,7 +115,8 @@ void Camera::control()
 
 
     //Recalculate forward vector based off new yaw and pitch
-    _forward.x =  sin(camYaw*degrees2Radians) * cos(camPitch*degrees2Radians);
+    //_forward.x =  sin(camYaw*degrees2Radians) * cos(camPitch*degrees2Radians);
+    _forward.x =  -sin(camYaw*degrees2Radians) * cos(camPitch*degrees2Radians);
     _forward.y =  sin(camPitch * degrees2Radians);
     _forward.z = -cos(camYaw * degrees2Radians) * cos(camPitch * degrees2Radians);
     _forward.normalize();
