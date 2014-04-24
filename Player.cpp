@@ -31,12 +31,35 @@ int Player::getHealth()
 
 void Player::decreaseHealth()
 {
-   _health -= 1;
+   _health -= 5;
 }
 
 void Player::decreaseHealth(int damage)
 {
-    _health -= damage;
+    switch(damage)
+    {
+        case 0:
+            _health -= 1;
+            break;
+        case 1:
+            _health -= 2;
+            break;
+        case 2:
+            _health -= 5;
+            break;
+        case 3:
+            _health -= 10;
+            break;
+        case 4:
+            _health -= 25;
+            break;
+        case 5:
+            _health -= 50;
+            break;
+        default:
+            _health -= 100;
+            break;
+    }
 }
 
 void Player::increaseHealth()

@@ -87,7 +87,9 @@ void GameLogic::update()
     for(unsigned int i = 0; i < _enemies.size(); ++i)
     {
        if(!_enemies[i]->isLiving())
+       {
            continue;
+       }
 
         enemiesAlive = true;
         _enemies[i]->patrol(_player->getCamera()->getLocation());
@@ -95,9 +97,6 @@ void GameLogic::update()
        if( ::physics::PhysicsEngine::spheresphere(pos, 0.5f, _enemies[i]->_position, _enemies[i]->_radius ))
        {
            ::physics::PhysicsEngine::resolveCollision(_player, _enemies[i]);
-           //_player->getCamera()->setLocation(_player->_position); 
-           //_player->getCamera()->control();
-           //_player->getCamera()->update();
           
           if(_player->isAlive()) 
           {
@@ -121,8 +120,10 @@ void GameLogic::update()
             }
        }
 
-       _opposition = enemiesAlive;
     }
+    _opposition = enemiesAlive;
+     if(!_opposition)
+          printf("All Enemies are Dead\n");
 
 };
 

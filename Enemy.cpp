@@ -67,7 +67,27 @@ void Enemy::decreaseHealth()
 
 void Enemy::decreaseHealth(int damage)
 {
-    _health -= damage;
+    switch(damage)
+    {
+        case 0:
+            _health -= 100;
+            break;
+        case 1:
+            _health -= 50;
+            break;
+        case 2:
+            _health -= 25;
+            break;
+        case 3:
+            _health -= 10;
+            break;
+        case 4:
+            _health -= 5;
+            break;
+        default:
+            _health -= 1;
+            break;
+    }
 }
 
 void Enemy::die()
@@ -113,13 +133,30 @@ void Enemy::patrol(Vector3f target)
 
 void Enemy::createStrongPatrol()
 {
-    Vector3f pos = _position;
+    /*Vector3f pos = _position;
     Node* path = AIManager::getInstance().astar(pos, Vector3f(0.0f, 0.0f, 0.0f));
     if(path != NULL)
     {
         path->traverse(_patrolPath);
     }
     path = AIManager::getInstance().astar(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(10.0f, 0.0f, 0.0f));
+    if(path != NULL)
+    {
+        path->traverse(_patrolPath);
+    }*/
+    Vector3f dest;  //destination
+    Node* path = AIManager::getInstance().astar(_position, Vector3f(0.0f, 0.0f, 0.0f));
+    if(path != NULL)
+    {
+        path->traverse(_patrolPath);
+    }
+    dest = AIManager::getInstance().randVec3f();
+    path = AIManager::getInstance().astar(Vector3f(0.0f, 0.0f, 0.0f), dest);
+    if(path != NULL)
+    {
+        path->traverse(_patrolPath);
+    }
+    path = AIManager::getInstance().astar(dest, _position);
     if(path != NULL)
     {
         path->traverse(_patrolPath);

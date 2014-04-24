@@ -15,6 +15,7 @@ class AIManager
         Vector3f _player;                       //Position of player updated, used to determine alert of enemies
         static AIManager& getInstance();
         Node* astar( Vector3f, Vector3f );       //A-Star search
+        Vector3f randVec3f();
     private:
         static AIManager* _instance;
         AIManager(const AIManager&);

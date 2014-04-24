@@ -233,7 +233,7 @@ bool isGoal(Node* current, Node* goal)
     return current->isSamePosition(goal);
 }
 
-Vector3f randVec3f()
+Vector3f AIManager::randVec3f()
 {
     std::default_random_engine generator;
     std::uniform_real_distribution<double> distribution(0.0, 1.0);
