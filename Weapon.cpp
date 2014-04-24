@@ -61,7 +61,7 @@ void Weapon::fire(Vector3f pos, Vector3f target)
         if(_clip >= _maxClipSize)
         {
             _clip = 0;
-            reload();
+            //reload();
         }
         b->_active = true;
         _magazine[_clip] = b;           //Place the bullet in _magazine i.e. fire away

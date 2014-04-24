@@ -31,7 +31,7 @@ private:
 	static bool _instanceFlag;
     bool _fireSignal;
 	GameLogic();
-    int difficulty = 0;
+    int _difficulty = 0;
 	const int NUMBER_OF_ENEMIES = 5;
 public:
     bool _active;           //If the player dies the game is not active
