@@ -107,7 +107,7 @@ void PhysicsEngine::resolveCollision(PhysicsEntity* a, PhysicsEntity* b)
     //Seeking Knock back effect
     //Assume B has triple the mass of a and it will be the enemy
     a->_velocity =  (b->_velocity + b->_velocity)*2.0f;
-    b->_velocity = -(b->_velocity + b->_velocity)*3.0f;
+    b->_velocity = -(b->_velocity + b->_velocity)*4.0f;
     a->update();
     b->update();
 }

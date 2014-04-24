@@ -55,7 +55,7 @@ void Weapon::fire(Vector3f pos, Vector3f target)
         _coolDown = 10;
         Bullet* b = new Bullet(pos);    //Create a bullet object
         // b->_velocity=(target - pos)*0.03125f;    //Fire it at the target from position
-        b->_velocity=(Vector3f(0.0f, 0.0f, 0.0f)-pos);    //Fire it at the target from position
+        b->_velocity=(target-pos);    //Fire it at the target from position
         b->_velocity.normalize();
         //b->_velocity = b->_velocity;
 
