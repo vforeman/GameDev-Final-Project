@@ -105,7 +105,7 @@ void GameLogic::update()
           }
            else if(!_player->isAlive())
            {
-                   printf("GameLogic Update: PLAYER DEAD %d\n", _player->getHealth());
+                   //printf("GameLogic Update: PLAYER DEAD %d\n", _player->getHealth());
            }
        }
        
@@ -123,9 +123,11 @@ void GameLogic::update()
        }
 
     }
-    _opposition = enemiesAlive;//i think you can use enemiesAlive the same as a boolean
-     if(!_opposition)
-          printf("All Enemies are Dead\n");
+
+    _opposition = enemiesAlive;
+    // if(!_opposition)
+    //      printf("All Enemies are Dead\n");
+
 };
 
 
@@ -173,8 +175,11 @@ void GameLogic::show()
 	glLoadIdentity();
 	_player->getCamera()->control();
     _player->getCamera()->update();
+    Vector3f position = _player->getCamera()->getLocation();
+
     if(_fireSignal)
-        _weapon->fire(_player->getCamera()->getLocation(), _player->getCamera()->getVector());
+        _weapon->fire(position,
+                      _player->getCamera()->getForward()); 
 
     Vector3f pos;
     float radius;
@@ -185,7 +190,8 @@ void GameLogic::show()
             pos = _weapon->getBullet(i)->_position;
             radius = _weapon->getBullet(i)->_radius;
             glPushMatrix();
-              glLoadIdentity();
+
+                glMatrixMode(GL_MODELVIEW);
                 glTranslatef(pos.x, pos.y, pos.z);
                 glScalef(radius, radius, radius);
                 _weapon->getBullet(i)->drawSphere();
