@@ -144,14 +144,15 @@ void Enemy::createStrongPatrol()
     {
         path->traverse(_patrolPath);
     }*/
+    Vector3f player = AIManager::getInstance().getPlayer();
     Vector3f dest;  //destination
-    Node* path = AIManager::getInstance().astar(_position, Vector3f(0.0f, 0.0f, 0.0f));
+    Node* path = AIManager::getInstance().astar(_position, player);
     if(path != NULL)
     {
         path->traverse(_patrolPath);
     }
     dest = AIManager::getInstance().randVec3f();
-    path = AIManager::getInstance().astar(Vector3f(0.0f, 0.0f, 0.0f), dest);
+    path = AIManager::getInstance().astar(player, dest);
     if(path != NULL)
     {
         path->traverse(_patrolPath);
