@@ -233,6 +233,11 @@ bool isGoal(Node* current, Node* goal)
     return current->isSamePosition(goal);
 }
 
+Vector3f AIManager::getPlayer()
+{
+    return _player;
+}
+
 Vector3f AIManager::randVec3f()
 {
     std::default_random_engine generator;
@@ -258,3 +263,8 @@ Vector3f AIManager::randVec3f()
         return Vector3f(x, 0.5f, z);    //Quadrnat IV
     }
 }   
+
+void AIManager::setPlayer(Vector3f player)
+{
+    _player = player;
+}
