@@ -34,6 +34,7 @@ private:
 public:
     bool _active;           //If the player dies the game is not active
     bool _running;
+    bool _opposition;       //Are any enemies alive?
 	physics::PhysicsEngine * _pEngine;
 	window::Window * _wController;
     std::vector<physics::Enemy*> _enemies;

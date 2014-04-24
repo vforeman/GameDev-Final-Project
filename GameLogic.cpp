@@ -40,6 +40,7 @@ void GameLogic::start()
     _iController = gamein::InputController::get();
 
     _active = true; //Set game to active in start
+    _opposition = true;
 
 	glShadeModel(GL_SMOOTH);
     float light_position[] = {0.0f, 40.0f, 0.0f, 1.0f};
@@ -80,24 +81,32 @@ void GameLogic::start()
 void GameLogic::update()
 {
     // Handles Check for Collision and other functions that need to be updated
-    //_player->_position = _player->getCamera()->getLocation();
+    bool enemiesAlive = false;
 	_weapon->iterate();
     Vector3f pos = _player->getCamera()->getLocation();
     for(unsigned int i = 0; i < _enemies.size(); ++i)
     {
+       if(!_enemies[i]->isLiving())
+           continue;
+
+        enemiesAlive = true;
         _enemies[i]->patrol(_player->getCamera()->getLocation());
         
        if( ::physics::PhysicsEngine::spheresphere(pos, 0.5f, _enemies[i]->_position, _enemies[i]->_radius ))
        {
-           //::physics::PhysicsEngine::resolveCollision(_player, _enemies[i]);
+           ::physics::PhysicsEngine::resolveCollision(_player, _enemies[i]);
            //_player->getCamera()->setLocation(_player->_position); 
            //_player->getCamera()->control();
            //_player->getCamera()->update();
           
           if(_player->isAlive()) 
+          {
             _player->decreaseHealth();
+          }
            else if(!_player->isAlive())
-               printf("GameLogic Update: PLAYER DEAD\n");
+           {
+                   printf("GameLogic Update: PLAYER DEAD %d\n", _player->getHealth());
+           }
        }
        
        for(unsigned int j = 0; j < _weapon->getClip(); ++j)
@@ -111,6 +120,8 @@ void GameLogic::update()
                 _enemies[i]->die();
             }
        }
+
+       _opposition = enemiesAlive;
     }
 
 };
@@ -178,11 +189,40 @@ void GameLogic::show()
             glPopMatrix();
         }
     }
+    float wall = (float) Overlay::OVERLAY_HEIGHT/2;
+	//DRAW WALLS 
+    glPushMatrix();
+        glBegin(GL_QUADS);
+            glColor3fv(SKYBLUE);
+            //North Wall
+            glVertex3f(-wall, -3.0f, -wall);
+            glVertex3f( wall, -3.0f, -wall);
+            glVertex3f( wall, 100.0f, -wall);
+            glVertex3f(-wall, 100.0f, -wall);
 
-    // Handles Check for Collision and other functions that need to be updated
-	_renderer->drawStatic();
- _renderer->drawDynamic();
- _renderer->drawHud();		///MUST BE DRAWN LAST BECAUSE I CLEAR THE DEPTH BUFFER
+            //East Wall
+            glVertex3f(wall, -3.0f, wall);
+            glVertex3f(wall, -3.0f, -wall);
+            glVertex3f(wall, 100.0f, -wall);
+            glVertex3f(wall, 100.0f, wall);
+
+            //West Wall
+            glVertex3f(-wall, -3.0f, -wall);
+            glVertex3f(-wall, -3.0f, wall);
+            glVertex3f(-wall, 100.0f, wall);
+            glVertex3f(-wall, 100.0f, -wall);
+
+            //South Wall
+            glVertex3f(wall, -3.0f, wall);
+            glVertex3f(-wall, -3.0f, wall);
+            glVertex3f(-wall, 100.0f, wall);
+            glVertex3f(wall, 100.0f, wall);
+        glEnd();
+    glPopMatrix();
+    //END DRAW WALLS
+    _renderer->drawStatic();
+    _renderer->drawDynamic();
+    _renderer->drawHud();		///MUST BE DRAWN LAST BECAUSE I CLEAR THE DEPTH BUFFER
 
 }
 
