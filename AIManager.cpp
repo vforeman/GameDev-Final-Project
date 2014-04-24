@@ -10,13 +10,6 @@ bool isGoal(Node*, Node*);
 float calculateHn(Vector3f, Vector3f);
 void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>& closed, Vector3f); 
 
-/*TODO
- * FIX A-STAR SEARCH ALGORITHM
- * IT IS GIVING A BLACK SCREEN AND TAKING 204% OF THE CPU
- * NOTEWORTHY: THE PROBLEM IS IN THE LOOP OF THE A-STAR
- * ALTERING THE NODE TRAVERSAL HAS HAD LIMITED SUCCESS ONLY ON A SMALL LOOP
-* SOMETHING COULD BE WRONG WITH YOUR HEURISTIC
-*/
 Node* AIManager::astar(Vector3f end, Vector3f begin)
 {
     bool firstGo = true;
@@ -46,7 +39,6 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
     bool valid = true;
     if(!Overlay::isObstacle(current->_x+STEP, current->_y, current->_z))
     {
-//        bool valid = true;
         temp->_x = current->_x+STEP;
         temp->_z = current->_z; 
         for(unsigned int i = 0; i < closelist.size() && valid; ++i)
@@ -67,7 +59,6 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
     }
     if(!Overlay::isObstacle(current->_x-STEP, current->_y, current->_z))
     {
-//        bool valid = true;
         temp->_x = current->_x-STEP;
         temp->_z = current->_z; 
         for(unsigned int i = 0; i < closelist.size() && valid; ++i)
@@ -88,7 +79,6 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
     }
     if(!Overlay::isObstacle(current->_x, current->_y, current->_z+STEP))
     {
-//        bool valid = true;
         temp->_x = current->_x;
         temp->_z = current->_z+STEP; 
         for(unsigned int i = 0; i < closelist.size() && valid; ++i)
@@ -109,7 +99,6 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
     }
     if(!Overlay::isObstacle(current->_x, current->_y, current->_z-STEP))
     {
-//        bool valid = true;
         temp->_x = current->_x;
         temp->_z = current->_z-STEP; 
         for(unsigned int i = 0; i < closelist.size() && valid; ++i)
@@ -244,4 +233,28 @@ bool isGoal(Node* current, Node* goal)
     return current->isSamePosition(goal);
 }
 
-
+Vector3f randVec3f()
+{
+    std::default_random_engine generator;
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    std::uniform_real_distribution<double> placement(0.0, (double)Overlay::OVERLAY_WIDTH/2);
+    float quadrant = placement(generator);
+    float x = placement(generator);
+    float z = placement(generator);
+    if(quadrant >= 0 && quadrant < 0.25f)
+    {
+        return Vector3f(x, 0.5f, z);    //Quadrant I Cartesian (Pos X and pos Z)
+    }
+    if(quadrant >= 0.25f && quadrant < 0.5f)
+    {
+        return Vector3f(-x, 0.5f, z);   //Quadrant II
+    }
+    if(quadrant >= 0.5f && quadrant < 0.75f)
+    {
+        return Vector3f(-x, 0.5f, -z);  //Quadrant III
+    }
+    else
+    {
+        return Vector3f(x, 0.5f, z);    //Quadrnat IV
+    }
+}   
