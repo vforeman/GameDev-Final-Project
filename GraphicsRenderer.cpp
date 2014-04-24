@@ -167,40 +167,19 @@ THE ORIGIN (0,0) IS IN THE UPPER LEFT CORNER
   The positive x-axis is right,
   The positive y-axis goes down.
 !!!!!!!!!!!!!!!!!!!!!!!!!!*/
-  int playerbullets = 10;
   inHudMode(640,480);
   glDisable(GL_LIGHTING);
   glEnable(GL_COLOR_MATERIAL);
-
-  for(int k =0; k < playerbullets; ++k){
      glPushMatrix();
-    glTranslatef(0,3*k,0);
-    glBegin(GL_POLYGON);//bullet shell
-
-
-
-      glColor4f(1.0f, 0.85f, 0.0, 1.0);
-      glVertex2i( 40, 0 );//topright
-      glVertex2i( 40,  25 );//bottomright
-      glVertex2i( 0, 25 );//bottom left
-      glVertex2i( 0, 0 );//TOPLEFT
-
+     glLineWidth(4);
+    glBegin(GL_LINE);//bullet shell
+      glColor4f(1.0f, 0.85f, 0.0, 0.3);
+      glVertex2i( 320, 230 );//topright
+      glVertex2i( 320,  250 );//bottomright
+      glVertex2i( 310, 240 );//bottom left
+      glVertex2i( 340, 240 );//TOPLEFT
     glEnd();
     glPopMatrix();
-    glBegin(GL_POLYGON); //bullet head
-      glColor4f(1.0f, 0.85f, 0.0, 1.0);
-      glVertex2i(10, 10*k+0);
-      glVertex2i(10, 10*k+10);
-      glVertex2i(0, 10*k+10);
-      glVertex2i(0, 10*k+0);//TOPLEFT
-
-
-    glEnd();
-
-  }
-
-
-
   outHudMode();
 }
 
