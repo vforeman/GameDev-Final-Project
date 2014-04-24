@@ -32,11 +32,12 @@ public:
 	~Renderer();
 	void drawStatic();
 	void drawDynamic();
- void drawHud();
+    void drawHud();
     void popBackGraphics();
     void registerGraphics(Graphics*);
     void emptyObjects();
 	Overlay _lvl;
+	void playerDead(Vector3f);
 
 private:
 	static Renderer * _instance;

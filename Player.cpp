@@ -31,7 +31,7 @@ int Player::getHealth()
 
 void Player::decreaseHealth()
 {
-   _health -= 5;
+   _health -= 50;
 }
 
 void Player::decreaseHealth(int damage)
@@ -61,7 +61,10 @@ void Player::decreaseHealth(int damage)
             break;
     }
 }
-
+void Player::restart(){
+    setHealth(100);
+    getCamera()->setLocation(Vector3f(0,0,0));
+}
 void Player::increaseHealth()
 {
     _health += 5;

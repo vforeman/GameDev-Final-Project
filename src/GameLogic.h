@@ -34,6 +34,7 @@ private:
     int difficulty = 0;
 	const int NUMBER_OF_ENEMIES = 5;
 public:
+	void restart();
     bool _active;           //If the player dies the game is not active
     bool _running;
     bool _opposition;       //Are any enemies alive?

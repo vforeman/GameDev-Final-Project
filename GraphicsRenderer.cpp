@@ -17,7 +17,17 @@ Renderer::~Renderer()
 void Renderer::buildHudList(){
 
 }
-
+void Renderer::playerDead(Vector3f p){
+  glBegin(GL_QUADS);
+  glColor4f(1.0,0.0,0.0,0.4);
+         glVertex3f(0.4f+p.x , 4.0f +p.y , 0.4f+p.z);   glVertex3f(-0.4f+p.x , 4.0f +p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 4.0f +p.y ,-0.4f+p.z);  glVertex3f(0.4f+p.x , 4.0f +p.y ,-0.4f+p.z); //0123top
+         glVertex3f(0.4f+p.x , 4.0f +p.y , 0.4f+p.z);   glVertex3f(-0.4f+p.x , 4.0f +p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 0.2f+p.y , 0.4f+p.z);  glVertex3f(0.4f+p.x , 0.2f+p.y , 0.4f+p.z); //0145north
+         glVertex3f(0.4f+p.x , 4.0f +p.y , 0.4f+p.z);   glVertex3f(0.4f+p.x , 4.0f +p.y ,-0.4f+p.z); glVertex3f(0.4f+p.x , 0.2f+p.y ,-0.4f+p.z);  glVertex3f(0.4f+p.x , 0.2f+p.y , 0.4f+p.z); //0365east
+         glVertex3f(0.4f+p.x , 4.0f +p.y ,-0.4f+p.z);   glVertex3f(-0.4f+p.x , 4.0f +p.y ,-0.4f+p.z);  glVertex3f(-0.4f+p.x , 0.2f+p.y ,-0.4f+p.z);  glVertex3f(0.4f+p.x , 0.2f+p.y ,-0.4f+p.z); //3276south
+         glVertex3f(-0.4f+p.x , 4.0f +p.y ,-0.4f+p.z);   glVertex3f(-0.4f+p.x , 4.0f +p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 0.2f+p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 0.2f+p.y ,-0.4f+p.z); //2147west
+         glVertex3f(0.4f+p.x , 0.2f+p.y , 0.4f+p.z);   glVertex3f(-0.4f+p.x , 0.2f+p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 0.2f+p.y ,-0.4f+p.z);  glVertex3f(0.4f+p.x , 0.2f+p.y ,-0.4f+p.z);//5476bot
+  glEnd();
+}
 void Renderer::drawStatic()
 {
 
@@ -55,9 +65,11 @@ void Renderer::drawStatic()
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
   // glEnable(GL_LIGHTING);
-  glDisable(GL_COLOR_MATERIAL);
 
+  glDisable(GL_COLOR_MATERIAL);
+  playerDead(Vector3f(0,0,0));
 }
+
 void Renderer::drawDynamic()
 { glColor3f(1,0,0);
   glEnable(GL_BLEND);
@@ -165,7 +177,6 @@ glPushMatrix();
   inHudMode(640,480);
   glDisable(GL_LIGHTING);
   glEnable(GL_COLOR_MATERIAL);
-     
      glLineWidth(4);
     glBegin(GL_LINES);//bullet shell
       glColor4f(1.0f, 0.85f, 0.0, 0.6);
@@ -174,7 +185,7 @@ glPushMatrix();
       glVertex3f( 310, 240,0 );//left
       glVertex3f( 330, 240,0 );//right
     glEnd();
-    
+  glDisable(GL_COLOR_MATERIAL);
   outHudMode();
   glPopMatrix();
 }

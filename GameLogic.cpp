@@ -107,8 +107,14 @@ void GameLogic::update()
           }
            else if(!_player->isAlive())
            {
-                   //printf("GameLogic Update: PLAYER DEAD %d\n", _player->getHealth());
+                   _iController->_playerDead = true;
+                   if(_iController->_respawn){
+                    restart();
+                    _iController->_playerDead = false;
+                    _iController->_respawn = false;
+                   }
            }
+
        }
        
        for(unsigned int j = 0; j < _weapon->getClip(); ++j)
@@ -257,6 +263,12 @@ void GameLogic::spawnEnemies()
 	}
 
 }   
+
+void GameLogic::restart(){
+  _player->restart();
+  spawnEnemies();
+  _iController->_playerDead = false;
+}
 
 GameLogic * GameLogic::get()
 {

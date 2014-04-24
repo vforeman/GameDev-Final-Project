@@ -2,6 +2,8 @@
 namespace gamein{
 bool InputController::_instanceFlag = false;
 InputController * InputController::_instance = NULL;
+bool InputController::_playerDead = false;
+bool InputController::_respawn = false;
 
 InputController::InputController(){}
 
@@ -16,6 +18,7 @@ InputController * InputController::get()
  {
   _instance = new InputController();
   _instanceFlag = true;
+
   return _instance;
  }
  else
@@ -42,10 +45,13 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 							running = false;
 							break;
 
-						case SDLK_p:
+						case SDLK_p:if(_playerDead){break;}
 							cam->mouseIn();
 							SDL_ShowCursor(SDL_ENABLE);
 							break;
+						case SDLK_RETURN:if(_playerDead){
+							_respawn = true;
+						}
 						default: break;
 					}
 					break;
@@ -57,7 +63,7 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 							running = false;
 							break;
 
-						case SDLK_p:
+						case SDLK_p:if(_playerDead){break;}
 							cam-> mouseOut();
 							SDL_ShowCursor(SDL_ENABLE);
                             _mouseHidden = false;
@@ -66,7 +72,7 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 					}
 					break;
 
-				case SDL_MOUSEBUTTONDOWN:
+				case SDL_MOUSEBUTTONDOWN:if(_playerDead){break;}
 					if(!_mouseHidden)
                     {
                         cam->mouseIn();
@@ -80,6 +86,7 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
                         //printf("Fire\n");
                     }
 					break;
+
 				default: break;
 			}
 		}

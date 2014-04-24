@@ -22,6 +22,7 @@ class Player : virtual public physics::PhysicsEntity
         void increaseHealth();
         void increaseHealth(int);
         void setHealth(int);
+        void restart();
     protected:
         Camera* _camera;
         int _health;
