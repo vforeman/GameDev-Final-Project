@@ -19,7 +19,7 @@ PhysicsEntity::PhysicsEntity(Vector3f pos)
 void PhysicsEntity::update()
 {
     //x  = x0 + velocity * time
-	    _position = _position+ _velocity * 0.25f;
+	    _position = _position+ _velocity * 0.5f;
 }
 
 
@@ -105,7 +105,7 @@ void PhysicsEngine::resolveCollision(PhysicsEntity* a, PhysicsEntity* b)
     //Seeking Knock back effect
     //Assume B has triple the mass of a and it will be the enemy
     a->_velocity =  (b->_velocity + b->_velocity)*2.0f;
-    b->_velocity = -(b->_velocity + b->_velocity)*4.0f;
+    b->_velocity = -(b->_velocity + b->_velocity)*5.0f;
     a->update();
     b->update();
 }
