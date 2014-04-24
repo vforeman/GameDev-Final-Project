@@ -100,7 +100,7 @@ float PhysicsEngine::pointdistacesquare(Vector3<float> p1,Vector3<float> p2)
 }
 
 void PhysicsEngine::resolveCollision(PhysicsEntity* a, PhysicsEntity* b)
-{
+{	//!! b can't pass a !!
     //Resolve Collision
     //Seeking Knock back effect
     //Assume B has triple the mass of a and it will be the enemy
@@ -109,6 +109,8 @@ void PhysicsEngine::resolveCollision(PhysicsEntity* a, PhysicsEntity* b)
     a->update();
     b->update();
 }
+
+void PhysicsEngine::resolveCollisionWall(PhysicsEntity * b){}
 
 }//namespace physics
 

@@ -19,8 +19,8 @@ class Overlay
 		Overlay();//calls initialize function
 		~Overlay();
 		static bool isObstacle(Vector3f);
-  static bool isObstacle(int, int, int);
-		static bool isObstacle(int, int);
+  static bool isObstacle(float, float, float);
+		static bool isObstacle(float, float);
 		static vector<GLfloat> _staticVertices;
 		static vector<GLfloat> _staticNormals;
 		static vector<GLfloat> _staticColors;
@@ -28,12 +28,17 @@ class Overlay
 		static vector<GLuint> _staticIndex;
 		static unsigned int OVERLAY_HEIGHT;
 		static unsigned int OVERLAY_WIDTH;
+		static float OVERLAY_HF;
+		static float OVERLAY_WF;
+		static int OVERLAY_HI;
+		static int OVERLAY_WI; 
 	private:
 		vector<GLfloat>::iterator _floatIterator;
-		static vector<vector<char>> _overlay;
+		static char**_overlay;
+		//static vector<vector<char>> _overlay;
 		int _numOfWalls;
 		int _numOfFloors;
-		GLfloat _tx,_ty,_tz;//translation coordinates
+		GLfloat _x,_z;//translation coordinates
 		static void constructQuadrant();
 
 		/**
@@ -43,8 +48,8 @@ class Overlay
 		 */
 		void initialize();
 		void initializeTestLevel();
-		char W();//add wall to static data
-		char F();//add tile to static data
+		char W(float,float);//add wall to static data
+		char F(float,float);//add tile to static data
 		void G();//grass tile
 		void D();//dirt tile
 

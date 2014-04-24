@@ -1,9 +1,15 @@
 #include "src/Overlay.h"
 
-unsigned int Overlay::OVERLAY_HEIGHT = 50;
-unsigned int Overlay::OVERLAY_WIDTH = 50;
+unsigned int Overlay::OVERLAY_HEIGHT = 100;//z
+unsigned int Overlay::OVERLAY_WIDTH = 100;//x
+float Overlay::OVERLAY_HF = (float)Overlay::OVERLAY_HEIGHT;//z
+float Overlay::OVERLAY_WF = (float)Overlay::OVERLAY_WIDTH;//x
+int Overlay::OVERLAY_HI = (int)Overlay::OVERLAY_HF;//z
+int Overlay::OVERLAY_WI = (int)Overlay::OVERLAY_WF;//x
 
-vector<vector<char>> Overlay::_overlay (Overlay::OVERLAY_HEIGHT);
+char** Overlay::_overlay = new char*[Overlay::OVERLAY_WI];
+
+//vector<vector<char>> Overlay::_overlay (Overlay::OVERLAY_HEIGHT);
 vector<GLfloat> Overlay::_staticVertices;
 vector<GLfloat> Overlay::_staticNormals;
 vector<GLfloat> Overlay::_staticColors;
@@ -11,14 +17,14 @@ vector<GLshort> Overlay::_staticTexCoords;
 vector<GLuint> Overlay::_staticIndex;
 
 Overlay::Overlay(){
+    for(int  c =0; c< Overlay::OVERLAY_WI; ++c ){
+       Overlay::_overlay[c] = new char[Overlay::OVERLAY_HI];
+    }
     _numOfWalls = 0;
     _numOfFloors = 0;
     //NW corner is structural ~ origin,(0,0) and trans_values
     //are adjusted for offset from the world origin
-    _tx = -((float)Overlay::OVERLAY_WIDTH)/2.0;
-    _ty = -3.0f;//constant floor level
-    _tz =-((float)Overlay::OVERLAY_HEIGHT)/2.0;
-    // initializeTestLevel();
+
     initialize();
 
 }
@@ -28,23 +34,36 @@ Overlay::~Overlay()
 
 //initiate and populate char obstacle map
 void Overlay::initialize(){
-    char connected = 'U';
-    //rows of the map; _tx
-    for(vector<char> &s : _overlay){
-        s.resize(Overlay::OVERLAY_WIDTH );
-        //columns of the map; _tz
-        for(char &c : s){
-            //Todo::reward contiguous wall behavior,
-            //shame lonely pillar
-            c =  (randomRange(1,100)%100 == 90) ? W() : F();
-            connected = c;
-            ++_tx;
+/*--------------BOUNDARY OF THE MAP-----------------*/
+    _x = -(Overlay::OVERLAY_WF/2.0);
+    _z = -(Overlay::OVERLAY_HF/2.0);
+    for(int u = 0; u < Overlay::OVERLAY_WI; ++u){
+            Overlay::_overlay[0][u] = W(_x,_z);
+            Overlay::_overlay[Overlay::OVERLAY_HI-1][u] = W(_x,_z+Overlay::OVERLAY_HF-1);
+            ++_x; 
+    }_x = 1.0 -(Overlay::OVERLAY_WI/2.0);
+    for(int i =1; i < Overlay::OVERLAY_HI-1; ++i){
+        Overlay::_overlay[i][0] = W(_x,_z);
+        Overlay::_overlay[i][Overlay::OVERLAY_WI-1] = W(Overlay::OVERLAY_WF-1,_z); 
+    }
+/*--------------RANDOM OBSTACLES-----------------*/
+    _x = 1.0 -(Overlay::OVERLAY_WF/2.0);
+    _z = 1.0-(Overlay::OVERLAY_HF/2.0);
+    for( int u = 1; u < Overlay::OVERLAY_WI-1; ++u){
+        for(int i = 1; i < Overlay::OVERLAY_HI-1 ; ++i){             
+           //Todo::reward contiguous wall behavior,shame lonely pillar
+            Overlay::_overlay[i][u] =  (randomRange(1,100)%100 == 90) ? W(_x,_z) : F(_x,_z);
+            cout<<isObstacle(_x,_z);
+            // cout<<'('<<_tx<<','<<_tz<<')';
+            ++_x;           
         }
-        _tx = -((float)Overlay::OVERLAY_HEIGHT)/2;
-        ++_tz;
+        cout<<endl;
+        _x = 1.0-(Overlay::OVERLAY_WI/2.0);
+        ++_z;
     }
 }
-char Overlay::W(){
+char Overlay::W(float _tx, float _tz){
+    float _ty = -3.0f;
     Vector3f n;
     Vector3f wallCenter = Vector3f(0,5,0);
     float height = (float)util::randomRange(6,12);
@@ -82,9 +101,11 @@ char Overlay::W(){
     _staticIndex.insert(_staticIndex.end(),treeTop_index, treeTop_index+sizeof(treeTop_index)/sizeof(GLuint));
     _staticColors.insert(_staticColors.end(), treeTop_colors, treeTop_colors + sizeof(treeTop_colors)/sizeof(GLfloat));
     _numOfWalls++;
+    cout<<'W';
     return 'W';
 }
-char Overlay::F(){
+char Overlay::F(float _tx, float _tz){
+    float _ty = -3.0f;
     GLfloat tile[] ={
          0.4f+_tx , 0.2f+_ty , 0.4f+_tz     ,-0.4f+_tx , 0.2f+_ty , 0.4f+_tz    ,-0.4f+_tx , 0.2f+_ty ,-0.4f+_tz    , 0.4f+_tx , 0.2f+_ty ,-0.4f+_tz  //top
     };//didn't think the floor needed to be so 3D
@@ -95,6 +116,7 @@ char Overlay::F(){
         ? D()
         : G();
     ++_numOfFloors;
+    cout<<'F';
     return 'F';
 }
 void Overlay::G()
@@ -113,25 +135,33 @@ void Overlay::D()
         }
     }*/
 }
+bool Overlay::isObstacle(float x, float z)
+{
+    if(x < -(Overlay::OVERLAY_WF/2.0)) x = -(Overlay::OVERLAY_WF/2.0)-1;
+    if(z < -(Overlay::OVERLAY_HF/2.0)) z = -(Overlay::OVERLAY_HF/2.0)-1;
+    if(x >= (Overlay::OVERLAY_WF/2.0)) x = (Overlay::OVERLAY_WF/2.0)-1;
+    if(z >= (Overlay::OVERLAY_HF/2.0)) z = (Overlay::OVERLAY_HF/2.0)-1;
+    /*Vector3f check = translate(Vector3f(float(x), 0.0f, float(z)));
+    if(check.x < 0 || check.z < 0 || check.x >= (float)Overlay::OVERLAY_WIDTH || check.z >= (float)Overlay::OVERLAY_HEIGHT)
+        return true;
 
+    return _overlay[check.x][check.z] == 'W';*/
+    x+=(Overlay::OVERLAY_WF/2);
+    z+=(Overlay::OVERLAY_HF/2);
+
+    return _overlay[(int)x][(int)z] == 'W';
+}
 Vector3f translate(Vector3f trans);
 bool Overlay::isObstacle(Vector3f pos)
 {
-    Vector3f check = translate(pos);
+/*    Vector3f check = translate(pos);
     if(check.x < 0 || check.z < 0 || check.x >= (float)Overlay::OVERLAY_WIDTH || check.z >= (float)Overlay::OVERLAY_HEIGHT)
         return true;
-    return _overlay[(int)check.x][(int)check.z] == 'W';
+    return _overlay[(int)check.x][(int)check.z] == 'W';*/
+    return isObstacle(pos.x,pos.z);
 }
-bool Overlay::isObstacle(int x, int z)
-{
-    Vector3f check = translate(Vector3f(float(x), 0.0f, float(z)));
-    if(check.x < 0 || check.z < 0 || check.x >= (float)Overlay::OVERLAY_WIDTH || check.z >= (float)Overlay::OVERLAY_HEIGHT)
-        return true;
 
-    return _overlay[check.x][check.z] == 'W';
-    
-}
-bool Overlay::isObstacle(int x, int y, int z)
+bool Overlay::isObstacle(float x, float y, float z)
 {
     return Overlay::isObstacle(x, z);
 }

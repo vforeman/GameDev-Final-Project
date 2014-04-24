@@ -84,18 +84,19 @@ void GameLogic::update()
     bool enemiesAlive = false;
 	_weapon->iterate();
     Vector3f pos = _player->getCamera()->getLocation();
+    //  iterate through the list of enemies
     for(unsigned int i = 0; i < _enemies.size(); ++i)
-    {
+    {   
        if(!_enemies[i]->isLiving())
        {
            continue;
        }
-
         enemiesAlive = true;
+        //  give this enemy the player's position
         _enemies[i]->patrol(_player->getCamera()->getLocation());
-        
+        //if sphere-sphere collision for this enemy against the player
        if( ::physics::PhysicsEngine::spheresphere(pos, 0.5f, _enemies[i]->_position, _enemies[i]->_radius ))
-       {
+       {  //halt movement
            ::physics::PhysicsEngine::resolveCollision(_player, _enemies[i]);
           
           if(_player->isAlive()) 
@@ -109,22 +110,22 @@ void GameLogic::update()
        }
        
        for(unsigned int j = 0; j < _weapon->getClip(); ++j)
-       {
+       {    //dont render bullets that hit the ground or go into the sky
             if(_weapon->getBullet(j)->_position.y <= -3.0f or _weapon->getBullet(j)->_position.y >= 30.0f)
                 _weapon->getBullet(j)->_active = false;
-
+              //if an enemy is hit
             if( ::physics::PhysicsEngine::spheresphere(_weapon->getBullet(j)->_position, 0.5f, _enemies[i]->_position, _enemies[i]->_radius))
-            {
+            {   //stop rendering the bullet
                 _weapon->getBullet(j)->_active = false;
+                //stop rendering the enemy
                 _enemies[i]->die();
             }
        }
 
     }
-    _opposition = enemiesAlive;
+    _opposition = enemiesAlive;//i think you can use enemiesAlive the same as a boolean
      if(!_opposition)
           printf("All Enemies are Dead\n");
-
 };
 
 
