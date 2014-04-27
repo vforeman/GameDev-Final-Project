@@ -3,7 +3,7 @@ namespace physics{
 
 
 Enemy::Enemy() : _health(100),  _alive(true), _point(0),
-                 _alert(false), _ALERT_RADIUS(20.0f)
+                 _alert(false), alertRadius(20.0f)
 {
     _position = Vector3f(42.0f, 0.5f, 42.0f);   //Arbitrary position 
     Graphics::createCircle(_verts, _norms);
@@ -11,7 +11,7 @@ Enemy::Enemy() : _health(100),  _alive(true), _point(0),
 }
 
 Enemy::Enemy(Vector3f pos) : _health(100), _alive(true), _point(0),
-                             _alert(false), _ALERT_RADIUS(20.0f)
+                             _alert(false), alertRadius(20.0f)
 {
     _position = pos;
     Graphics::createCircle(_verts,_norms);
@@ -92,15 +92,18 @@ void Enemy::die()
 void Enemy::patrol(Vector3f target)
 {
 
-    if(physics::PhysicsEngine::spheresphere(_position, _ALERT_RADIUS, target, 0.5f) )
+    if(physics::PhysicsEngine::spheresphere(_position, alertRadius, target, 0.5f) )
     {
         //Fire at player
         _radius = 2.0f;
-        _velocity = target - _position;
+       
+        _weapon.fire(_position, target, true); 
+        /*_velocity = target - _position;
         _velocity.normalize();
         _velocity = _velocity * 3.0f;
         _force = _velocity * 1.5f;
         update();
+        */
     }
     else
     {
