@@ -48,20 +48,36 @@ unsigned int Weapon::getClip()
     return _clip;    
 }
 
-void Weapon::fire(Vector3f pos, Vector3f target)
+
+void Weapon::fire(Vector3f pos, Vector3f target, bool npc)
 {
+    
     if(_coolDown < 5)
     {
-        _coolDown = 10;
+        
         Bullet* b = new Bullet(pos);    //Create a bullet object
-        b->_velocity=(target);    //Fire it at the target from position
-        //b->_velocity.normalize();
+        
+        if(!npc)
+        {
+            _coolDown = 10;
+            b->_velocity=(target);    //Fire it at the target from position
+            //b->_velocity.normalize();
+        }
+        else
+        {
+            _coolDown = 25;
+            b->_velocity=(target-pos);
+            b->_velocity.normalize();
+            //b->_velocity = b->_velocity * 0.25f;
+        }
 
         ++_clip;                        //If emptied clip reset to 0
         if(_clip >= _maxClipSize)
         {
             _clip = 0;
-            //reload();
+
+            if(npc)
+                reload();
         }
         b->_active = true;
         _magazine[_clip] = b;           //Place the bullet in _magazine i.e. fire away
