@@ -31,7 +31,7 @@ private:
 	void show();
     void spawnEnemies();
     bool _fireSignal;
-    int _difficulty = 0;
+    int _difficulty = -1;
 	const int NUMBER_OF_ENEMIES = 5;
 public:
 	void restart();

@@ -105,7 +105,28 @@ void Renderer::drawDynamic()
                     glDisableClientState(GL_NORMAL_ARRAY);
                     // glDisableClientState(GL_COLOR_ARRAY);
                     glPopMatrix();
-
+                    
+                    //printf("Before For Loop\n"); 
+                    //Draw Bullets
+                    for(unsigned int i = 0; i < e->_weapon.getClip(); ++i)
+                    {
+                        Vector3f pos;
+                        float radius;
+                        if(e->_weapon.getBullet(i)->_active)
+                        {
+                            pos = e->_weapon.getBullet(i)->_position;
+                            radius = e->_weapon.getBullet(i)->_radius;
+                            
+                            glPushMatrix();
+                                printf("Enemy Bullet Visible?\n");
+                                glMatrixMode(GL_MODELVIEW);
+                                glTranslatef(pos.x, pos.y, pos.z);
+                                glScalef(radius, radius, radius);
+                                e->_weapon.getBullet(i)->drawSphere();
+                            glPopMatrix();
+                        }
+                    }
+                    //printf("After For Loop\n");
                 }
         }
         catch(exception e)

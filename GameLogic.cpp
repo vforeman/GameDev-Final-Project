@@ -10,7 +10,6 @@ GameLogic::GameLogic()
 
 void GameLogic::start()
 {
-     SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
      
 	graphics::Renderer::get();
 	physics::PhysicsEngine::get();
@@ -22,16 +21,8 @@ void GameLogic::start()
     _player->_radius = 0.5f;
     _weapon = new physics::Weapon();
     AIManager::getInstance().setPlayer(Vector3f(0.0f, 0.0f, 0.0f));
-	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p)
-    {
-		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
-		int zmax = ((int)Overlay::OVERLAY_HEIGHT)/2;
-		float x = (float)util::randomRange(-xmax,xmax);
-		float z = (float)util::randomRange(-zmax,zmax);
-        _enemies.push_back(new ::physics::Enemy(Vector3f(x, 0.5f, z)));
-        graphics::Renderer::get().registerGraphics(_enemies.back());
-	}
 
+    spawnEnemies(); //Spawn enemies randomly a certain distance from player
 
 
     _active = true; //Set game to active in start
@@ -74,6 +65,7 @@ void GameLogic::update()
 	_weapon->iterate();
     Vector3f pos = _player->getCamera()->getLocation();
     AIManager::getInstance().setPlayer(pos);
+    
     //  iterate through the list of enemies
     for(unsigned int i = 0; i < _enemies.size(); ++i)
     {   
@@ -84,10 +76,29 @@ void GameLogic::update()
         enemiesAlive = true;
         //  give this enemy the player's position
         _enemies[i]->patrol(_player->getCamera()->getLocation());
-        //if sphere-sphere collision for this enemy against the player
+       
+
+       _enemies[i]->_weapon.iterate();
+       for(unsigned int j = 0; j < _enemies[i]->_weapon.getClip(); ++j)
+       {
+
+            if(_enemies[i]->_weapon.getBullet(j)->_position.y <= 0.0f || _enemies[i]->_weapon.getBullet(j)->_position.y >= 30.0f)
+                _enemies[i]->_weapon.getBullet(j)->_active = false;
+          
+            if( _enemies[i]->_weapon.getBullet(j)->_active &&_player->isAlive() && 
+                ::physics::PhysicsEngine::spheresphere(_enemies[i]->_weapon.getBullet(j)->_position, 2.f, pos, 0.5f))
+            {   
+                //stop rendering the bullet
+                _weapon->getBullet(j)->_active = false;
+                printf("Player Hit\n");
+            }
+       }
+
+       //if sphere-sphere collision for this enemy against the player
        if( ::physics::PhysicsEngine::spheresphere(pos, 0.5f, _enemies[i]->_position, _enemies[i]->_radius ))
-       {  //halt movement
-           ::physics::PhysicsEngine::resolveCollision(_player, _enemies[i]);
+       {  
+           //halt movement
+           //::physics::PhysicsEngine::resolveCollision(_player, _enemies[i]);
           
           if(_player->isAlive()) 
           {
@@ -95,6 +106,8 @@ void GameLogic::update()
           }
            else if(!_player->isAlive())
            {
+                   printf("Player Dead\n");
+                   /*
                    gamein::InputController::_playerDead = true;;
 
                    if(gamein::InputController::get()._respawn)
@@ -103,7 +116,7 @@ void GameLogic::update()
                        gamein::InputController::_playerDead = false;
                        gamein::InputController::_respawn = false;
                    }
-
+                   */
            }
 
        }
@@ -176,7 +189,7 @@ void GameLogic::show()
     Vector3f position = _player->getCamera()->getLocation();
 
     if(_fireSignal)
-        _weapon->fire(position, _player->getCamera()->getForward()); 
+        _weapon->fire(position, _player->getCamera()->getForward(), false); 
 
     Vector3f pos;
     float radius;
@@ -241,15 +254,22 @@ void GameLogic::spawnEnemies()
 {
     graphics::Renderer::get().emptyObjects();
     _enemies.clear();
-
+    Vector3f pos;  //possible enemy position
+    Vector3f player = AIManager::getInstance().getPlayer();
     ++_difficulty;
 	for(int p = 0; p < NUMBER_OF_ENEMIES; ++p)
     {
-		int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
-		int zmax = ((int)Overlay::OVERLAY_HEIGHT)/2;
-		float x = (float)util::randomRange(-xmax,xmax);
-		float z = (float)util::randomRange(-zmax,zmax);
-        _enemies.push_back(new ::physics::Enemy(Vector3f(x, 0.5f, z)));
+		do{
+            int xmax = ((int)Overlay::OVERLAY_WIDTH)/2;
+		    int zmax = ((int)Overlay::OVERLAY_HEIGHT)/2;
+		    float x = (float)util::randomRange(-xmax,xmax);
+		    float z = (float)util::randomRange(-zmax,zmax);
+
+            pos = Vector3f(x, 0.3f, z);
+        } while(physics::PhysicsEngine::spheresphere(player, 25.0f, pos, 2.0f) &&  
+                Overlay::isObstacle(pos));
+        
+        _enemies.push_back(new ::physics::Enemy(pos));
         graphics::Renderer::get().registerGraphics(_enemies.back());
 	}
 
