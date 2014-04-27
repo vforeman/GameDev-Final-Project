@@ -212,8 +212,9 @@ void GameLogic::show()
     float wall = (float) Overlay::OVERLAY_HEIGHT/2;
 	//DRAW WALLS 
     glPushMatrix();
+        glDisable(GL_LIGHTING);
         glBegin(GL_QUADS);
-            glColor3fv(SKYBLUE);
+            glColor3fv(GRAY32);
             //North Wall
             glVertex3f(-wall, -3.0f, -wall);
             glVertex3f( wall, -3.0f, -wall);
@@ -242,6 +243,7 @@ void GameLogic::show()
             glVertex3f(wall, 100.0f, wall);
             glNormal3d(0, 0, 1);
         glEnd();
+        glEnable(GL_LIGHTING);
     glPopMatrix();
     //END DRAW WALLS
 	graphics::Renderer::get().drawStatic();
@@ -266,7 +268,7 @@ void GameLogic::spawnEnemies()
 		    float z = (float)util::randomRange(-zmax,zmax);
 
             pos = Vector3f(x, 0.3f, z);
-        } while(physics::PhysicsEngine::spheresphere(player, 25.0f, pos, 2.0f) &&  
+        } while(physics::PhysicsEngine::spheresphere(player, 25.0f, pos, 2.0f) ||  
                 Overlay::isObstacle(pos));
         
         _enemies.push_back(new ::physics::Enemy(pos));

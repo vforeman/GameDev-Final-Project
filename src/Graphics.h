@@ -25,6 +25,7 @@ const float WHITE[] = {0.0f, 0.0f, 0.0f,0.5f};
 
 //Specialized COlors
 const float SKYBLUE[] = {0.49f, 0.75f, 0.93f};
+const float GRAY32[]  = {0.2f, 0.2f, 0.2f};
 
 class Graphics
 {
