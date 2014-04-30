@@ -118,7 +118,6 @@ void Renderer::drawDynamic()
                             radius = e->_weapon.getBullet(i)->_radius;
                             
                             glPushMatrix();
-                                printf("Enemy Bullet Visible?\n");
                                 glMatrixMode(GL_MODELVIEW);
                                 glTranslatef(pos.x, pos.y, pos.z);
                                 glScalef(radius, radius, radius);
