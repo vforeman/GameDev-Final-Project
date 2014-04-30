@@ -24,7 +24,7 @@ Weapon::Weapon() : _coolDown(4)
 {
     _reloading = false;
     _clip = 0;
-    _maxClipSize = 8;
+    _maxClipSize = 64;
     _magazine = new Bullet*[_maxClipSize];
     for(unsigned int i = 0; i < _maxClipSize; ++i)
     {
