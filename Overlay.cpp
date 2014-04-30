@@ -149,6 +149,9 @@ bool Overlay::isObstacle(float x, float z)
     x+=(Overlay::OVERLAY_WF/2);
     z+=(Overlay::OVERLAY_HF/2);
 
+    if((int)x < 0 || (int)z < 0)
+        return true;
+
     return _overlay[(int)x][(int)z] == 'W';
 }
 Vector3f translate(Vector3f trans);
