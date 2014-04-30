@@ -29,12 +29,14 @@ public:
     void decreaseHealth(int);
     void die();
     void patrol(Vector3f);
+    void searchNDestroy();
     std::vector<float> _verts;
     std::vector<float> _norms;
     Weapon _weapon;
 protected:
     bool _alive;
     bool _alert;
+    bool _searching;
     float alertRadius;
     int _health;
     unsigned int _point;    //Point on patrol path, treated as iterator

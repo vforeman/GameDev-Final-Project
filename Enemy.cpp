@@ -121,8 +121,13 @@ void Enemy::patrol(Vector3f target)
             else
             {
                 ++_point;
-                if(_point >= _patrolPath.size())
+                if(_point >= _patrolPath.size() && !_searching)
                     _point = 0;
+                else if(_point >= _patrolPath.size() && _searching)
+                {
+                    searchNDestroy();
+                    _point = 0;
+                }
             }
         }
     }
@@ -130,17 +135,6 @@ void Enemy::patrol(Vector3f target)
 
 void Enemy::createStrongPatrol()
 {
-    /*Vector3f pos = _position;
-    Node* path = AIManager::getInstance().astar(pos, Vector3f(0.0f, 0.0f, 0.0f));
-    if(path != NULL)
-    {
-        path->traverse(_patrolPath);
-    }
-    path = AIManager::getInstance().astar(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(10.0f, 0.0f, 0.0f));
-    if(path != NULL)
-    {
-        path->traverse(_patrolPath);
-    }*/
     Vector3f player = AIManager::getInstance().getPlayer();
     Vector3f dest;  //destination
     Node* path = AIManager::getInstance().astar(_position, player);
@@ -155,6 +149,18 @@ void Enemy::createStrongPatrol()
         path->traverse(_patrolPath);
     }
     path = AIManager::getInstance().astar(dest, _position);
+    if(path != NULL)
+    {
+        path->traverse(_patrolPath);
+    }
+}
+
+void Enemy::searchNDestroy()
+{
+    _patrolPath.clear();
+    _searching = true;
+    Node *path = AIManager::getInstance().astar(_position, 
+                                                AIManager::getInstance().getPlayer());
     if(path != NULL)
     {
         path->traverse(_patrolPath);

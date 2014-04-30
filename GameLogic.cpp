@@ -305,6 +305,9 @@ void GameLogic::spawnEnemies()
         
         _enemies.push_back(new ::physics::Enemy(pos));
         graphics::Renderer::get().registerGraphics(_enemies.back());
+        
+        if(p > NUMBER_OF_ENEMIES-2)
+            _enemies.back()->searchNDestroy();
 	}
 
     _opposition = true;
