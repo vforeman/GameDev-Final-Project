@@ -3,6 +3,7 @@
 namespace logic
 {
 
+
 GameLogic::GameLogic()
 {
     //SINGLETON CONSTRUCTORS & DESTRUCTORS ARE EMPTY
@@ -16,6 +17,9 @@ void GameLogic::start()
     gamein::InputController::get();
 	window::Window::get();
 	window::Window::get().open();
+    _gameFont.init("./Assets/Test.ttf", 16);
+    _menuFont.init("./Assets/GoldenEye.ttf", 20);
+    _titleFont.init("./Assets/GoldenEye.ttf", 32);
 
     _player = new Player(Vector3f(0, 0.8f, 0)); //This is Eye coordinate
     _player->_radius = 0.5f;
@@ -23,7 +27,7 @@ void GameLogic::start()
     AIManager::getInstance().setPlayer(Vector3f(0.0f, 0.0f, 0.0f));
 
     spawnEnemies(); //Spawn enemies randomly a certain distance from player
-
+    _score = 0;
 
     _active = true; //Set game to active in start
     _opposition = true;
@@ -86,11 +90,13 @@ void GameLogic::update()
                 _enemies[i]->_weapon.getBullet(j)->_active = false;
           
             if( _enemies[i]->_weapon.getBullet(j)->_active &&_player->isAlive() && 
-                ::physics::PhysicsEngine::spheresphere(_enemies[i]->_weapon.getBullet(j)->_position, 2.f, pos, 0.5f))
+                ::physics::PhysicsEngine::spheresphere(_enemies[i]->_weapon.getBullet(j)->_position, 0.5f, pos, 2.0f))
             {   
                 //stop rendering the bullet
                 _weapon->getBullet(j)->_active = false;
-                printf("Player Hit\n");
+                _player->decreaseHealth();
+                if(_score >= 4 && _difficulty >= 4)
+                    _score -= 4;
             }
        }
 
@@ -124,13 +130,15 @@ void GameLogic::update()
        for(unsigned int j = 0; j < _weapon->getClip(); ++j)
        {    //dont render bullets that hit the ground or go into the sky
             if(_weapon->getBullet(j)->_position.y <= 0.0f || _weapon->getBullet(j)->_position.y >= 30.0f)
+            {
                 _weapon->getBullet(j)->_active = false;
-              //if an enemy is hit
+            }
             if( _weapon->getBullet(j)->_active && _enemies[i]->isLiving() &&::physics::PhysicsEngine::spheresphere(_weapon->getBullet(j)->_position, 0.5f, _enemies[i]->_position, _enemies[i]->_radius))
             {   //stop rendering the bullet
                 _weapon->getBullet(j)->_active = false;
                 //stop rendering the enemy
                 _enemies[i]->decreaseHealth(_difficulty);
+                _score += _difficulty;
             }
        }
 
@@ -177,6 +185,8 @@ void GameLogic::run()
 
 	graphics::Renderer::get().emptyObjects();
     _enemies.clear();
+
+    _gameFont.clean();
 }
 
 
@@ -204,6 +214,7 @@ void GameLogic::show()
                 glMatrixMode(GL_MODELVIEW);
                 glTranslatef(pos.x, pos.y, pos.z);
                 glScalef(radius, radius, radius);
+                glColor3fv(BLACK);
                 _weapon->getBullet(i)->drawSphere();
             glPopMatrix();
         }
@@ -248,6 +259,7 @@ void GameLogic::show()
     //END DRAW WALLS
 	graphics::Renderer::get().drawStatic();
 	graphics::Renderer::get().drawDynamic();
+    displayHUD();
 	graphics::Renderer::get().drawHud();        //DRAW LAST CLEAR DEPTH BUFFER
 
 }
@@ -275,7 +287,45 @@ void GameLogic::spawnEnemies()
         graphics::Renderer::get().registerGraphics(_enemies.back());
 	}
 
-}   
+}
+
+void GameLogic::displayMenu()
+{   
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glLoadIdentity();
+    glTranslatef(0.0f, 0.0f, -1.0f);
+    
+    glRasterPos2f(-0.40f, 0.35f);
+    glColor3ub(0xff, 0xff, 0xff);
+
+    glPushMatrix();
+        glLoadIdentity();
+        freetype::print(_titleFont, 512, 1024, "GAME: THE PLAYING");
+        freetype::print(_menuFont,  512, 924, "PRESS ANY BUTTON TO START\n");
+    glPopMatrix(); 
+}
+
+void GameLogic::displayHUD()
+{
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    glTranslatef(0.0f, 0.0f, -1.0f);
+
+    glColor3ub(0, 0, 0xff);
+
+    glRasterPos2f(-0.40f, 0.35f);
+    //glPrint("Active WGL Bitmap Text");
+
+    glColor3ub(0xff, 0, 0);
+
+    glPushMatrix();
+    glLoadIdentity();
+    //freetype::print(ourFont, 320, 200, "The quick brown fox jumps over the lazy dog");
+    freetype::print(_gameFont, 20, 20, "Player Health: %d", _player->getHealth());
+    freetype::print(_gameFont, 1024, 20, "Score: %u", _score);
+    glPopMatrix();
+}
 
 void GameLogic::restart()
 {
