@@ -96,8 +96,8 @@ void GameLogic::update()
                 //stop rendering the bullet
                 _weapon->getBullet(j)->_active = false;
                 _player->decreaseHealth();
-                if(_score >= 4 && _difficulty >= 4)
-                    _score -= 4;
+                //if(_score >= 4 && _difficulty >= 4)
+                //    _score -= 4;
             }
 
        }
@@ -110,6 +110,7 @@ void GameLogic::update()
           
           if(_player->isAlive()) 
           {
+            _player->setHealth(1);
             _player->decreaseHealth(_difficulty*10);
           }
        }
@@ -120,7 +121,7 @@ void GameLogic::update()
             {
                 _weapon->getBullet(j)->_active = false;
             }
-            if( _weapon->getBullet(j)->_active && _enemies[i]->isLiving() &&::physics::PhysicsEngine::spheresphere(_weapon->getBullet(j)->_position, 0.5f, _enemies[i]->_position, _enemies[i]->_radius))
+            if( _weapon->getBullet(j)->_active && _enemies[i]->isLiving() && ::physics::PhysicsEngine::spheresphere(_weapon->getBullet(j)->_position, 0.5f, _enemies[i]->_position, _enemies[i]->_radius))
             {   //stop rendering the bullet
                 _weapon->getBullet(j)->_active = false;
                 //stop rendering the enemy
@@ -134,7 +135,6 @@ void GameLogic::update()
     _opposition = enemiesAlive;
     if(!_opposition)
     {
-        printf("All enemies vanquished\n");
         spawnEnemies();        
     } 
 
@@ -195,7 +195,6 @@ void GameLogic::run()
         _score = 0;
         if(back2Menu)
         {
-            printf("GameLogic Back2Menu\n");
             back2Menu = false;
             gamein::InputController::get().setExitSignal(false);
             _active = true;
@@ -250,29 +249,29 @@ void GameLogic::show()
             //North Wall
             glVertex3f(-wall, -3.0f, -wall);
             glVertex3f( wall, -3.0f, -wall);
-            glVertex3f( wall, 100.0f, -wall);
-            glVertex3f(-wall, 100.0f, -wall);
+            glVertex3f( wall, 50.0f, -wall);
+            glVertex3f(-wall, 50.0f, -wall);
             glNormal3d(0, 0, 1);
 
             //East Wall
             glVertex3f(wall, -3.0f, wall);
             glVertex3f(wall, -3.0f, -wall);
-            glVertex3f(wall, 100.0f, -wall);
-            glVertex3f(wall, 100.0f, wall);
+            glVertex3f(wall, 50.0f, -wall);
+            glVertex3f(wall, 50.0f, wall);
             glNormal3d(0, 0, 1);
 
             //West Wall
             glVertex3f(-wall, -3.0f, -wall);
             glVertex3f(-wall, -3.0f, wall);
-            glVertex3f(-wall, 100.0f, wall);
-            glVertex3f(-wall, 100.0f, -wall);
+            glVertex3f(-wall, 50.0f, wall);
+            glVertex3f(-wall, 50.0f, -wall);
             glNormal3d(0, 0, 1);
 
             //South Wall
             glVertex3f(wall, -3.0f, wall);
             glVertex3f(-wall, -3.0f, wall);
-            glVertex3f(-wall, 100.0f, wall);
-            glVertex3f(wall, 100.0f, wall);
+            glVertex3f(-wall, 50.0f, wall);
+            glVertex3f(wall, 50.0f, wall);
             glNormal3d(0, 0, 1);
         glEnd();
         glEnable(GL_LIGHTING);
@@ -331,7 +330,7 @@ void GameLogic::displayMenu()
         freetype::print(_menuFont, 512, 20, "I believe in you");
 
         if(_highscore>0)
-            freetype::print(_menuFont, 430, 100, "Highscore %u", _highscore);
+            freetype::print(_menuFont, 512, 100, "Highscore           %u", _highscore);
 
     glPopMatrix(); 
     

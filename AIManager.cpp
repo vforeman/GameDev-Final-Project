@@ -138,26 +138,27 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
 bool checkObstacle(Vector3f pos)
 {
     bool obstaclePresent = false;
-    float i = 0.25f;
+    float i = 0.0f;
     
     if(Overlay::isObstacle(pos)) return true;
     float x = pos.x;
     float z = pos.z;
     Vector3f check = pos; 
-    while( i <= float(STEP)+1.0f && !obstaclePresent)
+    while( i <= float(STEP)+5.0f && !obstaclePresent)
     {
         pos.x += i;
         pos.z += i;
         x -= i;
         z -= i;
     
-        i = i + 0.25f;
-        obstaclePresent = (Overlay::isObstacle(Vector3f(pos.x, 0.0f, pos.z))     || 
-                          Overlay::isObstacle(Vector3f(check.x, 0.0f, pos.z))    ||
-                          Overlay::isObstacle(Vector3f(pos.x, 0.0f, check.z))    ||
-                          Overlay::isObstacle(Vector3f(check.x, 0.0f, z))        ||
-                          Overlay::isObstacle(Vector3f(x, 0.0f, check.z))        ||
-                          Overlay::isObstacle(Vector3f(x, 0.0f, z)) );
+        i = i + 0.125f;
+        obstaclePresent = (
+                            Overlay::isObstacle(Vector3f(pos.x, 0.0f, pos.z))     || 
+                            Overlay::isObstacle(Vector3f(check.x, 0.0f, pos.z))    ||
+                            Overlay::isObstacle(Vector3f(pos.x, 0.0f, check.z))    ||
+                            Overlay::isObstacle(Vector3f(check.x, 0.0f, z))        ||
+                            Overlay::isObstacle(Vector3f(x, 0.0f, check.z))        ||
+                            Overlay::isObstacle(Vector3f(x, 0.0f, z)) );
     }
 
     return obstaclePresent;
@@ -259,7 +260,7 @@ float calculateHn(Vector3f curr, Vector3f goal)
 
 
     //return D * (dx * dx + dy * dy);
-    return 100* dx * dx + dy * dy;
+    return 200* dx * dx + dy * dy;
 }
 
 bool isGoal(Node* current, Node* goal)

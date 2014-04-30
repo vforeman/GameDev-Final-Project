@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 {
     alutInit(&argc, argv);
     
-    //SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
+    SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
 
     try
     {
@@ -31,10 +31,10 @@ int main(int argc, char *argv[])
     }
 
  
-    //SoundManager::getInstance().stop();
-    //usleep(250);
-    //SoundManager::getInstance().close();
-    //usleep(250);
+    SoundManager::getInstance().stop();
+    usleep(250);
+    SoundManager::getInstance().close();
+    usleep(250);
     alutExit();
     return 0;
 }
