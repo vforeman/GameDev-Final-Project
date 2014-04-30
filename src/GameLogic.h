@@ -15,6 +15,7 @@
 #include "Util.h"
 #include "Overlay.h"
 #include "SoundManager.h"
+#include "Font.h"
 
 using namespace util;
 namespace logic{
@@ -30,9 +31,15 @@ private:
     void update();
 	void show();
     void spawnEnemies();
+    void displayMenu();
+    void displayHUD();
     bool _fireSignal;
     int _difficulty = -1;
 	const int NUMBER_OF_ENEMIES = 5;
+    unsigned int _score;
+    freetype::font_data _gameFont;
+    freetype::font_data _menuFont;
+    freetype::font_data _titleFont;
 public:
 	void restart();
     bool _active;           //If the player dies the game is not active
