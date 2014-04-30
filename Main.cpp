@@ -20,8 +20,15 @@ int main(int argc, char *argv[])
     
     //SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
 
-    GameLogic::get().start();
-    GameLogic::get().run();
+    try
+    {
+        GameLogic::get().start();
+        GameLogic::get().run();
+    }
+    catch(std::exception &e)
+    {
+        printf("%s CAUGHT AN EXCEPTION", e.what());
+    }
 
  
     //SoundManager::getInstance().stop();
