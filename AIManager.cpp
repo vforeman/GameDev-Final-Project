@@ -10,6 +10,7 @@ bool isGoal(Node*, Node*);
 float calculateHn(Vector3f, Vector3f);
 void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>& closed, Vector3f); 
 
+bool checkObstacle(Vector3f);
 Node* AIManager::astar(Vector3f end, Vector3f begin)
 {
     bool firstGo = true;
@@ -37,7 +38,8 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
     //add adjacent positions to list
     Node* temp = new Node;
     bool valid = true;
-    if(!Overlay::isObstacle(current->_x+STEP, current->_y, current->_z))
+    //if(!Overlay::isObstacle(current->_x+STEP, current->_y, current->_z))
+    if(!checkObstacle(Vector3f(current->_x+STEP, current->_y, current->_z)))
     {
         temp->_x = current->_x+STEP;
         temp->_z = current->_z; 
@@ -57,7 +59,8 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
             std::push_heap(openlist.begin(), openlist.end());
         }
     }
-    if(!Overlay::isObstacle(current->_x-STEP, current->_y, current->_z))
+    //if(!Overlay::isObstacle(current->_x-STEP, current->_y, current->_z))
+    if(!checkObstacle(Vector3f(current->_x-STEP, current->_y, current->_z)))
     {
         temp->_x = current->_x-STEP;
         temp->_z = current->_z; 
@@ -77,7 +80,8 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
         }
         valid = true;
     }
-    if(!Overlay::isObstacle(current->_x, current->_y, current->_z+STEP))
+    //if(!Overlay::isObstacle(current->_x, current->_y, current->_z+STEP))
+    if(!checkObstacle(Vector3f(current->_x, current->_y, current->_z+STEP)))
     {
         temp->_x = current->_x;
         temp->_z = current->_z+STEP; 
@@ -97,7 +101,8 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
         }
         valid = true;
     }
-    if(!Overlay::isObstacle(current->_x, current->_y, current->_z-STEP))
+    //if(!Overlay::isObstacle(current->_x, current->_y, current->_z-STEP))
+    if(!checkObstacle(Vector3f(current->_x, current->_y, current->_z-STEP)))
     {
         temp->_x = current->_x;
         temp->_z = current->_z-STEP; 
@@ -127,6 +132,35 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
     }
     return NULL;
 
+}
+
+//Effectively increase the weight around obstacles
+bool checkObstacle(Vector3f pos)
+{
+    bool obstaclePresent = false;
+    float i = 0.25f;
+    
+    if(Overlay::isObstacle(pos)) return true;
+    float x = pos.x;
+    float z = pos.z;
+    Vector3f check = pos; 
+    while( i <= float(STEP)+1.0f && !obstaclePresent)
+    {
+        pos.x += i;
+        pos.z += i;
+        x -= i;
+        z -= i;
+    
+        i = i + 0.25f;
+        obstaclePresent = (Overlay::isObstacle(Vector3f(pos.x, 0.0f, pos.z))     || 
+                          Overlay::isObstacle(Vector3f(check.x, 0.0f, pos.z))    ||
+                          Overlay::isObstacle(Vector3f(pos.x, 0.0f, check.z))    ||
+                          Overlay::isObstacle(Vector3f(check.x, 0.0f, z))        ||
+                          Overlay::isObstacle(Vector3f(x, 0.0f, check.z))        ||
+                          Overlay::isObstacle(Vector3f(x, 0.0f, z)) );
+    }
+
+    return obstaclePresent;
 }
 
 void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>& closed, Vector3f goal) 
