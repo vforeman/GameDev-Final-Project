@@ -36,6 +36,7 @@ private:
     bool _fireSignal;
     int _difficulty = -1;
 	const int NUMBER_OF_ENEMIES = 5;
+    unsigned int _highscore = 0;
     unsigned int _score;
     freetype::font_data _gameFont;
     freetype::font_data _menuFont;

@@ -12,6 +12,11 @@ InputController& InputController::get()
     return instance;
 }
 
+bool InputController::getExitSignal()
+{
+    return _exitSignal;
+}
+
 bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 {
 	SDL_Event event;
@@ -28,15 +33,15 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 					{
 						case SDLK_ESCAPE:
 							running = false;
+                            _exitSignal = true;
 							break;
 
-						case SDLK_p:if(_playerDead){break;}
+						case SDLK_p:
 							cam->mouseIn();
 							SDL_ShowCursor(SDL_ENABLE);
 							break;
-						case SDLK_RETURN:if(_playerDead){
-							_respawn = true;
-						}
+						case SDLK_RETURN:
+				            break;		
 						default: break;
 					}
 					break;
@@ -46,9 +51,10 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 					{
 						case SDLK_ESCAPE:
 							running = false;
+                            _exitSignal = true;
 							break;
 
-						case SDLK_p:if(_playerDead){break;}
+						case SDLK_p:
 							cam-> mouseOut();
 							SDL_ShowCursor(SDL_ENABLE);
                             _mouseHidden = false;
@@ -57,18 +63,17 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 					}
 					break;
 
-				case SDL_MOUSEBUTTONDOWN:if(_playerDead){break;}
+				case SDL_MOUSEBUTTONDOWN:
 					if(!_mouseHidden)
                     {
                         cam->mouseIn();
 					    SDL_ShowCursor(SDL_DISABLE);
                         _mouseHidden = true;
+                        running = true;
                     }
                     else
                     {
-                        //wep->fire(cam->getLocation(), Vector3f(0.0f, 0.0f, 0.0f));
                         fireSignal = true;
-                        //printf("Fire\n");
                     }
 					break;
 
@@ -76,5 +81,15 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 			}
 		}
 	return running;
+}
+
+void InputController::setExitSignal(bool exitSignal)
+{
+    _exitSignal = exitSignal;
+}
+
+void InputController::setMouseHidden(bool hidden)
+{
+    _mouseHidden = hidden;
 }
 }// namespace gamein

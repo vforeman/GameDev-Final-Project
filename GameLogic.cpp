@@ -19,7 +19,7 @@ void GameLogic::start()
 	window::Window::get().open();
     _gameFont.init("./Assets/Test.ttf", 16);
     _menuFont.init("./Assets/GoldenEye.ttf", 20);
-    _titleFont.init("./Assets/GoldenEye.ttf", 32);
+    _titleFont.init("./Assets/GoldenEye.ttf", 36);
 
     _player = new Player(Vector3f(0, 0.8f, 0)); //This is Eye coordinate
     _player->_radius = 0.5f;
@@ -31,6 +31,7 @@ void GameLogic::start()
 
     _active = true; //Set game to active in start
     _opposition = true;
+    _running = false;
 
 	glShadeModel(GL_SMOOTH);
     float light_position[] = {0.0f, 40.0f, 0.0f, 1.0f};
@@ -98,6 +99,7 @@ void GameLogic::update()
                 if(_score >= 4 && _difficulty >= 4)
                     _score -= 4;
             }
+
        }
 
        //if sphere-sphere collision for this enemy against the player
@@ -108,23 +110,8 @@ void GameLogic::update()
           
           if(_player->isAlive()) 
           {
-            _player->decreaseHealth(_difficulty);
+            _player->decreaseHealth(_difficulty*10);
           }
-           else if(!_player->isAlive())
-           {
-                   printf("Player Dead\n");
-                   /*
-                   gamein::InputController::_playerDead = true;;
-
-                   if(gamein::InputController::get()._respawn)
-                   {
-                       restart();
-                       gamein::InputController::_playerDead = false;
-                       gamein::InputController::_respawn = false;
-                   }
-                   */
-           }
-
        }
        
        for(unsigned int j = 0; j < _weapon->getClip(); ++j)
@@ -156,37 +143,71 @@ void GameLogic::update()
 
 void GameLogic::run()
 {
-	float angle =0.0;
+    bool back2Menu = false;
+    float angle =0.0;
 	const int FPS = 30;
 	Uint32 start;
-    _running = true;
+    //_running = true;
     _fireSignal = false;
-	while(_running && _active)
-	{
-		start = SDL_GetTicks();
-        _running = gamein::InputController::get().HandleInput(_player->getCamera(), _fireSignal, _running);
+    while(_active)
+    {
+	    displayMenu();  
+        _running = gamein::InputController::get().HandleInput(_player->getCamera(), _fireSignal, _running);    
+        
+        if(gamein::InputController::get().getExitSignal())
+            _active = false;
+        while(_running && _player->isAlive())
+	    {
+		    start = SDL_GetTicks();
+            _running = gamein::InputController::get().HandleInput(_player->getCamera(), _fireSignal, _running);
+            if(!_running)
+            {
+                back2Menu = true;
+            }
+            //handle logic and rendering below
+	        update();
+	        show();
 
-        //handle logic and rendering below
-	    update();
-	    show();
+	        SDL_GL_SwapBuffers();
+	        angle+= 0.5;
+	        if(angle >360)
+		        angle-=360;
 
-        // glDepthFunc(GL_LESS);//Would this help?
-	    SDL_GL_SwapBuffers();
-	    angle+= 0.5;
-	    if(angle >360)
-		    angle-=360;
+            // handle framemanagement
+	        if(1000/FPS > SDL_GetTicks() - start)
+		        SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
 
-        // handle framemanagement
-	    if(1000/FPS > SDL_GetTicks() - start)
-		    SDL_Delay(1000/FPS -(SDL_GetTicks() - start) );
+            _fireSignal = false;
+	    }
 
-        _fireSignal = false;
-	}
+        _player->getCamera()->mouseOut();
+        SDL_ShowCursor(SDL_ENABLE);
+        gamein::InputController::get().setMouseHidden(false);
+        _player->restart();
+        _running = false;
+        spawnEnemies();
+        _difficulty = 0;
+        if(_score > _highscore)
+        {
+            _highscore = _score;
+        }
 
+        _score = 0;
+        if(back2Menu)
+        {
+            printf("GameLogic Back2Menu\n");
+            back2Menu = false;
+            gamein::InputController::get().setExitSignal(false);
+            _active = true;
+        }
+        
+    }
 	graphics::Renderer::get().emptyObjects();
     _enemies.clear();
 
     _gameFont.clean();
+    _menuFont.clean();
+    _titleFont.clean();
 }
 
 
@@ -287,6 +308,7 @@ void GameLogic::spawnEnemies()
         graphics::Renderer::get().registerGraphics(_enemies.back());
 	}
 
+    _opposition = true;
 }
 
 void GameLogic::displayMenu()
@@ -301,9 +323,19 @@ void GameLogic::displayMenu()
 
     glPushMatrix();
         glLoadIdentity();
-        freetype::print(_titleFont, 512, 1024, "GAME: THE PLAYING");
-        freetype::print(_menuFont,  512, 924, "PRESS ANY BUTTON TO START\n");
+        freetype::print(_titleFont, 430, 824, "GAME THE PLAYING");
+        freetype::print(_menuFont, 400, 624, "CLICK THE MOUSE IN THE WINDOW TO START");
+        freetype::print(_menuFont, 400, 574, "Shoot at Enemies by pressing the mouse button");
+        freetype::print(_menuFont, 400, 524, "Move with WASD keys");
+        freetype::print(_menuFont, 400, 474, "Go for the highscore");
+        freetype::print(_menuFont, 512, 20, "I believe in you");
+
+        if(_highscore>0)
+            freetype::print(_menuFont, 430, 100, "Highscore %u", _highscore);
+
     glPopMatrix(); 
+    
+    SDL_GL_SwapBuffers();
 }
 
 void GameLogic::displayHUD()
