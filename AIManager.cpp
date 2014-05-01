@@ -137,23 +137,24 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
 //Effectively increase the weight around obstacles
 bool checkObstacle(Vector3f pos)
 {
-    bool obstaclePresent = false;
-    float i = 0.0f;
     
     if(Overlay::isObstacle(pos)) return true;
+
+    bool obstaclePresent = false;
+    float i = 0.0f;
     float x = pos.x;
     float z = pos.z;
     Vector3f check = pos; 
-    while( i <= float(STEP)+5.0f && !obstaclePresent)
+    while( i <= float(STEP)+7.5f && !obstaclePresent)
     {
-        pos.x += i;
-        pos.z += i;
-        x -= i;
-        z -= i;
+        pos.x = pos.x + i;
+        pos.z = pos.z + i;
+        x = x - i;
+        z = z - i;
     
         i = i + 0.125f;
         obstaclePresent = (
-                            Overlay::isObstacle(Vector3f(pos.x, 0.0f, pos.z))     || 
+                            Overlay::isObstacle(Vector3f(pos.x, 0.0f, pos.z))      || 
                             Overlay::isObstacle(Vector3f(check.x, 0.0f, pos.z))    ||
                             Overlay::isObstacle(Vector3f(pos.x, 0.0f, check.z))    ||
                             Overlay::isObstacle(Vector3f(check.x, 0.0f, z))        ||

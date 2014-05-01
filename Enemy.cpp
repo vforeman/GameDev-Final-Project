@@ -95,7 +95,9 @@ void Enemy::patrol(Vector3f target)
     if(physics::PhysicsEngine::spheresphere(_position, alertRadius, target, 0.5f) )
     {
         //Fire at player
-        _radius = 2.0f;
+        //_radius = 2.0f;
+        if(_radius <= MAX_SIZE)
+            _radius += GROWRATE;
        
         _weapon.fire(_position, target, true); 
         /*_velocity = target - _position;
@@ -107,7 +109,10 @@ void Enemy::patrol(Vector3f target)
     }
     else
     {
-        _radius = 0.5f;
+        //_radius = 0.5f;
+        if(_radius >= MIN_SIZE)
+            _radius -= GROWRATE;
+
         if(!_patrolPath.empty())
         {
             if(!(_position.x - _patrolPath[_point].x < 0.25f && _position.x - _patrolPath[_point].x > -0.25f &&

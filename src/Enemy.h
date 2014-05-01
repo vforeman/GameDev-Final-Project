@@ -18,6 +18,10 @@ namespace physics{
 /***********************************
 *                   ENEMY SPECIFICATION
 *************************************/
+const float MAX_SIZE = 2.0f;
+const float MIN_SIZE = 0.5f;
+const float GROWRATE = 0.05f;
+
 class Enemy : virtual public PhysicsEntity, virtual public Graphics
 {
 public:

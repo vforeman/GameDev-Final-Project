@@ -33,6 +33,7 @@ private:
     void spawnEnemies();
     void displayMenu();
     void displayHUD();
+    void displayDamage();       //When player is hit alert him to damage
     bool _fireSignal;
     int _difficulty = -1;
 	const int NUMBER_OF_ENEMIES = 5;
@@ -41,6 +42,7 @@ private:
     freetype::font_data _gameFont;
     freetype::font_data _menuFont;
     freetype::font_data _titleFont;
+    freetype::font_data _alertFont;
 public:
 	void restart();
     bool _active;           //If the player dies the game is not active

@@ -20,6 +20,7 @@ void GameLogic::start()
     _gameFont.init("./Assets/Test.ttf", 16);
     _menuFont.init("./Assets/GoldenEye.ttf", 20);
     _titleFont.init("./Assets/GoldenEye.ttf", 36);
+    _alertFont.init("./Assets/Stroke.ttf", 24);
 
     _player = new Player(Vector3f(0, 0.8f, 0)); //This is Eye coordinate
     _player->_radius = 0.5f;
@@ -105,9 +106,6 @@ void GameLogic::update()
        //if sphere-sphere collision for this enemy against the player
        if( ::physics::PhysicsEngine::spheresphere(pos, 0.5f, _enemies[i]->_position, _enemies[i]->_radius ))
        {  
-           //halt movement
-           //::physics::PhysicsEngine::resolveCollision(_player, _enemies[i]);
-          
           if(_player->isAlive()) 
           {
             _player->setHealth(1);
@@ -152,6 +150,7 @@ void GameLogic::run()
     while(_active)
     {
 	    displayMenu();  
+        usleep(500);
         _running = gamein::InputController::get().HandleInput(_player->getCamera(), _fireSignal, _running);    
         
         if(gamein::InputController::get().getExitSignal())
@@ -207,6 +206,7 @@ void GameLogic::run()
     _gameFont.clean();
     _menuFont.clean();
     _titleFont.clean();
+    _alertFont.clean();
 }
 
 
@@ -358,6 +358,21 @@ void GameLogic::displayHUD()
     //freetype::print(ourFont, 320, 200, "The quick brown fox jumps over the lazy dog");
     freetype::print(_gameFont, 20, 20, "Player Health: %d", _player->getHealth());
     freetype::print(_gameFont, 1024, 20, "Score: %u", _score);
+    glPopMatrix();
+}
+
+void GameLogic::displayDamage()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    glTranslatef(0.0f, 0.0f, -1.0f);
+
+    glRasterPos2f(-0.40f, 0.35f);
+    glColor3ub(0xff, 0, 0);
+
+    glPushMatrix();
+    glLoadIdentity();
+    freetype::print(_alertFont, 500, 500, "BEING ATTACKED");
     glPopMatrix();
 }
 
