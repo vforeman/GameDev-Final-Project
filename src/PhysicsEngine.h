@@ -54,17 +54,18 @@ private:
 class PhysicsEngine
 {
 public:
-	static PhysicsEngine * get();
-	~PhysicsEngine();
+	static PhysicsEngine& get();
 	static bool spheresphere(Vector3<float>& c1,float _radius1,Vector3<float>& c2,float _radius2);
 	static float pointdistacesquare(Vector3<float> p1,Vector3<float> p2);
 	static bool intersection(Vector2<float>, Vector2<float>,Vector3<float> sphere,float radius);
-	
+
+    static void resolveCollision(PhysicsEntity*, PhysicsEntity*); //Sphere-Sphere Collision Resolution
+    static void resolveCollisionWall(PhysicsEntity * );
 
 private:
-	static PhysicsEngine * _instance;
-	static bool _instanceFlag;
 	PhysicsEngine();
+    PhysicsEngine(const PhysicsEngine&);
+    PhysicsEngine& operator=(const PhysicsEngine&);
 };
 
 

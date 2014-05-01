@@ -1,23 +1,29 @@
 #include "src/GraphicsRenderer.h"
 namespace graphics{
 bool Renderer::_firstDraw = true;
-bool Renderer::_instanceFlag = false;
-Renderer * Renderer::_instance = NULL;
 GLuint Renderer::h_bullets;
+
 Renderer::Renderer()
-:_textureFlag(false)
+{
+}
+
+void Renderer::buildHudList()
 {
 
 }
 
-Renderer::~Renderer()
+void Renderer::playerDead(Vector3f p)
 {
-	_instanceFlag = false;
+  glBegin(GL_QUADS);
+  glColor4f(1.0,0.0,0.0,0.4);
+         glVertex3f(0.4f+p.x , 4.0f +p.y , 0.4f+p.z);   glVertex3f(-0.4f+p.x , 4.0f +p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 4.0f +p.y ,-0.4f+p.z);  glVertex3f(0.4f+p.x , 4.0f +p.y ,-0.4f+p.z); //0123top
+         glVertex3f(0.4f+p.x , 4.0f +p.y , 0.4f+p.z);   glVertex3f(-0.4f+p.x , 4.0f +p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 0.2f+p.y , 0.4f+p.z);  glVertex3f(0.4f+p.x , 0.2f+p.y , 0.4f+p.z); //0145north
+         glVertex3f(0.4f+p.x , 4.0f +p.y , 0.4f+p.z);   glVertex3f(0.4f+p.x , 4.0f +p.y ,-0.4f+p.z); glVertex3f(0.4f+p.x , 0.2f+p.y ,-0.4f+p.z);  glVertex3f(0.4f+p.x , 0.2f+p.y , 0.4f+p.z); //0365east
+         glVertex3f(0.4f+p.x , 4.0f +p.y ,-0.4f+p.z);   glVertex3f(-0.4f+p.x , 4.0f +p.y ,-0.4f+p.z);  glVertex3f(-0.4f+p.x , 0.2f+p.y ,-0.4f+p.z);  glVertex3f(0.4f+p.x , 0.2f+p.y ,-0.4f+p.z); //3276south
+         glVertex3f(-0.4f+p.x , 4.0f +p.y ,-0.4f+p.z);   glVertex3f(-0.4f+p.x , 4.0f +p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 0.2f+p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 0.2f+p.y ,-0.4f+p.z); //2147west
+         glVertex3f(0.4f+p.x , 0.2f+p.y , 0.4f+p.z);   glVertex3f(-0.4f+p.x , 0.2f+p.y , 0.4f+p.z);  glVertex3f(-0.4f+p.x , 0.2f+p.y ,-0.4f+p.z);  glVertex3f(0.4f+p.x , 0.2f+p.y ,-0.4f+p.z);//5476bot
+  glEnd();
 }
-void Renderer::buildHudList(){
-
-}
-
 void Renderer::drawStatic()
 {
 
@@ -37,7 +43,8 @@ void Renderer::drawStatic()
   glEnableClientState(GL_COLOR_ARRAY);
   glEnableClientState(GL_INDEX_ARRAY);
 
-  if(_firstDraw){
+  if(_firstDraw)
+  {
     _firstDraw=true;
     //Connect the arrays themselves
     glVertexPointer(3, GL_FLOAT, 0, &_lvl._staticVertices[0]);
@@ -55,44 +62,71 @@ void Renderer::drawStatic()
   glDisableClientState(GL_NORMAL_ARRAY);
   glDisableClientState(GL_COLOR_ARRAY);
   // glEnable(GL_LIGHTING);
-  glDisable(GL_COLOR_MATERIAL);
 
+  glDisable(GL_COLOR_MATERIAL);
+  playerDead(Vector3f(0,0,0));
 }
+
 void Renderer::drawDynamic()
-{ glColor3f(1,0,0);
-  glEnable(GL_BLEND);
-  //we should toggle this whenever the sphere gets hit
-  glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_SRC_ALPHA);
-  glEnable(GL_COLOR_MATERIAL);
+{ 
+    glColor3f(1,0,0);
+    glEnable(GL_BLEND);
+    //we should toggle this whenever the sphere gets hit
+    glBlendFunc(GL_SRC_ALPHA/*_SATURATE*/, GL_SRC_ALPHA);
+    glEnable(GL_COLOR_MATERIAL);
     for(unsigned int i = 0; i < _drawObjects.size(); ++i)
     {
         try
         {
                 ::physics::Enemy* e = dynamic_cast< ::physics::Enemy* >( _drawObjects[i] );
-	            glMatrixMode(GL_MODELVIEW);
-                glPushMatrix();
-                glTranslatef(e->_position.x, e->_position.y, e->_position.z);
-                glScalef(e->_radius, e->_radius, e->_radius);
-                // e->drawSphere();
-                glEnableClientState(GL_VERTEX_ARRAY);
-                glEnableClientState(GL_NORMAL_ARRAY);
-                // glEnableClientState(GL_INDEX_ARRAY);
+	            if(e->isLiving())
+                {
+                    glMatrixMode(GL_MODELVIEW);
+                    glPushMatrix();
+                    glTranslatef(e->_position.x, e->_position.y, e->_position.z);
+                    glScalef(e->_radius, e->_radius, e->_radius);
+                    // e->drawSphere();
+                    glEnableClientState(GL_VERTEX_ARRAY);
+                    glEnableClientState(GL_NORMAL_ARRAY);
+                    // glEnableClientState(GL_INDEX_ARRAY);
                     //Connect the arrays themselves
-                glVertexPointer(3, GL_FLOAT, 0, &e->_verts[0]);
-                // glIndexPointer(GL_INT,0,&_lvl._staticIndex[0]);
-                glNormalPointer(GL_FLOAT, 0, &e->_norms[0]);
-                // glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
+                    glVertexPointer(3, GL_FLOAT, 0, &e->_verts[0]);
+                    // glIndexPointer(GL_INT,0,&_lvl._staticIndex[0]);
+                    glNormalPointer(GL_FLOAT, 0, &e->_norms[0]);
+                    // glColorPointer(4, GL_FLOAT, 0, &_lvl._staticColors[0]);
 
-                //removed encapsulating stack moves, hopeful speedup
-                glDrawArrays(GL_TRIANGLE_STRIP , 0,e->_verts.size()/3);
+                    //removed encapsulating stack moves, hopeful speedup
+                    glDrawArrays(GL_TRIANGLE_STRIP , 0,e->_verts.size()/3);
 
-                //TODO::I dont think I should be loading the vertex data every call
-                //Disable vertex arrays that are no longer in use
-                glDisableClientState(GL_VERTEX_ARRAY);
-                // glDisableClientState(GL_INDEX_ARRAY);
-                glDisableClientState(GL_NORMAL_ARRAY);
-                // glDisableClientState(GL_COLOR_ARRAY);
-                glPopMatrix();
+                    //TODO::I dont think I should be loading the vertex data every call
+                    //Disable vertex arrays that are no longer in use
+                    glDisableClientState(GL_VERTEX_ARRAY);
+                    // glDisableClientState(GL_INDEX_ARRAY);
+                    glDisableClientState(GL_NORMAL_ARRAY);
+                    // glDisableClientState(GL_COLOR_ARRAY);
+                    glPopMatrix();
+                    
+                    //printf("Before For Loop\n"); 
+                    //Draw Bullets
+                    for(unsigned int i = 0; i < e->_weapon.getClip(); ++i)
+                    {
+                        Vector3f pos;
+                        float radius;
+                        if(e->_weapon.getBullet(i)->_active)
+                        {
+                            pos = e->_weapon.getBullet(i)->_position;
+                            radius = e->_weapon.getBullet(i)->_radius;
+                            
+                            glPushMatrix();
+                                glMatrixMode(GL_MODELVIEW);
+                                glTranslatef(pos.x, pos.y, pos.z);
+                                glScalef(radius, radius, radius);
+                                e->_weapon.getBullet(i)->drawSphere();
+                            glPopMatrix();
+                        }
+                    }
+                    //printf("After For Loop\n");
+                }
         }
         catch(exception e)
         {
@@ -156,48 +190,23 @@ GLuint Renderer::loadBMP(){
 
 
 }
-void Renderer::drawHud(){
-/*!!!!!!!!!!!!!!!!!!!!!
-THE ORIGIN (0,0) IS IN THE UPPER LEFT CORNER
-  OF THE SCREEN.
-  The positive x-axis is right,
-  The positive y-axis goes down.
-!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-  int playerbullets = 10;
+void Renderer::drawHud()
+{
+glPushMatrix();
   inHudMode(640,480);
   glDisable(GL_LIGHTING);
   glEnable(GL_COLOR_MATERIAL);
-
-  for(int k =0; k < playerbullets; ++k){
-     glPushMatrix();
-    glTranslatef(0,3*k,0);
-    glBegin(GL_POLYGON);//bullet shell
-
-
-
-      glColor4f(1.0f, 0.85f, 0.0, 1.0);
-      glVertex2i( 40, 0 );//topright
-      glVertex2i( 40,  25 );//bottomright
-      glVertex2i( 0, 25 );//bottom left
-      glVertex2i( 0, 0 );//TOPLEFT
-
+     glLineWidth(4);
+    glBegin(GL_LINES);//bullet shell
+      glColor4f(1.0f, 0.85f, 0.0, 0.6);
+      glVertex3f( 320, 230,0 );//top
+      glVertex3f( 320,  250,0 );//bottom
+      glVertex3f( 310, 240,0 );//left
+      glVertex3f( 330, 240,0 );//right
     glEnd();
-    glPopMatrix();
-    glBegin(GL_POLYGON); //bullet head
-      glColor4f(1.0f, 0.85f, 0.0, 1.0);
-      glVertex2i(10, 10*k+0);
-      glVertex2i(10, 10*k+10);
-      glVertex2i(0, 10*k+10);
-      glVertex2i(0, 10*k+0);//TOPLEFT
-
-
-    glEnd();
-
-  }
-
-
-
+  glDisable(GL_COLOR_MATERIAL);
   outHudMode();
+  glPopMatrix();
 }
 
 void inHudMode(int screen_width, int screen_height)
@@ -212,7 +221,8 @@ void inHudMode(int screen_width, int screen_height)
 
   glLoadIdentity();
   glDisable(GL_CULL_FACE);
-  glClear(GL_DEPTH_BUFFER_BIT);
+
+  //glClear(GL_DEPTH_BUFFER_BIT);
   glDepthMask(GL_FALSE);
   glDisable(GL_DEPTH_TEST);
 }
@@ -226,18 +236,10 @@ void outHudMode()
   glPopAttrib();
 }
 
-Renderer * Renderer::get()
+Renderer& Renderer::get()
 {
- if(_instance == NULL)
- {
-  _instance = new Renderer();
-  _instanceFlag = true;
-  return _instance;
- }
- else
- {
-  return _instance;
- }
+    static Renderer instance;
+    return instance;
 }
 
 

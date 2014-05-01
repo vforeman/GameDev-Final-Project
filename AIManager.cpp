@@ -10,13 +10,7 @@ bool isGoal(Node*, Node*);
 float calculateHn(Vector3f, Vector3f);
 void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>& closed, Vector3f); 
 
-/*TODO
- * FIX A-STAR SEARCH ALGORITHM
- * IT IS GIVING A BLACK SCREEN AND TAKING 204% OF THE CPU
- * NOTEWORTHY: THE PROBLEM IS IN THE LOOP OF THE A-STAR
- * ALTERING THE NODE TRAVERSAL HAS HAD LIMITED SUCCESS ONLY ON A SMALL LOOP
-* SOMETHING COULD BE WRONG WITH YOUR HEURISTIC
-*/
+bool checkObstacle(Vector3f);
 Node* AIManager::astar(Vector3f end, Vector3f begin)
 {
     bool firstGo = true;
@@ -44,9 +38,9 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
     //add adjacent positions to list
     Node* temp = new Node;
     bool valid = true;
-    if(!Overlay::isObstacle(current->_x+STEP, current->_y, current->_z))
+    //if(!Overlay::isObstacle(current->_x+STEP, current->_y, current->_z))
+    if(!checkObstacle(Vector3f(current->_x+STEP, current->_y, current->_z)))
     {
-//        bool valid = true;
         temp->_x = current->_x+STEP;
         temp->_z = current->_z; 
         for(unsigned int i = 0; i < closelist.size() && valid; ++i)
@@ -65,9 +59,9 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
             std::push_heap(openlist.begin(), openlist.end());
         }
     }
-    if(!Overlay::isObstacle(current->_x-STEP, current->_y, current->_z))
+    //if(!Overlay::isObstacle(current->_x-STEP, current->_y, current->_z))
+    if(!checkObstacle(Vector3f(current->_x-STEP, current->_y, current->_z)))
     {
-//        bool valid = true;
         temp->_x = current->_x-STEP;
         temp->_z = current->_z; 
         for(unsigned int i = 0; i < closelist.size() && valid; ++i)
@@ -86,9 +80,9 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
         }
         valid = true;
     }
-    if(!Overlay::isObstacle(current->_x, current->_y, current->_z+STEP))
+    //if(!Overlay::isObstacle(current->_x, current->_y, current->_z+STEP))
+    if(!checkObstacle(Vector3f(current->_x, current->_y, current->_z+STEP)))
     {
-//        bool valid = true;
         temp->_x = current->_x;
         temp->_z = current->_z+STEP; 
         for(unsigned int i = 0; i < closelist.size() && valid; ++i)
@@ -107,9 +101,9 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
         }
         valid = true;
     }
-    if(!Overlay::isObstacle(current->_x, current->_y, current->_z-STEP))
+    //if(!Overlay::isObstacle(current->_x, current->_y, current->_z-STEP))
+    if(!checkObstacle(Vector3f(current->_x, current->_y, current->_z-STEP)))
     {
-//        bool valid = true;
         temp->_x = current->_x;
         temp->_z = current->_z-STEP; 
         for(unsigned int i = 0; i < closelist.size() && valid; ++i)
@@ -138,6 +132,36 @@ Node* AIManager::astar(Vector3f end, Vector3f begin)
     }
     return NULL;
 
+}
+
+//Effectively increase the weight around obstacles
+bool checkObstacle(Vector3f pos)
+{
+    bool obstaclePresent = false;
+    float i = 0.0f;
+    
+    if(Overlay::isObstacle(pos)) return true;
+    float x = pos.x;
+    float z = pos.z;
+    Vector3f check = pos; 
+    while( i <= float(STEP)+5.0f && !obstaclePresent)
+    {
+        pos.x += i;
+        pos.z += i;
+        x -= i;
+        z -= i;
+    
+        i = i + 0.125f;
+        obstaclePresent = (
+                            Overlay::isObstacle(Vector3f(pos.x, 0.0f, pos.z))     || 
+                            Overlay::isObstacle(Vector3f(check.x, 0.0f, pos.z))    ||
+                            Overlay::isObstacle(Vector3f(pos.x, 0.0f, check.z))    ||
+                            Overlay::isObstacle(Vector3f(check.x, 0.0f, z))        ||
+                            Overlay::isObstacle(Vector3f(x, 0.0f, check.z))        ||
+                            Overlay::isObstacle(Vector3f(x, 0.0f, z)) );
+    }
+
+    return obstaclePresent;
 }
 
 void getSuccessors(Node* current , std::vector<Node*>& list, std::vector<Node*>& closed, Vector3f goal) 
@@ -236,7 +260,7 @@ float calculateHn(Vector3f curr, Vector3f goal)
 
 
     //return D * (dx * dx + dy * dy);
-    return 100* dx * dx + dy * dy;
+    return 200* dx * dx + dy * dy;
 }
 
 bool isGoal(Node* current, Node* goal)
@@ -244,4 +268,38 @@ bool isGoal(Node* current, Node* goal)
     return current->isSamePosition(goal);
 }
 
+Vector3f AIManager::getPlayer()
+{
+    return _player;
+}
 
+Vector3f AIManager::randVec3f()
+{
+    std::default_random_engine generator;
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    std::uniform_real_distribution<double> placement(0.0, (double)Overlay::OVERLAY_WIDTH/2);
+    float quadrant = placement(generator);
+    float x = placement(generator);
+    float z = placement(generator);
+    if(quadrant >= 0 && quadrant < 0.25f)
+    {
+        return Vector3f(x, 0.5f, z);    //Quadrant I Cartesian (Pos X and pos Z)
+    }
+    if(quadrant >= 0.25f && quadrant < 0.5f)
+    {
+        return Vector3f(-x, 0.5f, z);   //Quadrant II
+    }
+    if(quadrant >= 0.5f && quadrant < 0.75f)
+    {
+        return Vector3f(-x, 0.5f, -z);  //Quadrant III
+    }
+    else
+    {
+        return Vector3f(x, 0.5f, z);    //Quadrnat IV
+    }
+}   
+
+void AIManager::setPlayer(Vector3f player)
+{
+    _player = player;
+}

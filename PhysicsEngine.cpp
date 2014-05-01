@@ -6,21 +6,21 @@ namespace physics{
 *						PHYSICS ENTITY IMPLEMENTATION
 *************************************/
 
-PhysicsEntity::PhysicsEntity() : _position(Vector3f(0.0f, 0.0f, 0.0f)),
-                                 _velocity(Vector3f(0.0f, 0.0f, 0.0f))
+PhysicsEntity::PhysicsEntity() 
+: _position(Vector3f(0.0f, 0.0f, 0.0f)),_velocity(Vector3f(0.0f, 0.0f, 0.0f)),_force(Vector3f(0.0f, 0.0f, 0.0f))
 {
 }
 
-PhysicsEntity::PhysicsEntity(Vector3f pos) : _position(pos),
-  _velocity(Vector3f(0.0f, 0.0f, 0.0f))
+PhysicsEntity::PhysicsEntity(Vector3f pos) 
+: _position(pos), _velocity(Vector3f(0.0f, 0.0f, 0.0f)),_force(Vector3f(0.0f, 0.0f, 0.0f))
 {
 }
 
 void PhysicsEntity::update()
 {
     //x  = x0 + velocity * time
-	    _position = _position+ _velocity * 0.125f;
-        //printf("PHYSICSENGINE: PE(%.2f, %.2f, %.2f)\n", _position.x, _position.y, _position.z);
+
+	    _position = _position+ _velocity * 0.5f;
 
 }
 
@@ -56,29 +56,13 @@ StaticEntity::StaticEntity(float radius, Vector3f position, Vector3f force)
 /***********************************
 *						PHYSICS ENGINE IMPLEMENTATION
 *************************************/
-bool PhysicsEngine::_instanceFlag = false;
-PhysicsEngine * PhysicsEngine::_instance = NULL;
-
 
 PhysicsEngine::PhysicsEngine(){}
 
-PhysicsEngine::~PhysicsEngine()
+PhysicsEngine& PhysicsEngine::get()
 {
-	_instanceFlag = false;
-}
-
-PhysicsEngine * PhysicsEngine::get()
-{
-	if(_instance == NULL)
-	{
-		_instance = new PhysicsEngine();
-		_instanceFlag = true;
-		return _instance;
-	}
-	else
-	{
-		return _instance;
-	}
+    static PhysicsEngine instance;
+    return instance;
 }
 
 
@@ -109,6 +93,7 @@ float PhysicsEngine::pointdistacesquare(Vector3<float> p1,Vector3<float> p2)
 	return (vec.x*vec.x+vec.y*vec.y+vec.z*vec.z);
 }
 
+
 bool PhysicsEngine::intersection(Vector2<float> lineStart,Vector2<float> lineEnd,Vector3<float> sphere,float radius)
 {
 	float xstart = lineStart.x;
@@ -133,6 +118,20 @@ bool PhysicsEngine::intersection(Vector2<float> lineStart,Vector2<float> lineEnd
 	
 	return false;
 };
+
+void PhysicsEngine::resolveCollision(PhysicsEntity* a, PhysicsEntity* b)
+{	//!! b can't pass a !!
+    //Resolve Collision
+    //Seeking Knock back effect
+    //Assume B has triple the mass of a and it will be the enemy
+    a->_velocity =  (b->_velocity + b->_velocity)*2.0f;
+    b->_velocity = -(b->_velocity + b->_velocity)*5.0f;
+    a->update();
+    b->update();
+}
+
+void PhysicsEngine::resolveCollisionWall(PhysicsEntity * b){}
+
 
 }//namespace physics
 

@@ -28,27 +28,27 @@ void outHudMode();
 class Renderer
 {
 public:
-	static Renderer * get();
-	~Renderer();
+	static Renderer& get();
+	Overlay _lvl;
 	void drawStatic();
 	void drawDynamic();
- void drawHud();
+    void drawHud();
     void popBackGraphics();
     void registerGraphics(Graphics*);
     void emptyObjects();
-	Overlay _lvl;
+	void playerDead(Vector3f);
 
 private:
-	static Renderer * _instance;
-	static bool _instanceFlag;
-	static bool _firstDraw;
- std::vector<Graphics*> _drawObjects;    //Register graphics objects i.e. Enemy
-	bool _textureFlag;
 	Renderer();
+    Renderer(const Renderer&);
+    Renderer& operator=(const Renderer&);
+	bool _textureFlag = false;
+    GLuint _texture;
+	static bool _firstDraw;
 	static GLuint h_bullets;
- GLuint loadBMP();
- GLuint _texture;
- void buildHudList();
+    std::vector<Graphics*> _drawObjects;    //Register graphics objects i.e. Enemy
+    GLuint loadBMP();
+    void buildHudList();
 };
 
 }// namespace graphic

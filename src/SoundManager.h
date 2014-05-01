@@ -3,7 +3,7 @@
 
 #include <unistd.h>
 #include <pthread.h>
-//#include "OggStream.h"
+#include "OggStream.h"
 
 class SoundManager
 {

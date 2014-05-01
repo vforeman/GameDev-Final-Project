@@ -1,27 +1,20 @@
 #include "src/InputController.h"
 namespace gamein{
-bool InputController::_instanceFlag = false;
-InputController * InputController::_instance = NULL;
+bool InputController::_playerDead = false;
+bool InputController::_respawn = false;
 
 InputController::InputController(){}
 
-InputController::~InputController()
+
+InputController& InputController::get()
 {
-	_instanceFlag = false;
+    static InputController instance;
+    return instance;
 }
 
-InputController * InputController::get()
+bool InputController::getExitSignal()
 {
- if(NULL == _instance )
- {
-  _instance = new InputController();
-  _instanceFlag = true;
-  return _instance;
- }
- else
- {
-  return _instance;
- }
+    return _exitSignal;
 }
 
 bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
@@ -40,12 +33,15 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 					{
 						case SDLK_ESCAPE:
 							running = false;
+                            _exitSignal = true;
 							break;
 
 						case SDLK_p:
 							cam->mouseIn();
 							SDL_ShowCursor(SDL_ENABLE);
 							break;
+						case SDLK_RETURN:
+				            break;		
 						default: break;
 					}
 					break;
@@ -55,6 +51,7 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 					{
 						case SDLK_ESCAPE:
 							running = false;
+                            _exitSignal = true;
 							break;
 
 						case SDLK_p:
@@ -72,17 +69,27 @@ bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
                         cam->mouseIn();
 					    SDL_ShowCursor(SDL_DISABLE);
                         _mouseHidden = true;
+                        running = true;
                     }
                     else
                     {
-                        //wep->fire(cam->getLocation(), Vector3f(0.0f, 0.0f, 0.0f));
                         fireSignal = true;
-                        //printf("Fire\n");
                     }
 					break;
+
 				default: break;
 			}
 		}
 	return running;
+}
+
+void InputController::setExitSignal(bool exitSignal)
+{
+    _exitSignal = exitSignal;
+}
+
+void InputController::setMouseHidden(bool hidden)
+{
+    _mouseHidden = hidden;
 }
 }// namespace gamein

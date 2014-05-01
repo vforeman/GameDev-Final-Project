@@ -2,7 +2,11 @@ CXXFLAGS =  -g -std=c++11 $(OPTFLAGS)
 DEBUG = -g -Wall -Wextra-Werror
 CXX = g++
 VPATH = $(CURDIR)/src/
-LIBS = -lGLU -lGL -lSDL  -lpthread -I$(VPATH)
+<<<<<<< HEAD
+LIBS = -lGLU -lGL -lfreetype -lSDL -lalut -lopenal -lvorbis -lvorbisfile  -lpthread -I$(VPATH)
+=======
+LIBS = -lGLU -lGL -lfreetype -lSDL -lalut -lopenal -lvorbis -lvorbisfile -lpthread -I$(VPATH)
+>>>>>>> 930e088001d8218e1bcce4a2e6b7f1fe497d077b
 SOURCES = $(wildcard $(VPATH)*h)
 CPPFILES = $(wildcard *cpp)
 HEADERS = $(subst src/, ,$(SOURCES))

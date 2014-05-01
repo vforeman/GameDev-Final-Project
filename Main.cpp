@@ -16,12 +16,29 @@ using namespace std;
 using namespace logic;
 int main(int argc, char *argv[])
 {
-    //alutInit(&argc, argv);
-	GameLogic* gameObject = GameLogic::get();
-	gameObject->start();
-    gameObject->run();
 
- return 0;
+    alutInit(&argc, argv);
+    
+    SoundManager::getInstance().start("./Assets/TacticalSpace.ogg");
+
+
+    try
+    {
+        GameLogic::get().start();
+        GameLogic::get().run();
+    }
+    catch(std::exception &e)
+    {
+        printf("%s CAUGHT AN EXCEPTION", e.what());
+    }
+
+ 
+    SoundManager::getInstance().stop();
+    usleep(250);
+    SoundManager::getInstance().close();
+    usleep(250);
+    alutExit();
+    return 0;
 }
 
 

@@ -18,22 +18,27 @@ namespace physics{
 /***********************************
 *                   ENEMY SPECIFICATION
 *************************************/
-class Enemy : public PhysicsEntity, virtual public Graphics
+class Enemy : virtual public PhysicsEntity, virtual public Graphics
 {
 public:
     Enemy();
     Enemy(Vector3f);
-    int _health;
-    const float _ALERT_RADIUS;
+    bool isLiving();
     void attack(Vector3f);
+    void decreaseHealth();
+    void decreaseHealth(int);
     void die();
     void patrol(Vector3f);
+    void searchNDestroy();
     std::vector<float> _verts;
     std::vector<float> _norms;
     Weapon _weapon;
 protected:
     bool _alive;
     bool _alert;
+    bool _searching;
+    float alertRadius;
+    int _health;
     unsigned int _point;    //Point on patrol path, treated as iterator
     std::vector< Vector3f > _patrolPath;
     void createSimplePatrol();
