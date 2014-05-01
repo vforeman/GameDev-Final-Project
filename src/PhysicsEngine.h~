@@ -31,7 +31,7 @@ public:
     Vector3f _velocity;
 
     Vector3f _force;
-    virtual void update();
+    void update();
 protected:
     PhysicsEntity();
     PhysicsEntity(Vector3f);    //Initialize position
@@ -58,7 +58,7 @@ public:
 	~PhysicsEngine();
 	static bool spheresphere(Vector3<float>& c1,float _radius1,Vector3<float>& c2,float _radius2);
 	static float pointdistacesquare(Vector3<float> p1,Vector3<float> p2);
-	static bool intersection(Vector2<float>, Vector2<float>,Vector3<float> sphere,float radius);
+	static bool intersection(float xstart, float xend, float ystart,float yend,Vector3<float> sphere,float radius);
 	
 
 private:

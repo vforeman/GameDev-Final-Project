@@ -149,7 +149,7 @@ void GameLogic::show()
 	//std::cout<<"cam yaw: "<<_player->getCamera()->getYaw()<<std::endl;
 	//std::cout<<"cam pitch: "<<_player->getCamera()->getPitch()<<std::endl;
     if(_fireSignal)
-        _weapon->fire(_player->getCamera()->getLocation(), _player->getCamera()->getVector());//
+        _weapon->fire(_player->getCamera()->getLocation(), Vector3f(0.0,0.0,1.0));//_player->getCamera()->getVector()
 
     Vector3f pos;
     float radius;

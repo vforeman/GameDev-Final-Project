@@ -28,7 +28,6 @@ private:
 	void show();
 	static GameLogic * _instance;
 	static bool _instanceFlag;
-    bool _fireSignal;
 	GameLogic();
 	const int NUMBER_OF_ENEMIES = 5;
 public:
@@ -42,11 +41,11 @@ public:
 	graphics::Renderer * _renderer;
 	static GameLogic * get();
 	~GameLogic();
-	std::vector<Vector2<float> > enempos;
-	std::vector<Vector2<float> > lineEndpts;
+	std::vector<Vector3<float> > enempos;
+	std::vector<Vector3<float> > lineEndpts;
     void run();
 	void start();
-	void ranjaytest(std::vector<Vector2<float> >& e, std::vector<Vector2<float> >& le);
+	void ranjaytest(std::vector<Vector3<float> >& e);
 
 };
 

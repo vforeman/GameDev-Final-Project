@@ -59,7 +59,7 @@ void Enemy::patrol(Vector3f target)
     {
         //Fire at player
         _radius = 2.0f;
-        _weapon.fire(_position, target);
+        //_weapon.fire(_position, target);
     }
     else
     {
@@ -73,12 +73,14 @@ void Enemy::patrol(Vector3f target)
                 _velocity = _patrolPath[_point] - _position;//_velocity is a physics entity attribute
                 _velocity.normalize();
                 _position = _position + _velocity*0.125f;
+//                    printf("(%.2f, %.2f, %.2f)\n", _position.x, _position.y, _position.z);
             }
             else
             {
                 ++_point;
                 if(_point >= _patrolPath.size())
                     _point = 0;
+//                    printf("(%.2f, %.2f, %.2f)\n", _position.x, _position.y, _position.z);
             }
         }
     }

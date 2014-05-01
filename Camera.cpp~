@@ -160,21 +160,19 @@ Vector3<float> Camera::getVector()
     //float pitch = (camPitch);   //forward pitch
     //float yaw = (camYaw+90.0f);       //forward yaw
 
+    //Closer Translation of sphericl to rectangular coordinates
+    //return Vector3f(sin(pitch)*cos(yaw), sin(pitch)*sin(yaw), cos(pitch) );
+
+
+
+
 	
 	float pitch = (camPitch ); //*M_PI/180.0;
 	float yaw = (camYaw + 90.0f); //*M_PI/180.0;
-
-    //Closer Translation of sphericl to rectangular coordinates
-    return Vector3f(sin(pitch)*cos(yaw), sin(pitch)*sin(yaw), cos(pitch) );
-
-
-
-
-	
     
-	//float xzlen = cos(camPitch);
+	float xzlen = cos(camPitch);
 
-	 //return Vector3f(xzlen * cos(yaw), xzlen*sin(-yaw),  sin(pitch)); // works a lil better
+	 return Vector3f(xzlen * cos(yaw), xzlen*sin(-yaw),  sin(pitch)); // works a lil better
 	
 }  
 

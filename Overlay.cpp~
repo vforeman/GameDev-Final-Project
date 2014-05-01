@@ -38,7 +38,7 @@ void Overlay::initialize(){
             //shame lonely pillar
             c =  (randomRange(1,100)%100 == 90) ? W() : F();
             connected = c;
-		//std::cout<<c<<_tx<<','<<_tz<<std::endl;
+		std::cout<<c<<_tx<<','<<_tz<<std::endl;
             ++_tx;
         }
         _tx = -((float)Overlay::OVERLAY_HEIGHT)/2;

@@ -51,9 +51,9 @@ unsigned int Weapon::getClip()
 void Weapon::fire(Vector3f pos, Vector3f target)
 {
 	Vector3f temp = pos;
-	//temp.x /= 10;
-	//temp.y /= 10;
-	//temp.z /= 10;
+	temp.x /= 10;
+	temp.y /= 10;
+	temp.z /= 10;
 	std::cout<<"temp: "<<temp<<std::endl;
 	//target *=10;
 	std::cout<<"target: "<<target<<std::endl;

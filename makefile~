@@ -25,8 +25,8 @@ Overlay.o:	Overlay.cpp Vmath.h levels.h Assets.h Util.h
 AIManager.o: AIManager.cpp Node.h
 Node.o: Node.cpp Vmath.h
 Graphics.o: Graphics.cpp
-OggStream.h: OggStream.cpp
-SoundManager.o: SoundManager.cpp OggStream.h
+# OggStream.h: OggStream.cpp
+# SoundManager.o: SoundManager.cpp OggStream.h
 
 # Syntax for adding new Rules:
 # [TARGET] : [DEPENDENCIES]

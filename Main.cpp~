@@ -16,7 +16,7 @@ using namespace std;
 using namespace logic;
 int main(int argc, char *argv[])
 {
-    //alutInit(&argc, argv);
+    alutInit(&argc, argv);
 	GameLogic* gameObject = GameLogic::get();
 	gameObject->start();
     gameObject->run();

@@ -24,7 +24,7 @@ InputController * InputController::get()
  }
 }
 
-bool InputController::HandleInput(Camera * cam, physics::Weapon* wep, bool running)
+bool InputController::HandleInput(Camera * cam, bool& fireSignal, bool running)
 {
 	SDL_Event event;
 		while(SDL_PollEvent(&event))
@@ -75,8 +75,9 @@ bool InputController::HandleInput(Camera * cam, physics::Weapon* wep, bool runni
                     }
                     else
                     {
-                        wep->fire(cam->getLocation(), cam->getLocation());
-                        printf("Fire\n");
+                        //wep->fire(cam->getLocation(), Vector3f(0.0f, 0.0f, 0.0f));
+                        fireSignal = true;
+                        //printf("Fire\n");
                     }
 					break;
 				default: break;

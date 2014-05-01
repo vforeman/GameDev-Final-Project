@@ -111,8 +111,8 @@ void Node::setParent(Node* that)
 void Node::traverse(std::vector < Vector3f >& path)
 {
     Node *temp = this;
-    while(temp != NULL && temp->_child != NULL )
-        temp = temp->_child;
+    while(temp != NULL && temp->_parent != NULL )
+        temp = temp->_parent;
     
     if(path.empty())
     {
@@ -121,7 +121,7 @@ void Node::traverse(std::vector < Vector3f >& path)
             path.push_back(Vector3f(float(temp->_x),
                                     float(temp->_y),
                                     float(temp->_z)));
-            temp = temp->_parent;
+            temp = temp->_child;
         }
     }
     else
@@ -132,7 +132,7 @@ void Node::traverse(std::vector < Vector3f >& path)
             extendedPath.push_back(Vector3f(float(temp->_x),
                                     float(temp->_y),
                                     float(temp->_z)));
-            temp = temp->_parent;
+            temp = temp->_child;
         }
         path.reserve(path.size() + extendedPath.size());
         path.insert(path.end(), extendedPath.begin(), extendedPath.end()); 
